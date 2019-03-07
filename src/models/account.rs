@@ -1,9 +1,10 @@
-use crate::schema::author;
+use crate::schema::account;
 use serde::{Serialize, Deserialize};
 use chrono::NaiveDateTime;
 
-#[derive(Queryable, Serialize, Deserialize)]
-pub struct Author {
+#[derive(Queryable, Serialize, Deserialize, Identifiable, AsChangeset)]
+#[table_name="account"]
+pub struct Account {
     pub id: i32,
     pub email: String,
     pub full_name: String,
@@ -22,8 +23,8 @@ pub struct Author {
 }
 
 #[derive(Insertable, Serialize, Deserialize)]
-#[table_name="author"]
-pub struct NewAuthor {
+#[table_name="account"]
+pub struct NewAccount {
     pub email: String,
     pub full_name: String,
     pub password: String,

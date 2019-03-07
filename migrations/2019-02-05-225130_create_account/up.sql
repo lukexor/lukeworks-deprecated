@@ -1,4 +1,4 @@
-CREATE TABLE author (
+CREATE TABLE account (
   id SERIAL PRIMARY KEY,
   email VARCHAR NOT NULL UNIQUE,
   full_name VARCHAR NOT NULL,

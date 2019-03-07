@@ -2,7 +2,8 @@ use crate::schema::post;
 use serde::{Serialize, Deserialize};
 use chrono::NaiveDateTime;
 
-#[derive(Queryable, Serialize, Deserialize)]
+#[derive(Queryable, Serialize, Deserialize, Identifiable, AsChangeset)]
+#[table_name="post"]
 pub struct Post {
     pub id: i32,
     pub title: String,

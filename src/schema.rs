@@ -1,5 +1,5 @@
 table! {
-    author (id) {
+    account (id) {
         id -> Int4,
         email -> Varchar,
         full_name -> Varchar,
@@ -43,11 +43,11 @@ table! {
     }
 }
 
-joinable!(post -> author (author_id));
+joinable!(post -> account (author_id));
 joinable!(post -> category (category_id));
 
 allow_tables_to_appear_in_same_query!(
-    author,
+    account,
     category,
     post,
 );

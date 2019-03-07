@@ -6,16 +6,16 @@
 use rocket::routes;
 use rocket_contrib::database;
 
-// pub mod database;
-mod schema;
-mod models;
-mod routes;
+pub mod schema;
+pub mod models;
+pub mod routes;
+pub mod response;
 
 use routes::{
     root::*,
     admin::*,
     post::*,
-    author::*,
+    account::*,
     category::*,
 };
 
@@ -33,9 +33,9 @@ fn main() {
                create_post, get_all_posts, get_post,
                update_post, delete_post
         ])
-        .mount("/admin/author", routes![
-               create_author, get_all_authors, get_author,
-               update_author, delete_author
+        .mount("/admin/account", routes![
+               create_account, get_all_accounts, get_account,
+               update_account, delete_account
         ])
         .mount("/admin/category", routes![
                create_category, get_all_categories, get_category,
