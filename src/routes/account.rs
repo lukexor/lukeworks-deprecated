@@ -1,6 +1,5 @@
 use crate::*;
 use crate::models::account::*;
-use crate::schema::account;
 use crate::response::*;
 use rocket::{
     get,
@@ -9,14 +8,10 @@ use rocket::{
     delete,
 };
 use rocket_contrib::json::{Json, JsonValue};
-use diesel::{QueryDsl, RunQueryDsl};
 
 #[post("/", format = "json", data = "<account>")]
 pub fn create_account(conn: DbConn, account: Json<NewAccount>) -> JsonValue {
-    let new_account = diesel::insert_into(account::table)
-        .values(&account.into_inner())
-        .get_result::<Account>(&*conn);
-    match new_account {
+    match account.create(conn) {
         Ok(a)  => success_response(a),
         Err(e) => error_response(e),
     }
@@ -24,8 +19,7 @@ pub fn create_account(conn: DbConn, account: Json<NewAccount>) -> JsonValue {
 
 #[get("/", format = "json")]
 pub fn get_all_accounts(conn: DbConn) -> JsonValue {
-    let accounts = account::table.load::<Account>(&*conn);
-    match accounts {
+    match Account::read(conn) {
         Ok(a)  => success_response(a),
         Err(e) => error_response(e),
     }
@@ -33,21 +27,15 @@ pub fn get_all_accounts(conn: DbConn) -> JsonValue {
 
 #[get("/<id>", format = "json")]
 pub fn get_account(conn: DbConn, id: i32) -> JsonValue {
-    let account = account::table.find(id)
-        .first::<Account>(&*conn);
-    match account {
+    match Account::get(id, conn) {
         Ok(a)  => success_response(a),
         Err(e) => error_response(e),
     }
 }
 
-#[put("/<id>", format = "json", data = "<account>")]
-pub fn update_account(conn: DbConn, id: i32, account: Json<Account>) -> JsonValue {
-    let update = diesel::update(
-        account::table.find(id))
-        .set(&account.into_inner())
-        .get_result::<Account>(&*conn);
-    match update {
+#[put("/", format = "json", data = "<account>")]
+pub fn update_account(conn: DbConn, account: Json<Account>) -> JsonValue {
+    match account.update(conn) {
         Ok(u)  => success_response(u),
         Err(e) => error_response(e),
     }
@@ -55,10 +43,7 @@ pub fn update_account(conn: DbConn, id: i32, account: Json<Account>) -> JsonValu
 
 #[delete("/<id>", format = "json")]
 pub fn delete_account(conn: DbConn, id: i32) -> JsonValue {
-    let deleted = diesel::delete(
-        account::table.find(id))
-        .execute(&*conn);
-    match deleted {
+    match Account::delete(id, conn) {
         Ok(n)  => success_response(n),
         Err(e) => error_response(e),
     }
