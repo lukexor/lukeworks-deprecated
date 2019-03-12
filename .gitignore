@@ -1,4 +1,6 @@
-/target
-**/*.rs.bk
 .env
-Cargo.lock
+.gitkeep
+**/*.rs.bk
+**/*.lock
+target
+TODO

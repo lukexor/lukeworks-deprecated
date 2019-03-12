@@ -9,13 +9,13 @@ pub struct SuccessResponse<T> {
 }
 #[derive(Serialize, Deserialize)]
 pub struct ErrorResponse {
-    pub error: String,
+    pub json_error: String,
 }
 
-pub fn success_response<T: Serialize>(d: T) -> JsonValue {
+pub fn json_success<T: Serialize>(d: T) -> JsonValue {
     json!(SuccessResponse { data: d })
 }
 
-pub fn error_response<T: Display>(e: T) -> JsonValue {
-    json!(ErrorResponse { error: e.to_string() })
+pub fn json_error<T: Display>(e: T) -> JsonValue {
+    json!(ErrorResponse { json_error: e.to_string() })
 }

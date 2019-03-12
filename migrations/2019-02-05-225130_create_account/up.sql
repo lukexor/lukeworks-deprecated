@@ -5,7 +5,6 @@ CREATE TABLE account (
   password VARCHAR NOT NULL,
   password_updated TIMESTAMP NOT NULL DEFAULT NOW(),
   website VARCHAR,
-  gravatar VARCHAR,
   phone VARCHAR,
   bio TEXT,
   is_admin BOOLEAN NOT NULL DEFAULT 'f',

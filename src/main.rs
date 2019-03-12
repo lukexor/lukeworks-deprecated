@@ -3,9 +3,10 @@
 // TODO Remove extern crate when diesel fixes it
 #[macro_use] extern crate diesel;
 
-use rocket::routes;
-use rocket_contrib::database;
+use rocket::{Rocket, routes};
+use rocket_contrib::{database, templates::Template};
 
+pub mod db;
 pub mod schema;
 pub mod models;
 pub mod routes;
@@ -20,11 +21,12 @@ use routes::{
 };
 
 #[database("luke_web")]
-pub struct DbConn(pub diesel::PgConnection);
+pub struct DbConn(diesel::PgConnection);
 
-fn main() {
+fn rocket() -> Rocket {
     rocket::ignite()
         .attach(DbConn::fairing())
+        .attach(Template::fairing())
         .mount("/", routes![
                index, about, contact, admin, admin_redirect, login,
                title, blog, projects, post_by_category
@@ -41,5 +43,8 @@ fn main() {
                create_category, get_all_categories, get_category,
                update_category, delete_category
         ])
-        .launch();
+}
+
+fn main() {
+    rocket().launch();
 }

@@ -6,7 +6,6 @@ table! {
         password -> Varchar,
         password_updated -> Timestamp,
         website -> Nullable<Varchar>,
-        gravatar -> Nullable<Varchar>,
         phone -> Nullable<Varchar>,
         bio -> Nullable<Text>,
         is_admin -> Bool,
@@ -35,9 +34,8 @@ table! {
         category_id -> Int4,
         author_id -> Int4,
         minutes_to_read -> Int2,
-        is_project -> Bool,
         published -> Bool,
-        published_at -> Timestamp,
+        published_at -> Nullable<Timestamp>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }

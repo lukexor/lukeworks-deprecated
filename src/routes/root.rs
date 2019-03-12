@@ -1,9 +1,15 @@
 use rocket::get;
+use rocket_contrib::templates::Template;
+use tera::Context;
 
 #[get("/?<s>")]  // Landing page/optional search
-pub fn index(s: Option<String>) -> String {
-    s.map(|s| format!("Hi, {}!", s))
-        .unwrap_or_else(|| "Bob".to_string())
+pub fn index(s: Option<String>) -> Template {
+    let mut context = Context::new();
+    match s {
+        Some(s) => context.insert("message", &s),
+        None    => context.insert("message", "Main page"),
+    };
+    Template::render("base", &context)
 }
 
 #[get("/about")]  // About page

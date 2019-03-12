@@ -1,0 +1,20 @@
+[env]
+ENV = "/home/caeledh/www/luke_web/.env_test"
+
+[tasks.setup]
+script = ["source ${ENV} && diesel database setup"]
+
+[tasks.test]
+command = "cargo"
+args = ["test"]
+
+[tasks.teardown]
+command = "bash"
+args = ["source ${ENV} && diesel database drop"]
+
+[tasks.run_tests]
+dependencies = [
+    "setup",
+    "test",
+    "teardown",
+]
