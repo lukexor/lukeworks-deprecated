@@ -57,3 +57,105 @@ impl Category {
         diesel::delete(categories.find(id)).execute(&**conn)
     }
 }
+
+
+#[cfg(feature = "database")]
+#[cfg(test)]
+mod tests {
+    use crate::db::test::connection;
+    use crate::models::category::*;
+    use fake::*;
+
+    fn new_category() -> NewCategory {
+        let name = fake!(Name.name);
+        NewCategory::new(&name)
+    }
+
+    #[test]
+    fn create() {
+        let conn = connection();
+        let new_category = new_category();
+        let actual_category = new_category.create(&conn).unwrap();
+        let expected_category = Category {
+            id: actual_category.id,
+            name: new_category.name,
+            created_at: actual_category.created_at,
+            updated_at: actual_category.updated_at,
+        };
+        assert_eq!(expected_category, actual_category);
+    }
+
+    #[test]
+    fn update() {
+        let conn = connection();
+        let new_category = new_category();
+        let mut category = new_category.create(&conn).unwrap();
+        let new_name = "Updated Category";
+        category.name = new_name.into();
+        let updated_category = category.update(&conn).unwrap();
+        assert_eq!(new_name, updated_category.name);
+    }
+
+    #[test]
+    fn get_doesnt_exist() {
+        let conn = connection();
+        let result = Category::get(0, &conn);
+        assert!(result.is_err());
+        assert_eq!(diesel::result::Error::NotFound, result.err().unwrap());
+    }
+
+    #[test]
+    fn get_exists() {
+        let conn = connection();
+        let new_category = new_category();
+        let expected_category = new_category.create(&conn).unwrap();
+        let actual_category = Category::get(expected_category.id, &conn).unwrap();
+        assert_eq!(expected_category, actual_category);
+    }
+
+    #[test]
+    fn read_zero() {
+        let conn = connection();
+        let category_list = Category::read(&conn).unwrap();
+        assert!(category_list.is_empty());
+    }
+
+    #[test]
+    fn read_one() {
+        let conn = connection();
+        let new_category = new_category();
+        let expected_category = new_category.create(&conn).unwrap();
+        let category_list = Category::read(&conn).unwrap();
+        assert_eq!(1, category_list.len());
+        assert_eq!(expected_category, category_list[0]);
+    }
+
+    #[test]
+    fn read_multiple() {
+        let conn = connection();
+        let new_category1 = new_category();
+        let expected_category1 = new_category1.create(&conn).unwrap();
+        let new_category2 = new_category();
+        let expected_category2 = new_category2.create(&conn).unwrap();
+        let category_list = Category::read(&conn).unwrap();
+        assert_eq!(2, category_list.len());
+        assert_eq!(expected_category1, category_list[0]);
+        assert_eq!(expected_category2, category_list[1]);
+    }
+
+    #[test]
+    fn delete_doesnt_exist() {
+        let conn = connection();
+        let delete_count = Category::delete(1, &conn).unwrap();
+        assert_eq!(0, delete_count);
+    }
+
+    #[test]
+    fn delete_exists() {
+        let conn = connection();
+        let new_category = new_category();
+        let category = new_category.create(&conn).unwrap();
+        let delete_count = Category::delete(category.id, &conn).unwrap();
+        assert_eq!(1, delete_count);
+    }
+}

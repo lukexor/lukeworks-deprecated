@@ -82,3 +82,118 @@ impl Account {
         diesel::delete(accounts.find(id)).execute(&**conn)
     }
 }
+
+
+#[cfg(feature = "database")]
+#[cfg(test)]
+mod tests {
+    use crate::db::test::connection;
+    use crate::models::account::*;
+    use bcrypt::{DEFAULT_COST, hash};
+    use fake::*;
+
+    fn new_account() -> NewAccount {
+        let email = fake!(Internet.safe_email);
+        let full_name = fake!(Name.name);
+        let password = hash(fake!(Company.buzzword), DEFAULT_COST).unwrap();
+        NewAccount::new(&email, &full_name, &password)
+    }
+
+    #[test]
+    fn create() {
+        let conn = connection();
+        let new_account = new_account();
+        let actual_account = new_account.create(&conn).unwrap();
+        let expected_account = Account {
+            id: actual_account.id,
+            email: new_account.email,
+            full_name: new_account.full_name,
+            password: new_account.password,
+            password_updated: actual_account.password_updated,
+            website: None,
+            phone: None,
+            bio: None,
+            is_admin: false,
+            is_staff: false,
+            is_active: true,
+            last_login: None,
+            created_at: actual_account.created_at,
+            updated_at: actual_account.updated_at,
+        };
+        assert_eq!(expected_account, actual_account);
+    }
+
+    #[test]
+    fn update() {
+        let conn = connection();
+        let new_account = new_account();
+        let mut account = new_account.create(&conn).unwrap();
+        let new_full_name = "Updated User";
+        account.full_name = new_full_name.into();
+        let updated_account = account.update(&conn).unwrap();
+        assert_eq!(new_full_name, updated_account.full_name);
+    }
+
+     #[test]
+     fn get_doesnt_exist() {
+         let conn = connection();
+         let result = Account::get(0, &conn);
+         assert!(result.is_err());
+         assert_eq!(diesel::result::Error::NotFound, result.err().unwrap());
+     }
+
+     #[test]
+     fn get_exists() {
+         let conn = connection();
+         let new_account = new_account();
+         let expected_account = new_account.create(&conn).unwrap();
+         let actual_account = Account::get(expected_account.id, &conn).unwrap();
+         assert_eq!(expected_account, actual_account);
+     }
+
+     #[test]
+     fn read_zero() {
+         let conn = connection();
+         let account_list = Account::read(&conn).unwrap();
+         assert!(account_list.is_empty());
+     }
+
+     #[test]
+     fn read_one() {
+         let conn = connection();
+         let new_account = new_account();
+         let expected_account = new_account.create(&conn).unwrap();
+         let account_list = Account::read(&conn).unwrap();
+         assert_eq!(1, account_list.len());
+         assert_eq!(expected_account, account_list[0]);
+     }
+
+     #[test]
+     fn read_multiple() {
+         let conn = connection();
+         let new_account1 = new_account();
+         let new_account2 = new_account();
+         let expected_account1 = new_account1.create(&conn).unwrap();
+         let expected_account2 = new_account2.create(&conn).unwrap();
+         let account_list = Account::read(&conn).unwrap();
+         assert_eq!(2, account_list.len());
+         assert_eq!(expected_account1, account_list[0]);
+         assert_eq!(expected_account2, account_list[1]);
+     }
+
+     #[test]
+     fn delete_doesnt_exist() {
+         let conn = connection();
+         let delete_count = Account::delete(0, &conn).unwrap();
+         assert_eq!(0, delete_count);
+     }
+
+     #[test]
+     fn delete_exists() {
+         let conn = connection();
+         let new_account = new_account();
+         let account = new_account.create(&conn).unwrap();
+         let delete_count = Account::delete(account.id, &conn).unwrap();
+         assert_eq!(1, delete_count);
+     }
+}

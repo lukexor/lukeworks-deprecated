@@ -4,7 +4,7 @@
 #[macro_use] extern crate diesel;
 
 use rocket::{Rocket, routes};
-use rocket_contrib::{database, templates::Template};
+use rocket_contrib::templates::Template;
 
 pub mod db;
 pub mod schema;
@@ -12,6 +12,7 @@ pub mod models;
 pub mod routes;
 pub mod response;
 
+use db::DbConn;
 use routes::{
     root::*,
     admin::*,
@@ -19,9 +20,6 @@ use routes::{
     account::*,
     category::*,
 };
-
-#[database("luke_web")]
-pub struct DbConn(diesel::PgConnection);
 
 fn rocket() -> Rocket {
     rocket::ignite()

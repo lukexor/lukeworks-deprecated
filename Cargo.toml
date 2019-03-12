@@ -5,6 +5,9 @@ authors = ["Luke Petherbridge <me@lukeworks.tech>"]
 edition = "2018"
 publish = false
 
+[features]
+database = []
+
 [dependencies]
 bcrypt = "0.3.0"
 chrono = { version = "0.4.6", features = ["serde"] }

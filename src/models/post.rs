@@ -85,3 +85,136 @@ impl Post {
         math::round::ceil(minutes as f64, 0) as i16
     }
 }
+
+
+#[cfg(feature = "database")]
+#[cfg(test)]
+mod post_tests {
+    use crate::db::test::connection;
+    use crate::models::{post::*, category::*, account::*};
+    use bcrypt::{DEFAULT_COST, hash};
+    use fake::*;
+
+    fn setup(conn: &DbConn) {
+        let email = fake!(Internet.safe_email);
+        let full_name = fake!(Name.name);
+        let password = hash(fake!(Company.buzzword), DEFAULT_COST).unwrap();
+        let new_account = NewAccount::new(&email, &full_name, &password);
+        new_account.create(&conn).expect("valid account");
+
+        let name = fake!(Name.name);
+        let new_category = NewCategory::new(&name);
+        new_category.create(&conn).expect("valid category");
+    }
+
+    fn new_post(conn: &DbConn) -> NewPost {
+        let title = fake!(Lorem.sentence(2, 5));
+        let body = fake!(Lorem.paragraph(5, 5));
+        let category_id = Category::read(conn).unwrap().first().unwrap().id;
+        let author_id = Account::read(conn).unwrap().first().unwrap().id;
+        NewPost::new(&title, &body, category_id, author_id)
+    }
+
+    #[test]
+    fn create() {
+        let conn = connection();
+        setup(&conn);
+        let new_post = new_post(&conn);
+        let actual_post = new_post.create(&conn).unwrap();
+        let expected_post = Post {
+            id: actual_post.id,
+            title: new_post.title.clone(),
+            body: new_post.body.clone(),
+            category_id: Category::read(&conn).unwrap().first().unwrap().id,
+            author_id: Account::read(&conn).unwrap().first().unwrap().id,
+            minutes_to_read: Post::calc_minutes_to_read(&new_post.body),
+            published: false,
+            published_at: None,
+            created_at: actual_post.created_at,
+            updated_at: actual_post.updated_at,
+        };
+        assert_eq!(expected_post, actual_post);
+    }
+
+    #[test]
+    fn update() {
+        let conn = connection();
+        setup(&conn);
+        let new_post = new_post(&conn);
+        let mut post = new_post.create(&conn).unwrap();
+        let new_title = "Updated Post";
+        post.title = new_title.into();
+        let updated_post = post.update(&conn).unwrap();
+        assert_eq!(new_title, updated_post.title);
+    }
+
+    #[test]
+    fn get_doesnt_exist() {
+        let conn = connection();
+        setup(&conn);
+        let result = Post::get(1, &conn);
+        assert!(result.is_err());
+        assert_eq!(diesel::result::Error::NotFound, result.err().unwrap());
+    }
+
+    #[test]
+    fn get_exists() {
+        let conn = connection();
+        setup(&conn);
+        let new_post = new_post(&conn);
+        let expected_post = new_post.create(&conn).unwrap();
+        let actual_post = Post::get(expected_post.id, &conn).unwrap();
+        assert_eq!(expected_post, actual_post);
+    }
+
+    #[test]
+    fn read_zero() {
+        let conn = connection();
+        setup(&conn);
+        let post_list = Post::read(&conn).unwrap();
+        assert!(post_list.is_empty());
+    }
+
+    #[test]
+    fn read_one() {
+        let conn = connection();
+        setup(&conn);
+        let new_post = new_post(&conn);
+        let expected_post = new_post.create(&conn).unwrap();
+        let post_list = Post::read(&conn).unwrap();
+        assert_eq!(1, post_list.len());
+        assert_eq!(expected_post, post_list[0]);
+    }
+
+    #[test]
+    fn read_multiple() {
+        let conn = connection();
+        setup(&conn);
+        let new_post1 = new_post(&conn);
+        let expected_post1 = new_post1.create(&conn).unwrap();
+        let new_post2 = new_post(&conn);
+        let expected_post2 = new_post2.create(&conn).unwrap();
+        let post_list = Post::read(&conn).unwrap();
+        assert_eq!(2, post_list.len());
+        assert_eq!(expected_post1, post_list[0]);
+        assert_eq!(expected_post2, post_list[1]);
+    }
+
+    #[test]
+    fn delete_doesnt_exist() {
+        let conn = connection();
+        setup(&conn);
+        let delete_count = Post::delete(1, &conn).unwrap();
+        assert_eq!(0, delete_count);
+    }
+
+    #[test]
+    fn delete_exists() {
+        let conn = connection();
+        setup(&conn);
+        let new_post = new_post(&conn);
+        let post = new_post.create(&conn).unwrap();
+        let delete_count = Post::delete(post.id, &conn).unwrap();
+        assert_eq!(1, delete_count);
+    }
+}

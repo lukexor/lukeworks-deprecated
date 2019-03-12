@@ -1,5 +1,4 @@
 INSERT INTO account (
-    id,
     email,
     full_name,
     password,
@@ -11,7 +10,6 @@ INSERT INTO account (
     is_staff,
     is_active
 ) VALUES (
-    1,
     'me@lukeworks.tech',
     'Luke Petherbridge',
     '$2y$12$sRQvwF6KZ5NibMei3NFTauGCvGUG.akONtMhOpHRXOIbZfcBY5JYC',
