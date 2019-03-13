@@ -1,1 +1,1 @@
-DELETE FROM post WHERE id <= 11;
+DELETE FROM post WHERE id <= 9;

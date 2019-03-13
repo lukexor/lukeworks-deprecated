@@ -21,6 +21,7 @@ table! {
     category (id) {
         id -> Int4,
         name -> Varchar,
+        parent_id -> Nullable<Int4>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -33,6 +34,7 @@ table! {
         body -> Text,
         category_id -> Int4,
         author_id -> Int4,
+        parent_id -> Nullable<Int4>,
         minutes_to_read -> Int2,
         published -> Bool,
         published_at -> Nullable<Timestamp>,

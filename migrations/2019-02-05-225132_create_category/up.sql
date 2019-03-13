@@ -1,6 +1,7 @@
 CREATE TABLE category (
   id SERIAL PRIMARY KEY,
   name VARCHAR NOT NULL,
+  parent_id INTEGER NULL REFERENCES category (id),
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 )

@@ -9,6 +9,7 @@ use diesel::prelude::*;
 pub struct Category {
     pub id: i32,
     pub name: String,
+    pub parent_id: Option<i32>,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
 }
@@ -37,6 +38,7 @@ impl Category {
         Category {
             id: id,
             name: name.to_string(),
+            parent_id: None,
             created_at: now,
             updated_at: now,
         }
@@ -79,6 +81,7 @@ mod tests {
         let expected_category = Category {
             id: actual_category.id,
             name: new_category.name,
+            parent_id: None,
             created_at: actual_category.created_at,
             updated_at: actual_category.updated_at,
         };

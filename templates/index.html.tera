@@ -1,0 +1,4 @@
+{% extends "base" %}
+{% block title %}Lucas Petherbridge - Software Engineer. Designer. Thinker.{% endblock title %}
+{% block meta_description %}A blog and project portfolio by Lucas Petherbridge on programming and technology.{% endblock meta_description %}
+{% block main %}<p>Hi! I'm Lucas, but everyone calls me Luke. I love to code and solve problems. This site is a place to blog about programming and technology and too host a portfolio of my projects. I write about things that intrigue and inspire me as well as my experiences in the software industry. I love to learn and it is my hope that this site might inspire others to learn.</p>{% endblock main %}

@@ -8,6 +8,8 @@ use rocket::{
     delete,
 };
 use rocket_contrib::json::{Json, JsonValue};
+use rocket_contrib::templates::Template;
+use tera::Context;
 
 // Pages ------------------------------------------------------------
 
@@ -17,8 +19,10 @@ pub fn title(title: String) -> String {
 }
 
 #[get("/blog")]  // List of blog posts with date/title
-pub fn blog() -> &'static str {
-    "Hello, blog!"
+pub fn blog(conn: DbConn) -> Template {
+    let mut context = Context::new();
+    context.insert("posts", &Post::read(&conn).unwrap());
+    Template::render("blog", &context)
 }
 
 #[get("/projects")]  // List of project posts with date/title

@@ -4,12 +4,12 @@ use tera::Context;
 
 #[get("/?<s>")]  // Landing page/optional search
 pub fn index(s: Option<String>) -> Template {
-    let mut context = Context::new();
+    let context = Context::new();
     match s {
-        Some(s) => context.insert("message", &s),
-        None    => context.insert("message", "Main page"),
+        Some(s) => s,
+        None    => "".to_string(),
     };
-    Template::render("base", &context)
+    Template::render("index", &context)
 }
 
 #[get("/about")]  // About page
