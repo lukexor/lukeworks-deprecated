@@ -37,7 +37,7 @@ fn rocket() -> Rocket {
         .attach(Template::fairing())
         .mount("/static", StaticFiles::from("static/"))
         .mount("/", routes![
-               index, about, contact, post::by_title,
+               index, search, about, contact, post::by_title,
                post::blog, post::projects, post::by_category
         ])
         .mount("/admin/", routes![

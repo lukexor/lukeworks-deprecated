@@ -3,13 +3,16 @@ use rocket::get;
 use rocket_contrib::templates::Template;
 use tera::Context;
 
+#[get("/")]  // Landing page/optional search
+pub fn index() -> Template {
+    Template::render("root/index", Context::new())
+}
+
 #[get("/?<s>")]  // Landing page/optional search
-pub fn index(s: Option<String>) -> Template {
-    if let Some(str) = s {
-        search(str)
-    } else {
-        Template::render("root/index", Context::new())
-    }
+pub fn search(s: String) -> Template {
+    let mut context = Context::new();
+    context.insert("search", &s);
+    Template::render("root/search", &context)
 }
 
 #[get("/about")]  // About page
@@ -22,10 +25,4 @@ pub fn about() -> Template {
 pub fn contact() -> Template {
     let context = Context::new();
     Template::render("root/contact", &context)
-}
-
-fn search(s: String) -> Template {
-    let mut context = Context::new();
-    context.insert("search", &s);
-    Template::render("root/search", &context)
 }
