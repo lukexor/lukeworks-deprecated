@@ -1,11 +1,16 @@
 #![feature(proc_macro_hygiene, decl_macro)]
+#![allow(clippy::needless_pass_by_value)]
 
 // TODO Remove extern crate when diesel fixes it
 // https://github.com/diesel-rs/diesel/pull/1956
 #[macro_use] extern crate diesel;
 
 use rocket::{Rocket, routes};
-use rocket_contrib::templates::Template;
+use rocket_contrib::{
+    templates::Template,
+    serve::StaticFiles,
+};
+
 
 mod db;
 mod schema;
@@ -16,10 +21,10 @@ mod response;
 use db::DbConn;
 use routes::{
     root::*,
-    admin::*,
-    post::*,
-    account::*,
-    category::*,
+    admin,
+    post,
+    account,
+    category,
 };
 
 fn main() {
@@ -30,20 +35,24 @@ fn rocket() -> Rocket {
     rocket::ignite()
         .attach(DbConn::fairing())
         .attach(Template::fairing())
+        .mount("/static", StaticFiles::from("static/"))
         .mount("/", routes![
-               index, about, contact, admin, admin_redirect, login,
-               title, blog, projects, post_by_category
+               index, about, contact, post::by_title,
+               post::blog, post::projects, post::by_category
+        ])
+        .mount("/admin/", routes![
+               admin::index, admin::redirect, admin::login
         ])
         .mount("/admin/post", routes![
-               create_post, get_all_posts, get_post,
-               update_post, delete_post
+               post::create, post::get_all, post::get,
+               post::update, post::delete
         ])
         .mount("/admin/account", routes![
-               create_account, get_all_accounts, get_account,
-               update_account, delete_account
+               account::create, account::get_all, account::get,
+               account::update, account::delete
         ])
         .mount("/admin/category", routes![
-               create_category, get_all_categories, get_category,
-               update_category, delete_category
+               category::create, category::get_all, category::get,
+               category::update, category::delete
         ])
 }

@@ -10,7 +10,7 @@ use rocket::{
 use rocket_contrib::json::{Json, JsonValue};
 
 #[post("/", format = "json", data = "<account>")]
-pub fn create_account(conn: DbConn, account: Json<NewAccount>) -> JsonValue {
+pub fn create(conn: DbConn, account: Json<New>) -> JsonValue {
     match account.create(&conn) {
         Ok(a)  => json_success(a),
         Err(e) => json_error(e),
@@ -18,7 +18,7 @@ pub fn create_account(conn: DbConn, account: Json<NewAccount>) -> JsonValue {
 }
 
 #[get("/", format = "json")]
-pub fn get_all_accounts(conn: DbConn) -> JsonValue {
+pub fn get_all(conn: DbConn) -> JsonValue {
     match Account::read(&conn) {
         Ok(a)  => json_success(a),
         Err(e) => json_error(e),
@@ -26,7 +26,7 @@ pub fn get_all_accounts(conn: DbConn) -> JsonValue {
 }
 
 #[get("/<id>", format = "json")]
-pub fn get_account(conn: DbConn, id: i32) -> JsonValue {
+pub fn get(conn: DbConn, id: i32) -> JsonValue {
     match Account::get(id, &conn) {
         Ok(a)  => json_success(a),
         Err(e) => json_error(e),
@@ -34,7 +34,7 @@ pub fn get_account(conn: DbConn, id: i32) -> JsonValue {
 }
 
 #[put("/", format = "json", data = "<account>")]
-pub fn update_account(conn: DbConn, account: Json<Account>) -> JsonValue {
+pub fn update(conn: DbConn, account: Json<Account>) -> JsonValue {
     match account.update(&conn) {
         Ok(u)  => json_success(u),
         Err(e) => json_error(e),
@@ -42,7 +42,7 @@ pub fn update_account(conn: DbConn, account: Json<Account>) -> JsonValue {
 }
 
 #[delete("/<id>", format = "json")]
-pub fn delete_account(conn: DbConn, id: i32) -> JsonValue {
+pub fn delete(conn: DbConn, id: i32) -> JsonValue {
     match Account::delete(id, &conn) {
         Ok(n)  => json_success(n),
         Err(e) => json_error(e),

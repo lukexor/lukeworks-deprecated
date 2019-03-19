@@ -16,13 +16,13 @@ pub struct Category {
 
 #[derive(Debug, Insertable, Serialize, Deserialize)]
 #[table_name="category"]
-pub struct NewCategory {
+pub struct New {
     pub name: String,
 }
 
-impl NewCategory {
+impl New {
     pub fn new(name: &str) -> Self {
-        NewCategory {
+        Self {
             name: name.to_string(),
         }
     }
@@ -35,8 +35,8 @@ impl NewCategory {
 impl Category {
     pub fn new(id: i32, name: &str) -> Self {
         let now = Utc::now().naive_utc();
-        Category {
-            id: id,
+        Self {
+            id,
             name: name.to_string(),
             parent_id: None,
             created_at: now,
@@ -44,16 +44,16 @@ impl Category {
         }
     }
 
-    pub fn update(&self, conn: &DbConn) -> QueryResult<Category> {
-        diesel::update(categories.find(self.id)).set(self).get_result::<Category>(&**conn)
+    pub fn update(&self, conn: &DbConn) -> QueryResult<Self> {
+        diesel::update(categories.find(self.id)).set(self).get_result::<Self>(&**conn)
     }
 
-    pub fn get(id: i32, conn: &DbConn) -> QueryResult<Category> {
-        categories.find(id).first::<Category>(&**conn)
+    pub fn get(id: i32, conn: &DbConn) -> QueryResult<Self> {
+        categories.find(id).first::<Self>(&**conn)
     }
 
-    pub fn read(conn: &DbConn) -> QueryResult<Vec<Category>> {
-        categories.load::<Category>(&**conn)
+    pub fn read(conn: &DbConn) -> QueryResult<Vec<Self>> {
+        categories.load::<Self>(&**conn)
     }
     pub fn delete(id: i32, conn: &DbConn) -> QueryResult<usize> {
         diesel::delete(categories.find(id)).execute(&**conn)
@@ -68,9 +68,9 @@ mod tests {
     use crate::models::category::*;
     use fake::*;
 
-    fn new_category() -> NewCategory {
+    fn new_category() -> New {
         let name = fake!(Name.name);
-        NewCategory::new(&name)
+        New::new(&name)
     }
 
     #[test]

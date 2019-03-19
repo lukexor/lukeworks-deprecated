@@ -1,3 +1,4 @@
+#![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
 use crate::{DbConn, schema::post, schema::post::table as posts};
 use serde::{Serialize, Deserialize};
 use chrono::prelude::*;
@@ -22,7 +23,7 @@ pub struct Post {
 
 #[derive(Debug, Insertable, Serialize, Deserialize)]
 #[table_name="post"]
-pub struct NewPost {
+pub struct New {
     pub title: String,
     pub body: String,
     pub category_id: i32,
@@ -30,14 +31,15 @@ pub struct NewPost {
     pub minutes_to_read: i16,
 }
 
-impl NewPost {
+
+impl New {
     pub fn new(title: &str, body: &str, category_id: i32,
-               author_id: i32) -> Self {
-        NewPost {
+                author_id: i32) -> Self {
+        Self {
             title: title.to_string(),
             body: body.to_string(),
-            category_id: category_id,
-            author_id: author_id,
+            category_id,
+            author_id,
             minutes_to_read: Post::calc_minutes_to_read(body),
         }
     }
@@ -51,14 +53,14 @@ impl Post {
     pub fn new(id: i32, title: &str, body: &str, category_id: i32,
                author_id: i32)-> Self {
         let now = Utc::now().naive_utc();
-        Post {
-            id: id,
+        Self {
+            id,
             title: title.to_string(),
             body: body.to_string(),
-            category_id: category_id,
-            author_id: author_id,
+            category_id,
+            author_id,
             parent_id: None,
-            minutes_to_read: Post::calc_minutes_to_read(body),
+            minutes_to_read: Self::calc_minutes_to_read(body),
             published: false,
             published_at: None,
             created_at: now,
@@ -66,16 +68,16 @@ impl Post {
         }
     }
 
-    pub fn update(&self, conn: &DbConn) -> QueryResult<Post> {
-        diesel::update(posts.find(self.id)).set(self).get_result::<Post>(&**conn)
+    pub fn update(&self, conn: &DbConn) -> QueryResult<Self> {
+        diesel::update(posts.find(self.id)).set(self).get_result::<Self>(&**conn)
     }
 
-    pub fn get(id: i32, conn: &DbConn) -> QueryResult<Post> {
-        posts.find(id).first::<Post>(&**conn)
+    pub fn get(id: i32, conn: &DbConn) -> QueryResult<Self> {
+        posts.find(id).first::<Self>(&**conn)
     }
 
-    pub fn read(conn: &DbConn) -> QueryResult<Vec<Post>> {
-        posts.load::<Post>(&**conn)
+    pub fn read(conn: &DbConn) -> QueryResult<Vec<Self>> {
+        posts.load::<Self>(&**conn)
     }
     pub fn delete(id: i32, conn: &DbConn) -> QueryResult<usize> {
         diesel::delete(posts.find(id)).execute(&**conn)
@@ -93,7 +95,13 @@ impl Post {
 #[cfg(test)]
 mod post_tests {
     use crate::db::test::connection;
-    use crate::models::{post::*, category::*, account::*};
+    use crate::models::{
+        post::*,
+        category::New as NewCategory,
+        category::Category,
+        account::New as NewAccount,
+        account::Category,
+    };
     use bcrypt::{DEFAULT_COST, hash};
     use fake::*;
 
@@ -109,12 +117,12 @@ mod post_tests {
         new_category.create(&conn).expect("valid category");
     }
 
-    fn new_post(conn: &DbConn) -> NewPost {
+    fn new_post(conn: &DbConn) -> New {
         let title = fake!(Lorem.sentence(2, 5));
         let body = fake!(Lorem.paragraph(5, 5));
         let category_id = Category::read(conn).unwrap().first().unwrap().id;
         let author_id = Account::read(conn).unwrap().first().unwrap().id;
-        NewPost::new(&title, &body, category_id, author_id)
+        New::new(&title, &body, category_id, author_id)
     }
 
     #[test]

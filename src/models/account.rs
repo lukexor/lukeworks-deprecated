@@ -25,15 +25,15 @@ pub struct Account {
 
 #[derive(Debug, Insertable, Serialize, Deserialize)]
 #[table_name="account"]
-pub struct NewAccount {
+pub struct New {
     pub email: String,
     pub full_name: String,
     pub password: String,
 }
 
-impl NewAccount {
+impl New {
     pub fn new(email: &str, full_name: &str, password: &str) -> Self {
-        NewAccount {
+        Self {
             email: email.into(),
             full_name: full_name.into(),
             password: password.into(),
@@ -48,8 +48,8 @@ impl NewAccount {
 impl Account {
     pub fn new(id: i32, email: &str, full_name: &str, password: &str) -> Self {
         let now = Utc::now().naive_utc();
-        Account {
-            id: id,
+        Self {
+            id,
             email: email.into(),
             full_name: full_name.into(),
             password: password.into(),
@@ -66,16 +66,16 @@ impl Account {
         }
     }
 
-    pub fn update(&self, conn: &DbConn) -> QueryResult<Account> {
-        diesel::update(accounts.find(self.id)).set(self).get_result::<Account>(&**conn)
+    pub fn update(&self, conn: &DbConn) -> QueryResult<Self> {
+        diesel::update(accounts.find(self.id)).set(self).get_result::<Self>(&**conn)
     }
 
-    pub fn get(id: i32, conn: &DbConn) -> QueryResult<Account> {
-        accounts.find(id).first::<Account>(&**conn)
+    pub fn get(id: i32, conn: &DbConn) -> QueryResult<Self> {
+        accounts.find(id).first::<Self>(&**conn)
     }
 
-    pub fn read(conn: &DbConn) -> QueryResult<Vec<Account>> {
-        accounts.load::<Account>(&**conn)
+    pub fn read(conn: &DbConn) -> QueryResult<Vec<Self>> {
+        accounts.load::<Self>(&**conn)
     }
 
     pub fn delete(id: i32, conn: &DbConn) -> QueryResult<usize> {
@@ -92,11 +92,11 @@ mod tests {
     use bcrypt::{DEFAULT_COST, hash};
     use fake::*;
 
-    fn new_account() -> NewAccount {
+    fn new_account() -> New {
         let email = fake!(Internet.safe_email);
         let full_name = fake!(Name.name);
         let password = hash(fake!(Company.buzzword), DEFAULT_COST).unwrap();
-        NewAccount::new(&email, &full_name, &password)
+        New::new(&email, &full_name, &password)
     }
 
     #[test]

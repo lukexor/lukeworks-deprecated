@@ -1,0 +1,4 @@
+{% extends "base" %}
+{% block title %}Lucas Petherbridge - Software Engineer. Designer. Thinker.{% endblock title %}
+{% block meta_description %}A blog and project portfolio by Lucas Petherbridge on programming and technology.{% endblock meta_description %}
+{% block main %}<p>{{ category }} Category page</p>{% endblock main %}
