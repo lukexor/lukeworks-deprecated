@@ -1,14 +1,24 @@
 #![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
-use crate::{DbConn, schema::post, schema::post::table as posts};
-use serde::{Serialize, Deserialize};
+use crate::{schema::post, schema::post::table as posts, DbConn};
 use chrono::prelude::*;
 use diesel::prelude::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(PartialEq, Eq, Debug, Clone, Queryable, Identifiable, AsChangeset,
-         Serialize, Deserialize)]
-#[table_name="post"]
+#[derive(
+    PartialEq,
+    Eq,
+    Debug,
+    Clone,
+    Queryable,
+    Insertable,
+    Identifiable,
+    AsChangeset,
+    Serialize,
+    Deserialize,
+)]
+#[table_name = "post"]
 pub struct Post {
-    pub id: i32,
+    pub id: Option<i32>,
     pub title: String,
     pub body: String,
     pub category_id: i32,
@@ -21,37 +31,8 @@ pub struct Post {
     pub updated_at: NaiveDateTime,
 }
 
-#[derive(Debug, Insertable, Serialize, Deserialize)]
-#[table_name="post"]
-pub struct New {
-    pub title: String,
-    pub body: String,
-    pub category_id: i32,
-    pub author_id: i32,
-    pub minutes_to_read: i16,
-}
-
-
-impl New {
-    pub fn new(title: &str, body: &str, category_id: i32,
-                author_id: i32) -> Self {
-        Self {
-            title: title.to_string(),
-            body: body.to_string(),
-            category_id,
-            author_id,
-            minutes_to_read: Post::calc_minutes_to_read(body),
-        }
-    }
-
-    pub fn create(&self, conn: &DbConn) -> QueryResult<Post> {
-        diesel::insert_into(posts).values(self).get_result::<Post>(&**conn)
-    }
-}
-
 impl Post {
-    pub fn new(id: i32, title: &str, body: &str, category_id: i32,
-               author_id: i32)-> Self {
+    pub fn new(id: Option<i32>, title: &str, body: &str, category_id: i32, author_id: i32) -> Self {
         let now = Utc::now().naive_utc();
         Self {
             id,
@@ -68,8 +49,16 @@ impl Post {
         }
     }
 
+    pub fn create(&self, conn: &DbConn) -> QueryResult<Self> {
+        diesel::insert_into(posts)
+            .values(self)
+            .get_result::<Self>(&**conn)
+    }
+
     pub fn update(&self, conn: &DbConn) -> QueryResult<Self> {
-        diesel::update(posts.find(self.id)).set(self).get_result::<Self>(&**conn)
+        diesel::update(posts.find(self.id))
+            .set(self)
+            .get_result::<Self>(&**conn)
     }
 
     pub fn get(id: i32, conn: &DbConn) -> QueryResult<Self> {
@@ -79,9 +68,11 @@ impl Post {
     pub fn read(conn: &DbConn) -> QueryResult<Vec<Self>> {
         posts.load::<Self>(&**conn)
     }
+
     pub fn delete(id: i32, conn: &DbConn) -> QueryResult<usize> {
         diesel::delete(posts.find(id)).execute(&**conn)
     }
+
     fn calc_minutes_to_read(body: &str) -> i16 {
         let avg_wpm_reading_speed = 200;
         let words = body.split_whitespace().collect::<Vec<&str>>();
@@ -90,39 +81,32 @@ impl Post {
     }
 }
 
-
 #[cfg(feature = "database")]
 #[cfg(test)]
 mod post_tests {
     use crate::db::test::connection;
-    use crate::models::{
-        post::*,
-        category::New as NewCategory,
-        category::Category,
-        account::New as NewAccount,
-        account::Category,
-    };
-    use bcrypt::{DEFAULT_COST, hash};
+    use crate::models::{account::*, category::*, post::*};
+    use bcrypt::{hash, DEFAULT_COST};
     use fake::*;
 
     fn setup(conn: &DbConn) {
         let email = fake!(Internet.safe_email);
         let full_name = fake!(Name.name);
         let password = hash(fake!(Company.buzzword), DEFAULT_COST).unwrap();
-        let new_account = NewAccount::new(&email, &full_name, &password);
+        let new_account = Account::new(&email, &full_name, &password);
         new_account.create(&conn).expect("valid account");
 
         let name = fake!(Name.name);
-        let new_category = NewCategory::new(&name);
+        let new_category = Category::new(&name);
         new_category.create(&conn).expect("valid category");
     }
 
-    fn new_post(conn: &DbConn) -> New {
+    fn new_post(conn: &DbConn) -> Post {
         let title = fake!(Lorem.sentence(2, 5));
         let body = fake!(Lorem.paragraph(5, 5));
         let category_id = Category::read(conn).unwrap().first().unwrap().id;
         let author_id = Account::read(conn).unwrap().first().unwrap().id;
-        New::new(&title, &body, category_id, author_id)
+        Post::new(&title, &body, category_id, author_id)
     }
 
     #[test]

@@ -1,4 +1,5 @@
 touch src/main.rs
+cargo fmt
 cargo clippy --all-features -- \
     -D clippy::all \
     -D clippy::pedantic \

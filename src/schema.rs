@@ -1,6 +1,6 @@
 table! {
     account (id) {
-        id -> Int4,
+        id -> Nullable<Int4>,
         email -> Varchar,
         full_name -> Varchar,
         password -> Varchar,
@@ -19,7 +19,7 @@ table! {
 
 table! {
     category (id) {
-        id -> Int4,
+        id -> Nullable<Int4>,
         name -> Varchar,
         parent_id -> Nullable<Int4>,
         created_at -> Timestamp,
@@ -29,7 +29,7 @@ table! {
 
 table! {
     post (id) {
-        id -> Int4,
+        id -> Nullable<Int4>,
         title -> Varchar,
         body -> Text,
         category_id -> Int4,
@@ -46,8 +46,4 @@ table! {
 joinable!(post -> account (author_id));
 joinable!(post -> category (category_id));
 
-allow_tables_to_appear_in_same_query!(
-    account,
-    category,
-    post,
-);
+allow_tables_to_appear_in_same_query!(account, category, post,);

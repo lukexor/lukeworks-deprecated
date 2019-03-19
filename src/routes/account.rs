@@ -1,18 +1,13 @@
-use crate::DbConn;
 use crate::models::account::*;
-use crate::response::{json_success, json_error};
-use rocket::{
-    get,
-    post,
-    put,
-    delete,
-};
+use crate::response::{json_error, json_success};
+use crate::DbConn;
+use rocket::{delete, get, post, put};
 use rocket_contrib::json::{Json, JsonValue};
 
 #[post("/", format = "json", data = "<account>")]
-pub fn create(conn: DbConn, account: Json<New>) -> JsonValue {
+pub fn create(conn: DbConn, account: Json<Account>) -> JsonValue {
     match account.create(&conn) {
-        Ok(a)  => json_success(a),
+        Ok(a) => json_success(a),
         Err(e) => json_error(e),
     }
 }
@@ -20,7 +15,7 @@ pub fn create(conn: DbConn, account: Json<New>) -> JsonValue {
 #[get("/", format = "json")]
 pub fn get_all(conn: DbConn) -> JsonValue {
     match Account::read(&conn) {
-        Ok(a)  => json_success(a),
+        Ok(a) => json_success(a),
         Err(e) => json_error(e),
     }
 }
@@ -28,7 +23,7 @@ pub fn get_all(conn: DbConn) -> JsonValue {
 #[get("/<id>", format = "json")]
 pub fn get(conn: DbConn, id: i32) -> JsonValue {
     match Account::get(id, &conn) {
-        Ok(a)  => json_success(a),
+        Ok(a) => json_success(a),
         Err(e) => json_error(e),
     }
 }
@@ -36,7 +31,7 @@ pub fn get(conn: DbConn, id: i32) -> JsonValue {
 #[put("/", format = "json", data = "<account>")]
 pub fn update(conn: DbConn, account: Json<Account>) -> JsonValue {
     match account.update(&conn) {
-        Ok(u)  => json_success(u),
+        Ok(u) => json_success(u),
         Err(e) => json_error(e),
     }
 }
@@ -44,7 +39,7 @@ pub fn update(conn: DbConn, account: Json<Account>) -> JsonValue {
 #[delete("/<id>", format = "json")]
 pub fn delete(conn: DbConn, id: i32) -> JsonValue {
     match Account::delete(id, &conn) {
-        Ok(n)  => json_success(n),
+        Ok(n) => json_success(n),
         Err(e) => json_error(e),
     }
 }
