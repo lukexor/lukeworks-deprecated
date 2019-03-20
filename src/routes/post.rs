@@ -16,9 +16,10 @@ pub fn by_title(title: String) -> Template {
 }
 
 #[get("/blog")] // List of blog posts with date/title
+                // pub fn blog(conn: DbConn) -> Template {
 pub fn blog(conn: DbConn) -> Template {
     let mut context = Context::new();
-    context.insert("posts", &Post::read(&conn).unwrap());
+    context.insert("posts", &Post::list(&conn).unwrap());
     Template::render("post/blog", &context)
 }
 
@@ -38,8 +39,8 @@ pub fn by_category(category: String) -> Template {
 // REST APIs --------------------------------------------------------
 
 #[post("/", format = "json", data = "<post>")]
-pub fn create(conn: DbConn, post: Json<Post>) -> JsonValue {
-    match post.create(&conn) {
+pub fn create(conn: DbConn, post: Json<Insert>) -> JsonValue {
+    match Post::create(&conn, &post) {
         Ok(a) => json_success(a),
         Err(e) => json_error(e),
     }
@@ -50,7 +51,7 @@ pub fn create(conn: DbConn, post: Json<Post>) -> JsonValue {
 
 #[get("/", format = "json")] // TODO Add filters/pagination
 pub fn get_all(conn: DbConn) -> JsonValue {
-    match Post::read(&conn) {
+    match Post::list(&conn) {
         Ok(a) => json_success(a),
         Err(e) => json_error(e),
     }
@@ -58,7 +59,7 @@ pub fn get_all(conn: DbConn) -> JsonValue {
 
 #[get("/<id>", format = "json")]
 pub fn get(conn: DbConn, id: i32) -> JsonValue {
-    match Post::get(id, &conn) {
+    match Post::get(&conn, id) {
         Ok(a) => json_success(a),
         Err(e) => json_error(e),
     }
@@ -66,7 +67,7 @@ pub fn get(conn: DbConn, id: i32) -> JsonValue {
 
 #[put("/", format = "json", data = "<post>")]
 pub fn update(conn: DbConn, post: Json<Post>) -> JsonValue {
-    match post.update(&conn) {
+    match Post::update(&conn, &post) {
         Ok(u) => json_success(u),
         Err(e) => json_error(e),
     }
@@ -74,7 +75,7 @@ pub fn update(conn: DbConn, post: Json<Post>) -> JsonValue {
 
 #[delete("/<id>", format = "json")]
 pub fn delete(conn: DbConn, id: i32) -> JsonValue {
-    match Post::delete(id, &conn) {
+    match Post::delete(&conn, id) {
         Ok(n) => json_success(n),
         Err(e) => json_error(e),
     }

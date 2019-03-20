@@ -5,8 +5,8 @@ use rocket::{delete, get, post, put};
 use rocket_contrib::json::{Json, JsonValue};
 
 #[post("/", format = "json", data = "<category>")]
-pub fn create(conn: DbConn, category: Json<Category>) -> JsonValue {
-    match category.create(&conn) {
+pub fn create(conn: DbConn, category: Json<Insert>) -> JsonValue {
+    match Category::create(&conn, &category) {
         Ok(a) => json_success(a),
         Err(e) => json_error(e),
     }
@@ -14,7 +14,7 @@ pub fn create(conn: DbConn, category: Json<Category>) -> JsonValue {
 
 #[get("/", format = "json")]
 pub fn get_all(conn: DbConn) -> JsonValue {
-    match Category::read(&conn) {
+    match Category::list(&conn) {
         Ok(a) => json_success(a),
         Err(e) => json_error(e),
     }
@@ -22,7 +22,7 @@ pub fn get_all(conn: DbConn) -> JsonValue {
 
 #[get("/<id>", format = "json")]
 pub fn get(conn: DbConn, id: i32) -> JsonValue {
-    match Category::get(id, &conn) {
+    match Category::get(&conn, id) {
         Ok(a) => json_success(a),
         Err(e) => json_error(e),
     }
@@ -30,7 +30,7 @@ pub fn get(conn: DbConn, id: i32) -> JsonValue {
 
 #[put("/", format = "json", data = "<category>")]
 pub fn update(conn: DbConn, category: Json<Category>) -> JsonValue {
-    match category.update(&conn) {
+    match Category::update(&conn, &category) {
         Ok(u) => json_success(u),
         Err(e) => json_error(e),
     }
@@ -38,7 +38,7 @@ pub fn update(conn: DbConn, category: Json<Category>) -> JsonValue {
 
 #[delete("/<id>", format = "json")]
 pub fn delete(conn: DbConn, id: i32) -> JsonValue {
-    match Category::delete(id, &conn) {
+    match Category::delete(&conn, id) {
         Ok(n) => json_success(n),
         Err(e) => json_error(e),
     }

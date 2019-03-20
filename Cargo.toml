@@ -1,13 +1,15 @@
 [package]
 name = "luke_web"
 version = "0.1.0"
-edition = "2018"
-publish = false
 authors = ["Luke Petherbridge <me@lukeworks.tech>"]
-description = "A blog and project portfolio by Lucas Petherbridge on programming and technology."
-repository = "https://github.com/lukexor/luke_web"
-readme = "README.md"
+edition = "2018"
+homepage = "https://lukeworks.tech"
 license = "GPL-3.0"
+publish = false
+readme = "README.md"
+repository = "https://github.com/lukexor/luke_web"
+description = """A blog and project portfolio by Lucas Petherbridge on
+programming and technology."""
 
 [features]
 database = []
@@ -15,17 +17,18 @@ database = []
 [dependencies]
 bcrypt = "0.3.0"
 chrono = { version = "0.4.6", features = ["serde"] }
-diesel = { version = "1.0.0", features = ["postgres", "chrono"] }
+diesel = { version = "1.4.2", features = ["postgres", "chrono"] }
 dotenv = "0.13.0"
 libmath = "0.2.1"
+rand = "0.6.5"
 rocket = "0.4.0"
 serde = { version = "1.0", features = ["derive"] }
-tera = "0.11"
+tera = "0.11.0"
 
 [dependencies.rocket_contrib]
-version = "0.4.0"
 default-features = false
 features = ["json", "diesel_postgres_pool", "tera_templates", "serve"]
+version = "0.4.0"
 
 [dev-dependencies]
 fake = "1.2.2"

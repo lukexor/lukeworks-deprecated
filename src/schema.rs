@@ -1,6 +1,6 @@
 table! {
     account (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         email -> Varchar,
         full_name -> Varchar,
         password -> Varchar,
@@ -19,7 +19,7 @@ table! {
 
 table! {
     category (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         name -> Varchar,
         parent_id -> Nullable<Int4>,
         created_at -> Timestamp,
@@ -29,7 +29,7 @@ table! {
 
 table! {
     post (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         title -> Varchar,
         body -> Text,
         category_id -> Int4,

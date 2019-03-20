@@ -31,7 +31,6 @@ fn rocket() -> Rocket {
             "/",
             routes![
                 index,
-                search,
                 about,
                 contact,
                 post::by_title,
@@ -58,7 +57,7 @@ fn rocket() -> Rocket {
             "/admin/account",
             routes![
                 account::create,
-                account::get_all,
+                account::list,
                 account::get,
                 account::update,
                 account::delete
