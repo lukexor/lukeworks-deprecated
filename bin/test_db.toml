@@ -1,12 +1,12 @@
 [tasks.setup]
-script = ["diesel database reset"]
+script = ["diesel database --config-file=/dev/null reset"]
 
 [tasks.test]
 command = "cargo"
 args = ["test", "--features", "database"]
 
 [tasks.teardown]
-script = ["diesel database drop"]
+script = ["diesel database --config-file=/dev/null drop"]
 
 [tasks.run_tests]
 dependencies = [
