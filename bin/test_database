@@ -1,2 +1,0 @@
-source .env
-cargo make --makefile bin/test_database.toml -- run_tests

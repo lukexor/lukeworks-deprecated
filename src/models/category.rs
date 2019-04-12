@@ -1,4 +1,4 @@
-use crate::{schema::category, DbConn};
+use crate::schema::category;
 use category::table as categories;
 use chrono::prelude::*;
 use diesel::prelude::*;
@@ -36,35 +36,35 @@ impl Category {
         }
     }
 
-    // fn with_parent(mut self, parent_id: i32) -> Self {
-    //     self.parent_id = Some(parent_id);
-    //     self
-    // }
+    fn with_parent(mut self, parent_id: i32) -> Self {
+        self.parent_id = Some(parent_id);
+        self
+    }
 
     // Associated methods
 
-    pub fn create(conn: &DbConn, category: &Insert) -> QueryResult<Self> {
+    pub fn create(conn: &diesel::PgConnection, category: &Insert) -> QueryResult<Self> {
         diesel::insert_into(categories)
             .values(category)
-            .get_result::<Self>(&**conn)
+            .get_result::<Self>(conn)
     }
 
-    pub fn update(conn: &DbConn, category: &Self) -> QueryResult<Self> {
+    pub fn update(conn: &diesel::PgConnection, category: &Self) -> QueryResult<Self> {
         diesel::update(categories.find(category.id))
             .set(category)
-            .get_result::<Self>(&**conn)
+            .get_result::<Self>(conn)
     }
 
-    pub fn get(conn: &DbConn, id: i32) -> QueryResult<Self> {
-        categories.find(id).first::<Self>(&**conn)
+    pub fn get(conn: &diesel::PgConnection, id: i32) -> QueryResult<Self> {
+        categories.find(id).first::<Self>(conn)
     }
 
-    pub fn list(conn: &DbConn) -> QueryResult<Vec<Self>> {
-        categories.load::<Self>(&**conn)
+    pub fn list(conn: &diesel::PgConnection) -> QueryResult<Vec<Self>> {
+        categories.load::<Self>(conn)
     }
 
-    pub fn delete(conn: &DbConn, id: i32) -> QueryResult<usize> {
-        diesel::delete(categories.find(id)).execute(&**conn)
+    pub fn delete(conn: &diesel::PgConnection, id: i32) -> QueryResult<usize> {
+        diesel::delete(categories.find(id)).execute(conn)
     }
 }
 
@@ -76,34 +76,32 @@ impl Insert {
         }
     }
 
-    // fn with_parent(mut self, parent_id: i32) -> Self {
-    //     self.parent_id = Some(parent_id);
-    //     self
-    // }
+    fn with_parent(mut self, parent_id: i32) -> Self {
+        self.parent_id = Some(parent_id);
+        self
+    }
 }
 
-// #[cfg(not(feature = "database"))]
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
+#[cfg(all(test, not(feature = "database")))]
+mod tests {
+    use super::*;
 
-//     #[test]
-//     fn category_with_parent() {
-//         let parent_id = "1";
-//         let category = Category::new(2, "New Category").with_parent(parent_id);
-//         assert_eq!(parent_id, category.parent_id);
-//     }
-//
-//     #[test]
-//     fn insert_with_parent() {
-//         let parent_id = "1";
-//         let category = Insert::new("New Category").with_parent(parent_id);
-//         assert_eq!(parent_id, category.parent_id);
-//     }
-// }
+    #[test]
+    fn category_with_parent() {
+        let parent_id = 1;
+        let category = Category::new(2, "New Category").with_parent(parent_id);
+        assert_eq!(Some(parent_id), category.parent_id);
+    }
 
-#[cfg(feature = "database")]
-#[cfg(test)]
+    #[test]
+    fn insert_with_parent() {
+        let parent_id = 1;
+        let category = Insert::new("New Category").with_parent(parent_id);
+        assert_eq!(Some(parent_id), category.parent_id);
+    }
+}
+
+#[cfg(all(test, feature = "database"))]
 mod tests {
     use super::*;
     use crate::db::test::connection;
@@ -192,7 +190,7 @@ mod tests {
         assert_eq!(1, delete_count);
     }
 
-    fn create_test_category(conn: &DbConn) -> Category {
+    fn create_test_category(conn: &diesel::PgConnection) -> Category {
         Category::create(&conn, &new_category()).unwrap()
     }
 }

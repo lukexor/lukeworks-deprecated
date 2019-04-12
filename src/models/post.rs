@@ -1,7 +1,7 @@
 #![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
 
 use crate::models::{account::Account, category::Category};
-use crate::{schema::post, DbConn};
+use crate::schema::post;
 use chrono::prelude::*;
 use diesel::prelude::*;
 use post::table as posts;
@@ -66,35 +66,35 @@ impl Post {
         }
     }
 
-    // fn with_parent(mut self, parent_id: i32) -> Self {
-    //     self.parent_id = Some(parent_id);
-    //     self
-    // }
+    fn with_parent(mut self, parent_id: i32) -> Self {
+        self.parent_id = Some(parent_id);
+        self
+    }
 
     // Associated methods
 
-    pub fn create(conn: &DbConn, post: &Insert) -> QueryResult<Self> {
+    pub fn create(conn: &diesel::PgConnection, post: &Insert) -> QueryResult<Self> {
         diesel::insert_into(posts)
             .values(post)
-            .get_result::<Self>(&**conn)
+            .get_result::<Self>(conn)
     }
 
-    pub fn update(conn: &DbConn, post: &Self) -> QueryResult<Self> {
+    pub fn update(conn: &diesel::PgConnection, post: &Self) -> QueryResult<Self> {
         diesel::update(posts.find(post.id))
             .set(post)
-            .get_result::<Self>(&**conn)
+            .get_result::<Self>(conn)
     }
 
-    pub fn get(conn: &DbConn, id: i32) -> QueryResult<Self> {
-        posts.find(id).first::<Self>(&**conn)
+    pub fn get(conn: &diesel::PgConnection, id: i32) -> QueryResult<Self> {
+        posts.find(id).first::<Self>(conn)
     }
 
-    pub fn list(conn: &DbConn) -> QueryResult<Vec<Self>> {
-        posts.load::<Self>(&**conn)
+    pub fn list(conn: &diesel::PgConnection) -> QueryResult<Vec<Self>> {
+        posts.load::<Self>(conn)
     }
 
-    pub fn delete(conn: &DbConn, id: i32) -> QueryResult<usize> {
-        diesel::delete(posts.find(id)).execute(&**conn)
+    pub fn delete(conn: &diesel::PgConnection, id: i32) -> QueryResult<usize> {
+        diesel::delete(posts.find(id)).execute(conn)
     }
 
     fn calc_minutes_to_read(body: &str) -> i16 {
@@ -117,43 +117,39 @@ impl Insert {
         }
     }
 
-    // fn with_parent(mut self, parent_id: i32) -> Self {
-    //     self.parent_id = Some(parent_id);
-    //     self
-    // }
+    fn with_parent(mut self, parent_id: i32) -> Self {
+        self.parent_id = Some(parent_id);
+        self
+    }
 }
 
-// #[cfg(not(feature = "database"))]
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
+#[cfg(all(test, not(feature = "database")))]
+mod tests {
+    use super::*;
 
-//     #[test]
-//     fn post_with_parent() {
-//         let parent_id = "1";
-//         let post = Post::new(2, "Test Post", "Test Content", 1, 1)
-//             .with_parent(parent_id);
-//         assert_eq!(parent_id, post.parent_id);
-//     }
-//
-//     #[test]
-//     fn insert_with_parent() {
-//         let parent_id = "1";
-//         let post = Insert::new("Test Post", "Test Content", 1, 1)
-//             .with_parent(parent_id);
-//         assert_eq!(parent_id, post.parent_id);
-//     }
-// }
+    #[test]
+    fn post_with_parent() {
+        let parent_id = 1;
+        let post = Post::new(2, "Test Post", "Test Content", 1, 1).with_parent(parent_id);
+        assert_eq!(Some(parent_id), post.parent_id);
+    }
 
-#[cfg(feature = "database")]
-#[cfg(test)]
+    #[test]
+    fn insert_with_parent() {
+        let parent_id = 1;
+        let post = Insert::new("Test Post", "Test Content", 1, 1).with_parent(parent_id);
+        assert_eq!(Some(parent_id), post.parent_id);
+    }
+}
+
+#[cfg(all(test, feature = "database"))]
 mod post_tests {
     use super::*;
     use crate::db::test::connection;
     use crate::models::{account, category};
     use fake::*;
 
-    fn setup(conn: &DbConn) {
+    fn setup(conn: &diesel::PgConnection) {
         let email = fake!(Internet.safe_email);
         let full_name = fake!(Name.name);
         let new_account = account::Insert::new(&email, &full_name);
@@ -164,7 +160,7 @@ mod post_tests {
         category::Category::create(&conn, &new_category).expect("valid category");
     }
 
-    fn new_post(conn: &DbConn) -> Insert {
+    fn new_post(conn: &diesel::PgConnection) -> Insert {
         let title = fake!(Lorem.sentence(2, 5));
         let body = fake!(Lorem.paragraph(5, 5));
         let category_id = Category::list(conn).unwrap().first().unwrap().id;
@@ -264,7 +260,7 @@ mod post_tests {
         assert_eq!(1, delete_count);
     }
 
-    fn create_test_post(conn: &DbConn) -> Post {
+    fn create_test_post(conn: &diesel::PgConnection) -> Post {
         Post::create(&conn, &new_post(conn)).unwrap()
     }
 }

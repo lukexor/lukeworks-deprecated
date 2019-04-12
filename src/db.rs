@@ -1,27 +1,20 @@
 use rocket_contrib::database;
 
-#[database("luke_web")]
+#[database("pg")]
 pub struct DbConn(diesel::PgConnection);
 
-#[cfg(feature = "database")]
-#[cfg(test)]
+#[cfg(all(test, feature = "database"))]
 pub mod test {
-    use super::DbConn;
     use diesel::prelude::*;
-    use diesel::r2d2;
-    use dotenv::{dotenv, var};
+    use std::env;
 
-    pub fn connection() -> DbConn {
-        dotenv().ok();
-        let database_url =
-            var("TEST_DATABASE_URL").expect("TEST_DATABASE_URL must be set in order to run tests");
-
-        let manager = r2d2::ConnectionManager::new(database_url.to_string());
-
-        let pool: r2d2::Pool<r2d2::ConnectionManager<PgConnection>> =
-            r2d2::Pool::builder().max_size(1).build(manager).unwrap();
-        let conn = pool.get().unwrap();
-        conn.begin_test_transaction().expect("valid transaction");
-        DbConn(conn)
+    pub fn connection() -> diesel::PgConnection {
+        let mut database_url = env::var("DATABASE_URL").unwrap();
+        if !database_url.contains("_test") {
+            database_url.push_str("_test");
+        }
+        let conn = PgConnection::establish(&database_url).unwrap();
+        conn.begin_test_transaction().unwrap();
+        conn
     }
 }

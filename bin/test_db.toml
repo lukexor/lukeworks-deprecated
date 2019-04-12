@@ -1,16 +1,12 @@
-[env]
-RUST_BACKTRACE = "0"
-ENV = "/home/caeledh/www/luke_web/.env_test"
-
 [tasks.setup]
-script = ["source ${ENV} && diesel database reset"]
+script = ["diesel database reset"]
 
 [tasks.test]
 command = "cargo"
 args = ["test", "--features", "database"]
 
 [tasks.teardown]
-script = ["source ${ENV} && diesel database drop"]
+script = ["diesel database drop"]
 
 [tasks.run_tests]
 dependencies = [

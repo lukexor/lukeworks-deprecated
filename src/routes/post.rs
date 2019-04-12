@@ -16,7 +16,6 @@ pub fn by_title(title: String) -> Template {
 }
 
 #[get("/blog")] // List of blog posts with date/title
-                // pub fn blog(conn: DbConn) -> Template {
 pub fn blog(conn: DbConn) -> Template {
     let mut context = Context::new();
     context.insert("posts", &Post::list(&conn).unwrap());

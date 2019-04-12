@@ -1,4 +1,4 @@
-use crate::{schema::account, DbConn};
+use crate::schema::account;
 use account::table as accounts;
 use bcrypt::{hash, DEFAULT_COST};
 use chrono::prelude::*;
@@ -57,36 +57,36 @@ impl Account {
         }
     }
 
-    // fn with_password(mut self, password: &str) -> Self {
-    //     self.password = Self::hash_password(password);
-    //     self.password_updated = Utc::now().naive_utc();
-    //     self
-    // }
+    fn with_password(mut self, password: &str) -> Self {
+        self.password = Self::hash_password(password);
+        self.password_updated = Utc::now().naive_utc();
+        self
+    }
 
     // Associated methods
 
-    pub fn create(conn: &DbConn, account: &Insert) -> QueryResult<Self> {
+    pub fn create(conn: &diesel::PgConnection, account: &Insert) -> QueryResult<Self> {
         diesel::insert_into(accounts)
             .values(account)
-            .get_result::<Self>(&**conn)
+            .get_result::<Self>(conn)
     }
 
-    pub fn update(conn: &DbConn, account: &Self) -> QueryResult<Self> {
+    pub fn update(conn: &diesel::PgConnection, account: &Self) -> QueryResult<Self> {
         diesel::update(accounts.find(account.id))
             .set(account)
-            .get_result::<Self>(&**conn)
+            .get_result::<Self>(conn)
     }
 
-    pub fn get(conn: &DbConn, id: i32) -> QueryResult<Self> {
-        accounts.find(id).first::<Self>(&**conn)
+    pub fn get(conn: &diesel::PgConnection, id: i32) -> QueryResult<Self> {
+        accounts.find(id).first::<Self>(conn)
     }
 
-    pub fn list(conn: &DbConn) -> QueryResult<Vec<Self>> {
-        accounts.load::<Self>(&**conn)
+    pub fn list(conn: &diesel::PgConnection) -> QueryResult<Vec<Self>> {
+        accounts.load::<Self>(conn)
     }
 
-    pub fn delete(conn: &DbConn, id: i32) -> QueryResult<usize> {
-        diesel::delete(accounts.find(id)).execute(&**conn)
+    pub fn delete(conn: &diesel::PgConnection, id: i32) -> QueryResult<usize> {
+        diesel::delete(accounts.find(id)).execute(conn)
     }
 
     fn generate_hashed_password() -> String {
@@ -114,23 +114,21 @@ impl Insert {
     }
 }
 
-// #[cfg(not(feature = "database"))]
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//     use bcrypt::verify;
+#[cfg(all(test, not(feature = "database")))]
+mod tests {
+    use super::*;
+    use bcrypt::verify;
 
-//     #[test]
-//     fn with_password() {
-//         let password = "1234";
-//         let account = Account::new(1, "test@example.com", "Bob Ross").with_password(password);
-//         let valid = verify(&password, &account.password).unwrap();
-//         assert!(valid);
-//     }
-// }
+    #[test]
+    fn with_password() {
+        let password = "1234";
+        let account = Account::new(1, "test@example.com", "Bob Ross").with_password(password);
+        let valid = verify(&password, &account.password).unwrap();
+        assert!(valid);
+    }
+}
 
-#[cfg(feature = "database")]
-#[cfg(test)]
+#[cfg(all(test, feature = "database"))]
 mod tests {
     use super::*;
     use crate::db::test::connection;
@@ -227,7 +225,7 @@ mod tests {
         assert_eq!(1, delete_count);
     }
 
-    fn create_test_account(conn: &DbConn) -> Account {
-        Account::create(&conn, &new_account()).unwrap()
+    fn create_test_account(conn: &diesel::PgConnection) -> Account {
+        Account::create(conn, &new_account()).unwrap()
     }
 }
