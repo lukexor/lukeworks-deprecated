@@ -3,6 +3,8 @@
 {% block title %}Lucas Petherbridge - Software Engineer. Designer. Thinker.{% endblock title %}
 {% block meta_description %}A blog and project portfolio by Lucas Petherbridge on programming and technology.{% endblock meta_description %}
 
-{% block main %}<h3>Hi, I'm Luke.</h3>
+{% block main %}
+<h3>Hi, I'm Luke.</h3>
 
-        <p>I love to code and solve problems. This is where I blog and host my project portfolio. I like to write about programming, technology, anything that intrigues or inspires me, and my experiences working in the software industry. I love growing and learning and it is my hope that I can inspire others to love it too!</p>{% endblock main %}
+<p>I love to code and solve problems. This is where I blog and host my project portfolio. I like to write about programming, technology, anything that intrigues or inspires me, and my experiences working in the software industry. I love growing and learning and it is my hope that I can inspire others to love it too!</p>
+{% endblock main %}

@@ -25,3 +25,9 @@ pub fn contact() -> Template {
     let context = Context::new();
     Template::render("root/contact", &context)
 }
+
+#[get("/resume")] // Resume
+pub fn resume() -> Template {
+    let context = Context::new();
+    Template::render("root/resume", &context)
+}

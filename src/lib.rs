@@ -1,5 +1,4 @@
 #![feature(proc_macro_hygiene, decl_macro)]
-#![allow(clippy::needless_pass_by_value)]
 
 // TODO Remove extern crate when diesel fixes it
 // https://github.com/diesel-rs/diesel/pull/1956
@@ -30,6 +29,7 @@ pub fn rocket() -> Rocket {
                 index,
                 about,
                 contact,
+                resume,
                 post::by_title,
                 post::blog,
                 post::projects,

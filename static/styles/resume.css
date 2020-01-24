@@ -1,0 +1,127 @@
+@media print {
+    .page-hr {
+        display: none;
+    }
+    html, body {
+        background: #FFF!important;
+    }
+}
+@page {
+    margin: 0;
+    size: A4;
+}
+html {
+    color: #444;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 100%;
+    height: 29.7cm;
+    padding: 20px 30px;
+    width: 21cm;
+}
+body {
+    background: #EEE;
+    position: relative;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #003D73;
+    font-family: "Georgia, Palatino, serif";
+}
+h3 {
+    border-bottom: 2px solid #CCC;
+    font-size: 1.8em;
+    margin: 20px 0 10px 0;
+    padding-bottom: 5px;
+}
+h4 {
+    color: #333;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 15px 0 5px 0;
+    padding: 0;
+}
+h5 {
+    color: #666;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 1.0em;
+    font-style: italic;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 0 15px 0;
+}
+.page-hr {
+    left: 0;
+    position: absolute;
+    top: 29.7cm;
+    width: 100%;
+}
+.heading {
+    float: left;
+    height: 7em;
+    width: 50%;
+}
+#name {
+    font-size: 2.6em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+#position {
+    font-size: 1.6em;
+    font-style: italic;
+    margin-top: 0;
+}
+#summary {
+    hyphens: auto;
+    -ms-hyphens: auto;
+    text-align: justify;
+    -webkit-hyphens: auto;
+}
+.side-bar {
+    float: left;
+    width: 30%;
+}
+.side-bar section, .main-content section {
+    clear: both;
+}
+.skill {
+    float: left;
+    width: 60%;
+    padding-bottom: 20px;
+}
+.skill-proficiency {
+    float: right;
+    padding-bottom: 20px;
+    text-align: right;
+    width: 40%;
+}
+.square {
+    background: #003D73;
+    float: right;
+    height: 14px;
+    margin: 2px;
+    width: 14px;
+}
+.clear {
+    clear: both;
+}
+.main-content {
+    float: right;
+    padding-left: 3%;
+    width: 65%;
+}
+.main-content h4 {
+    font-size: 1.5em;
+    margin: 0 0 5px 0;
+}
+.dates {
+    color: #333;
+    float: right;
+    font-weight: bold;
+    font-size: 0.85em;
+    padding-top: 0.4em;
+}
+.experience {
+    float: left;
+}
+.pad-bottom {
+    padding-bottom: 10px;
+}
