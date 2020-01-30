@@ -33,9 +33,18 @@
             <section id="hard-skills"><h3>Hard Skills</h3></section>
         </aside>
         <section class="main-content">
-            <section id="work-experience"><h3>Work Experience</h3></section>
-            <section id="education"><h3>Education</h3></section>
-            <section id="projects"><h3>Projects</h3></section>
+            <section id="work-experience">
+                <img class="ribbon" src="/static/images/ribbon.png">
+                <h3>Work Experience</h3>
+            </section>
+            <section id="education">
+                <img class="ribbon" src="/static/images/ribbon.png">
+                <h3>Education</h3>
+            </section>
+            <section id="projects">
+                <img class="ribbon" src="/static/images/ribbon.png">
+                <h3>Projects</h3>
+            </section>
         </section>
     </main>
 </body>

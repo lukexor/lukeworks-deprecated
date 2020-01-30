@@ -10,17 +10,19 @@
     margin: 0;
     size: A4;
 }
-html {
+body {
+    background: #EEE;
     color: #444;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     font-size: 100%;
     height: 29.7cm;
+    margin: 0;
     padding: 20px 30px;
+    position: relative;
     width: 21cm;
 }
-body {
-    background: #EEE;
-    position: relative;
+p {
+    margin: 0;
 }
 h1, h2, h3, h4, h5, h6 {
     color: #003D73;
@@ -45,14 +47,27 @@ h5 {
     font-size: 1.0em;
     font-style: italic;
     font-weight: normal;
-    margin: 0;
-    padding: 0 0 15px 0;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+a, a:visited {
+    color: #444;
+    text-decoration: none;
+}
+a:hover {
+    color: #00F;
+    text-decoration: underline;
 }
 .page-hr {
     left: 0;
     position: absolute;
     top: 29.7cm;
     width: 100%;
+}
+.pdf-link {
+    width: 100%;
+    text-align: right;
+    padding-bottom: 10px;
 }
 .heading {
     float: left;
@@ -79,7 +94,7 @@ h5 {
     float: left;
     width: 30%;
 }
-.side-bar section, .main-content section {
+.side-bar section, main-content section {
     clear: both;
 }
 .skill {
@@ -105,12 +120,17 @@ h5 {
 }
 .main-content {
     float: right;
-    padding-left: 3%;
-    width: 65%;
+    padding-left: 8%;
+    width: 62%;
 }
 .main-content h4 {
     font-size: 1.5em;
     margin: 0 0 5px 0;
+}
+.ribbon {
+    float: left;
+    margin: 0.4em 0 0 -8%;
+    padding: 0;
 }
 .dates {
     color: #333;

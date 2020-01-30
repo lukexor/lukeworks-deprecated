@@ -1,87 +1,3 @@
-// Populate sections on page load
-window.onload = function() {
-    Object.entries(personalInfo).forEach((info) => addInfo("personal-info", info));
-    softSkills.forEach((row) => addSkill("soft-skills", row, softProficiencies));
-    hardSkills.forEach((row) => addSkill("hard-skills", row, hardProficiencies));
-    workExperience.forEach((experience) => addExperience("work-experience", experience));
-    education.forEach((experience) => addExperience("education", experience));
-    projects.forEach((project) => addProject("projects", project));
-};
-
-// Functions to add content for each section
-const addInfo = function(section, info) {
-    const id = info[0];
-    const data = info[1];
-    let element = document.getElementById(id);
-    if (element) {
-        element.innerHTML = data;
-    } else {
-        console.warn(`Failed to find ${ id }`);
-    }
-};
-const addSkill = function(section, row, proficiencies) {
-    let proficiency_bars = "";
-    for (let i = 0; i < row.proficiency; ++i)
-        proficiency_bars += '<div class="square"></div>';
-
-    const html = `<section>
-        <div class="skill">${ row.skills }</div>
-        <div class="skill-proficiency">
-            ${ proficiency_bars }
-            <span class="clear">${ proficiencies[row.proficiency] }</span>
-        </div>
-    </section>`;
-    document.getElementById(section).innerHTML += html;
-};
-const addExperience = function(section, experience) {
-    const start = formatDate(experience.start);
-    const end = formatDate(experience.end);
-    let bullets = "";
-    experience.bullets.forEach((bullet) => {
-        bullets += `<li>${ bullet }</li>`
-    });
-    const html = `<section>
-        <div class="experience">
-            <h4>${ experience.title }</h4>
-            <h5>${ experience.entity }, ${ experience.location }</h5>
-        </div>
-        <div class="dates">${ start } –  ${ end }</div>
-        <ul class="clear">
-            ${ bullets }
-        </ul>
-    </section>`;
-    document.getElementById(section).innerHTML += html;
-};
-const addProject = function(section, project) {
-    const start = formatDate(project.start);
-    const end = formatDate(project.end);
-    const html = `<section>
-        <div class="experience">
-            <h4>${ project.title }</h4>
-        </div>
-        <div class="dates">${ start } –  ${ end }</div>
-        <div class="clear pad-bottom">
-            ${ project.description }
-        </div>
-    </section>`;
-    document.getElementById(section).innerHTML += html;
-};
-
-// Utility functions
-const formatDate = function(date) {
-    try {
-        const dateObj = new Date(date);
-        if (dateObj instanceof Date && !isNaN(dateObj)) {
-            const month = dateObj.toLocaleDateString("default", { "month": "short" });
-            const year = dateObj.toLocaleDateString("default", { "year": "2-digit" });
-            date = `${ month } '${ year }`;
-        }
-    } catch (e) {
-        console.warn(e);
-    }
-    return date;
-};
-
 // ====================================
 // == Start of Resume Details
 
@@ -98,40 +14,17 @@ const personalInfo = {
 };
 // Hard and Soft Skills
 const softSkills = [
-    {
-        "skills": "Leadership, Communication, Adaptability",
-        "proficiency": 5,
-    },
-    {
-        "skills": "Problem-Solving, Collaboration",
-        "proficiency": 4,
-    },
+    { "proficiency": 5, "skills": "Leadership, Communication, Adaptability" },
+    { "proficiency": 4, "skills": "Problem-Solving, Collaboration" },
 ];
 const hardSkills = [
-    {
-        "skills": "Rust, Python, Perl, Javascript",
-        "proficiency": 5,
-    },
-    {
-        "skills": "C, C++, Bash",
-        "proficiency": 4,
-    },
-    {
-        "skills": "Ruby, Java, Go",
-        "proficiency": 3,
-    },
-    {
-        "skills": "Swift, PHP, Objective-C, Haskell",
-        "proficiency": 2,
-    },
-    {
-        "skills": "MySQL, Postgres",
-        "proficiency": 5,
-    },
-    {
-        "skills": "Apache, Nginx",
-        "proficiency": 4,
-    },
+    // Languages
+    { "proficiency": 5, "skills": "Rust, Python, Perl, Javascript" },
+    { "proficiency": 4, "skills": "C, C++, Bash" },
+    { "proficiency": 3, "skills": "Ruby, Java, Go" },
+    // Technologies
+    { "proficiency": 5, "skills": "MySQL, Postgres" },
+    { "proficiency": 4, "skills": "Apache, Nginx" },
 ];
 
 // Experiences/Projects
@@ -185,10 +78,103 @@ const projects = [
         "start": "2014-08",
         "end": "Current",
         "title": "Personal Portfolio/Blog",
-        "description": "A website showcasing personal projects and articles using Python/Django and Nginx/MySQL. I'm currently, working on a migration to a Rust/Rocket implementation.",
+        "description": "A website showcasing personal projects and articles using Python/Django and Nginx/MySQL. I'm currently working on a migration to a Rust/Rocket implementation.",
         "link": "https://lukeworks.tech/",
     },
 ];
+
+// Populate sections on page load
+window.onload = function() {
+    Object.entries(personalInfo).forEach((info) => addInfo("personal-info", info));
+    softSkills.forEach((row) => addSkill("soft-skills", row, softProficiencies));
+    hardSkills.forEach((row) => addSkill("hard-skills", row, hardProficiencies));
+    workExperience.forEach((experience) => addExperience("work-experience", experience));
+    education.forEach((experience) => addExperience("education", experience));
+    projects.forEach((project) => addProject("projects", project));
+};
+
+// Functions to add content for each section
+const addInfo = function(section, info) {
+    const id = info[0];
+    let data = info[1];
+    let element = document.getElementById(id);
+    if (element) {
+        if (data.match(/http/)) {
+            data = `<a href="${ data }">${ data }</a>`;
+        } else if (data.match(/@/)) {
+            data = `<a href="mailto:${ data}">${ data}</a>`;
+        }
+        element.innerHTML = data;
+    } else {
+        console.warn(`Failed to find ${ id }`);
+    }
+};
+const addSkill = function(section, row, proficiencies) {
+    let proficiency_bars = "";
+    for (let i = 0; i < row.proficiency; ++i)
+        proficiency_bars += '<div class="square"></div>';
+
+    const html = `<section>
+        <div class="skill">${ row.skills }</div>
+        <div class="skill-proficiency">
+            ${ proficiency_bars }
+            <span class="clear">${ proficiencies[row.proficiency] }</span>
+        </div>
+    </section>`;
+    document.getElementById(section).innerHTML += html;
+};
+const addExperience = function(section, experience) {
+    const start = formatDate(experience.start);
+    const end = formatDate(experience.end);
+    let description = "";
+    if (experience.bullets.length > 1) {
+        description += '<ul class="clear">';
+        experience.bullets.forEach((bullet) => {
+            description += `<li>${ bullet }</li>`
+        });
+        description += "</ul>";
+    } else {
+        description = experience.bullets[0];
+    }
+    const html = `<section>
+        <div class="experience">
+            <h4>${ experience.title }</h4>
+        </div>
+        <div class="dates">${ start } –  ${ end }</div>
+        <h5 class="clear">${ experience.entity }, ${ experience.location }</h5>
+        ${ description }
+    </section>`;
+    document.getElementById(section).innerHTML += html;
+};
+const addProject = function(section, project) {
+    const start = formatDate(project.start);
+    const end = formatDate(project.end);
+    const html = `<section>
+        <div class="experience">
+            <h4>${ project.title }</h4>
+        </div>
+        <div class="dates">${ start } –  ${ end }</div>
+        <div class="clear pad-bottom">
+            ${ project.description } (<a href="${ project.link }">${ project.link }</a>)
+        </div>
+    </section>`;
+    document.getElementById(section).innerHTML += html;
+};
+
+// Utility functions
+const formatDate = function(date) {
+    try {
+        const dateObj = new Date(date);
+        if (dateObj instanceof Date && !isNaN(dateObj)) {
+            const month = dateObj.toLocaleDateString("default", { "month": "short" });
+            const year = dateObj.toLocaleDateString("default", { "year": "2-digit" });
+            date = `${ month } '${ year }`;
+        }
+    } catch (e) {
+        console.warn(e);
+    }
+    return date;
+};
 
 // == End of Resume Details
 // ====================================
