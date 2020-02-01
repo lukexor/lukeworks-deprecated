@@ -33,7 +33,20 @@ let startTime = new Date();
 var draw = function() {};
 
 function setup() {
-    createCanvas(600, 400);
+    try {
+        cellSize = parseInt(document.getElementById("cellSize").value);
+    } catch {
+        cellSize = 50;
+    }
+    try {
+        connectChance = parseInt(document.getElementById("connectChance").value);
+    } catch {
+        connectChance = 10;
+    }
+
+    let c = floor((windowWidth - 10) / cellSize);
+    let r = floor(c / 2);
+    createCanvas(c * cellSize, r * cellSize);
     createGrid();
 }
 
@@ -55,17 +68,6 @@ function mouseDragged() {
 }
 
 function createGrid() {
-    try {
-        cellSize = parseInt(document.getElementById("cellSize").value);
-    } catch {
-        cellSize = 50;
-    }
-    try {
-        connectChance = parseInt(document.getElementById("connectChance").value);
-    } catch {
-        connectChance = 10;
-    }
-
     grid = [];
     stack = [];
     cellsVisited = 0;
