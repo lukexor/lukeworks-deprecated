@@ -1,9 +1,13 @@
-use crate::models::post::*;
-use crate::response::{json_error, json_success};
-use crate::DbConn;
+use crate::{
+    models::post::*,
+    response::{json_error, json_success},
+    DbConn,
+};
 use rocket::{delete, get, post, put};
-use rocket_contrib::json::{Json, JsonValue};
-use rocket_contrib::templates::Template;
+use rocket_contrib::{
+    json::{Json, JsonValue},
+    templates::Template,
+};
 use tera::Context;
 
 // Pages ------------------------------------------------------------
@@ -18,7 +22,9 @@ pub fn by_title(title: String) -> Template {
 #[get("/blog")] // List of blog posts with date/title
 pub fn blog(conn: DbConn) -> Template {
     let mut context = Context::new();
-    context.insert("posts", &Post::list(&conn).unwrap());
+    let mut posts = Post::list(&conn).unwrap();
+    posts.reverse();
+    context.insert("posts", &posts);
     Template::render("post/blog", &context)
 }
 

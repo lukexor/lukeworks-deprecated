@@ -10,18 +10,23 @@ use rocket_contrib::{serve::StaticFiles, templates::Template};
 
 #[macro_use]
 mod db;
+mod filters;
 mod models;
 mod response;
 mod routes;
 mod schema;
 
 use db::DbConn;
-use routes::{account, admin, category, post, root::*};
+use routes::{account, admin, category, post, projects, root::*};
 
 pub fn rocket() -> Rocket {
     rocket::ignite()
         .attach(DbConn::fairing())
-        .attach(Template::fairing())
+        .attach(Template::custom(|engines| {
+            engines
+                .tera
+                .register_filter("markdown", filters::markdown_filter);
+        }))
         .mount("/static", StaticFiles::from("static/"))
         .mount(
             "/",
@@ -30,12 +35,15 @@ pub fn rocket() -> Rocket {
                 about,
                 contact,
                 resume,
+                resume_pdf,
                 post::by_title,
                 post::blog,
                 post::projects,
                 post::by_category
             ],
         )
+        // Projects
+        .mount("/", routes![projects::maze_astar, projects::matrix])
         .mount(
             "/admin/",
             routes![admin::index, admin::redirect, admin::login],

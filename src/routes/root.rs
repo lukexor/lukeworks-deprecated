@@ -1,5 +1,5 @@
-#![allow(clippy::single_match_else)]
 use rocket::get;
+use rocket::response::Redirect;
 use rocket_contrib::templates::Template;
 use tera::Context;
 
@@ -30,4 +30,9 @@ pub fn contact() -> Template {
 pub fn resume() -> Template {
     let context = Context::new();
     Template::render("root/resume", &context)
+}
+
+#[get("/resume.pdf")] // Resume PDF
+pub fn resume_pdf() -> Redirect {
+    Redirect::temporary("/static/petherbridge_lucas_software_engineer_resume.pdf")
 }
