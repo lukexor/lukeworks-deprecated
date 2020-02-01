@@ -21,7 +21,7 @@ const hardSkills = [
     // Languages
     { "proficiency": 5, "skills": "Rust, Python, Perl, Javascript" },
     { "proficiency": 4, "skills": "C, C++, Bash" },
-    { "proficiency": 3, "skills": "Ruby, Java, Go" },
+    { "proficiency": 3, "skills": "Ruby, Go" },
     // Technologies
     { "proficiency": 5, "skills": "MySQL, Postgres" },
     { "proficiency": 4, "skills": "Apache, Nginx" },
@@ -50,7 +50,7 @@ const workExperience = [
         "location": "Culver City, CA",
         "bullets": [
             "Drafted & refined requirements, worked with product & development teams to design solutions & define timelines for management.",
-            "Led process & development initiatives for an OSS/BSS for the ordering, billing, & provisioning of VoIP software using Perl, Javascript, Java/Tomcat, & MySQL.",
+            "Led process & development initiatives for an OSS/BSS for the ordering, billing, & provisioning of VoIP software using Perl, Javascript, MySQL.",
         ],
     },
 ];
