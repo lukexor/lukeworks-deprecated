@@ -8,7 +8,7 @@
     <meta name=”robots” content=”index, follow”>
     <link rel="shortcut icon" href="/favicon.ico">
     <script src="https://cdn.jsdelivr.net/npm/p5"></script>
-    <script src="/static/scripts/maze_astar.js"></script>
+    <script src="/static/scripts/projects/maze_astar.js"></script>
     <style>
         body {
             color: #fff;
