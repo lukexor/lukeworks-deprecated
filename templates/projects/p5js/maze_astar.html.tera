@@ -1,66 +1,5 @@
-<!DOCTYPE html>
-<head lang="en">
-    <meta charset="utf-8">
-    <title>Lucas Petherbridge - Maze Generation and A* Search</title>
-    <meta name="author" content="Lucas Petherbridge">
-    <meta name="description" content="Software Engineer. Designer. Thinker.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name=”robots” content=”index, follow”>
-    <link rel="shortcut icon" href="/favicon.ico">
-    <script src="https://cdn.jsdelivr.net/npm/p5"></script>
-    <script src="/static/scripts/projects/maze_astar.js"></script>
-    <style>
-        body {
-            color: #fff;
-            background: #000;
-        }
-        canvas {
-            float: left;
-            clear: both;
-            margin: 0 0 20px 0;
-        }
-        #buttons {
-            float:left;
-            width: 50%;
-        }
-        #settings {
-            float: right;
-            width: 50%;
-        }
-        #setting_labels {
-            float: left;
-            margin: 0 10px 0 0;
-            padding: 0;
-        }
-        #setting_labels span {
-            display: inline-block;
-            padding-bottom: 2px;
-        };
-        #setting_inputs {
-            margin: 0;
-            padding: 0;
-        }
-        #legend {
-            color: #0099FF;
-            text-decoration: none;
-            cursor: help;
-        }
-        #content {
-            height: 7em;
-            clear: both;
-        }
-        #error {
-            color: red;
-        }
-        .clear {
-            clear: both;
-        }
-        .help {
-            cursor: help;
-        }
-    </style>
-</head>
-<body>
+{% extends "projects/p5js" %}
+{% block main %}
     <div id="buttons">
         <button onclick="createMaze()">Draw Maze</button><button onclick="makeMazeNoLoop()">Instant Maze</button><br>
         <button onclick="solveAstar()">Draw A* search</button><button onclick="astarNoLoop()">Instant A* Search</button><br>
@@ -95,5 +34,4 @@
         </p>
         <span id="download"></span>
     </div>
-</body>
-</html>
+{% endblock main %}

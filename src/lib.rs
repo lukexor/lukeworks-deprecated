@@ -45,7 +45,12 @@ pub fn rocket() -> Rocket {
         // Projects
         .mount(
             "/",
-            routes![projects::maze_astar, projects::matrix, projects::fireworks],
+            routes![
+                projects::maze_astar,
+                projects::matrix,
+                projects::fireworks,
+                projects::raycasting_2d,
+            ],
         )
         .mount(
             "/admin/",
