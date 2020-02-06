@@ -45,7 +45,7 @@ class Firework {
     constructor() {
         this.color = color(random(255), random(255), random(255));
         let firework = new Particle(random(width), height, this.color);
-        firework.vel = createVector(0, random(-17, -10));
+        firework.vel = createVector(0, random(-13, -8));
         this.particles = [firework];
         this.particleCount = random(50, 200);
         this.explodeDelay = random(0, 6);

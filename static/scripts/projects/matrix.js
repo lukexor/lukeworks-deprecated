@@ -29,7 +29,7 @@ let streams = [];
 let chars = [" ", "$", "@", ":", "-", "+", "*", ";", ".", "<", ">"];
 
 function setup() {
-    createCanvas(windowWidth-10, windowHeight-20);
+    createCanvas(windowWidth-15, windowHeight-20);
     background(BG_COLOR);
     textStyle(BOLD);
     textFont(GLYPH_FONT);
