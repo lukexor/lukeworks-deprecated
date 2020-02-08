@@ -27,10 +27,18 @@ pub fn fireworks() -> Template {
     Template::render("projects/p5js", &context)
 }
 
-#[get("/raycasting_2d")]
+#[get("/raycasting-2d")]
 pub fn raycasting_2d() -> Template {
     let mut context = Context::new();
     context.insert("title", "2D Raycasting");
     context.insert("jsfile", "raycasting_2d.js");
+    Template::render("projects/p5js", &context)
+}
+
+#[get("/lorenz-attractor")]
+pub fn lorenz_attractor() -> Template {
+    let mut context = Context::new();
+    context.insert("title", "Lorenz Attractor");
+    context.insert("jsfile", "lorenz_attractor.js");
     Template::render("projects/p5js", &context)
 }
