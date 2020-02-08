@@ -1,0 +1,11 @@
+{% extends 'base' %}
+{% block title %}404 Not Found | LukeWorks{% endblock title %}
+{% block main %}
+<h2>404 Not Found</h2>
+<h3>Everything is fine. Nothing is ruined.</h3>
+<p>
+    However, whatever you were looking for either doesn't exist or something has gone horribly wrong.
+    File a broken link report by emailing <a href="mailto:report@lukeworks.tech">report@lukeworks.tech</a>. Then
+    go <a href="javascript:history.back()" title="back">back</a> and try clicking something else.
+</p>
+{% endblock main %}

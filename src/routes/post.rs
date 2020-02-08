@@ -16,7 +16,8 @@ use tera::Context;
 pub fn by_title(title: String) -> Template {
     let mut context = Context::new();
     context.insert("title", &title);
-    Template::render("post/title", &context)
+    // TODO - See if title exists as either a post or a project, else return 404
+    Template::render("http/404", &context)
 }
 
 #[get("/blog")] // List of blog posts with date/title
