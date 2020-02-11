@@ -52,6 +52,7 @@ pub fn rocket() -> Rocket {
                 projects::raycasting_2d,
                 projects::lorenz_attractor,
                 projects::pong,
+                projects::asteroids,
             ],
         )
         .mount(

@@ -51,3 +51,11 @@ pub fn pong() -> Template {
     context.insert("cssfile", "pong.css");
     Template::render("projects/p5js/pong", &context)
 }
+
+#[get("/asteroids")]
+pub fn asteroids() -> Template {
+    let mut context = Context::new();
+    context.insert("title", "Asteroids");
+    context.insert("jsfile", "asteroids.js");
+    Template::render("projects/p5js", &context)
+}
