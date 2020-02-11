@@ -1,0 +1,16 @@
+{% extends "projects/p5js" %}
+{% block main %}
+    <div id="play-choices">
+        <h1>Pong</h1>
+        <h2>Choose your opponent:</h2>
+        <button onclick="game.playCpu()">Computer</button><br><br>
+        <button onclick="game.playPerson()">Person</button><br><br>
+        <h3>Instructions:</h3>
+        <p>
+            Escape: Toggle Pause<br>
+            F10: New Game<br>
+            W / S: Move Player 1 Up/Down<br>
+            I / K: Move Player 2 Up/Down<br>
+        </p>
+    </div>
+{% endblock main %}

@@ -42,3 +42,12 @@ pub fn lorenz_attractor() -> Template {
     context.insert("jsfile", "lorenz_attractor.js");
     Template::render("projects/p5js", &context)
 }
+
+#[get("/pong")]
+pub fn pong() -> Template {
+    let mut context = Context::new();
+    context.insert("title", "Pong");
+    context.insert("jsfile", "pong.js");
+    context.insert("cssfile", "pong.css");
+    Template::render("projects/p5js/pong", &context)
+}
