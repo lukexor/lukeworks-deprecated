@@ -28,6 +28,8 @@ const STREAM_MAX = 30;
 let streams = [];
 let chars = [" ", "$", "@", ":", "-", "+", "*", ";", ".", "<", ">"];
 
+p5.disableFriendlyErrors = true;
+
 function setup() {
     createCanvas(windowWidth-15, windowHeight-20);
     background(BG_COLOR);

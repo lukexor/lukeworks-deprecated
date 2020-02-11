@@ -8,6 +8,8 @@ let beta = 8/3.0; // c
 
 let points = [];
 
+p5.disableFriendlyErrors = true;
+
 function setup() {
     createCanvas(windowWidth - 15, windowHeight - 20, WEBGL);
     colorMode(HSB);

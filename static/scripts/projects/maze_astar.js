@@ -32,6 +32,8 @@ let startTime = new Date();
 
 var draw = function() {};
 
+p5.disableFriendlyErrors = true;
+
 function setup() {
     try {
         cellSize = parseInt(document.getElementById("cellSize").value);

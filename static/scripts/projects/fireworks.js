@@ -3,6 +3,8 @@ let stars = [];
 let starCount = 100;
 let gravity;
 
+p5.disableFriendlyErrors = true;
+
 function setup() {
     createCanvas(windowWidth-15, windowHeight-20);
     background(25);

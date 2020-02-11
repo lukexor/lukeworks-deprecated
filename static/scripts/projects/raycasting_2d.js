@@ -5,6 +5,8 @@ let mouseMove = false;
 let xOffset = 0;
 let yOffset = 10000;
 
+p5.disableFriendlyErrors = true;
+
 function setup() {
     createCanvas(windowWidth-15, windowHeight-20);
     boundaries.push(new Boundary(0, 0, width, 0)); // Top
