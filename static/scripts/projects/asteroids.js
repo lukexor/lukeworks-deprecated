@@ -13,12 +13,14 @@ function setup() {
 
 function draw() {
     background(0);
+    let textX = width / 2;
+    let textY = 150;
     if (game.gameover) {
         textAlign(CENTER);
         textSize(70);
-        text("GAME OVER", width/2, height/2);
+        text("GAME OVER", textX, textY);
         textSize(20);
-        text("PRESS SPACE TO RESTART", width/2, height/2 + 40);
+        text("PRESS ENTER TO RESTART", textX, textY + 40);
         noLoop();
     } else if (game.started) {
         game.update();
@@ -26,9 +28,19 @@ function draw() {
     } else {
         textAlign(CENTER);
         textSize(70);
-        text("ASTEROIDS", width/2, height/2);
+        text("ASTEROIDS", textX, textY);
         textSize(20);
-        text("PRESS SPACE TO PLAY", width/2, height/2 + 40);
+        text("PRESS ENTER TO PLAY", textX, textY + 40);
+        textSize(15);
+        text("INSTRUCTIONS:\n\n" +
+            "LEFT / RIGHT: STEER SHIP\n" +
+            "UP: ACCELERATE\n" +
+            "SPACE: FIRE\n" +
+            "ESCAPE: TOGGLE PAUSE\n" +
+            "R: START NEW GAME\n",
+            textX,
+            textY + 80
+        );
         noLoop();
     }
 }
@@ -129,6 +141,7 @@ class Game {
                 this.asteroids.splice(i, 1);
             } else if (this.ship.hits(a)) {
                 this.shipExploded();
+                break;
             }
         }
     }
@@ -156,6 +169,12 @@ class Game {
     spawnShip() {
         this.ship.pos = createVector(width / 2, height / 2);
         this.ship.vel = createVector(0, 0);
+        this.asteroids.forEach(a => {
+            if (this.ship.hits(a)) {
+                a.pos.x += a.vel.x * 140;
+                a.pos.y += a.vel.y * 140;
+            }
+        });
     }
 
     shipExploded() {
@@ -205,7 +224,7 @@ class Game {
 
     keyPressed(keyCode) {
         switch (keyCode) {
-            case SPACE: {
+            case ENTER: {
                 if (!this.started || this.gameover) {
                     this.start();
                 }
@@ -339,8 +358,8 @@ class Asteroid extends SpaceObj {
 
         // Ensure spawn is far enough from ship
         if (ship && this.inSafeZone(ship)) {
-            this.pos.x += 140;
-            this.pos.y += 140;
+            this.pos.x += this.vel.x * 140;
+            this.pos.y += this.vel.y * 140;
         }
     }
     update() {
@@ -353,6 +372,6 @@ class Asteroid extends SpaceObj {
         let cx = ship.pos.x;
         let cy = ship.pos.y;
         let r = ship.size + 20;
-        return pow((x - cx), 2) + pow((y - cy), 2) < pow(r, 2);
+        return sqrt(pow((x - cx), 2) + pow((y - cy), 2)) < r;
     }
 }
