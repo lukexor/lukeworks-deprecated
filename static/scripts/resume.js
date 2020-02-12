@@ -36,10 +36,12 @@ const workExperience = [
         "entity": "NetFortris (Formerly Fonality, Inc)",
         "location": "Culver City, CA",
         "bullets": [
-            "Redesigned outdated Salesforce integration adapter to modern API standards using Javascript, Vue.js, XML, & HTML/CSS.",
+            "Updated mobile UCaaS application to modern API standards using React Native, Typescript, & Redux",
+            "Redesigned outdated Salesforce integration adapter to modern API standards using Javascript, Vue.js, XML, & HTML/CSS. Solo project that reduced the total code by 90% switching from Angular to Vue.js while maintaining the same features and increasing maintainability.",
             "Developed & integrated a new, flexible cloud platform for a UCaaS system to achieve high scalability & availability using Perl & Go.",
             "Reduced dependency on legacy systems by 80% by developing a robust, automated migration path which led to a 15% reduction in support & billing costs.",
             "Decreased quote response times by 50% by refactoring redundant calculations & adding caching leading to a dramatic increase in sales productivity.",
+            "Designed & developed an OSS/BSS for the ordering, billing, & provisioning of VoiP services that led to a 10% increase in overall revenue using Perl, Javascript, & HTML/CSS.",
         ],
     },
     {
@@ -50,7 +52,7 @@ const workExperience = [
         "location": "Culver City, CA",
         "bullets": [
             "Drafted & refined requirements, worked with product & development teams to design solutions & define timelines for management.",
-            "Led process & development initiatives for an OSS/BSS for the ordering, billing, & provisioning of VoIP software using Perl, Javascript, MySQL.",
+            "Led process & development initiatives for an OSS/BSS for the ordering, billing, & provisioning of VoIP services using JIRA, Git, & Crucible.",
         ],
     },
 ];
@@ -68,11 +70,11 @@ const education = [
 ];
 const projects = [
     {
-        "start": "2019-03",
-        "end": "2019-06",
-        "title": "RustyNES",
-        "description": "A Nintendo Entertainment System (NES) emulator written in Rust using SDL2.",
-        "link": "https://github.com/lukexor/rustynes",
+        "start": "2020-01",
+        "end": "Current",
+        "title": "Javascript Visualizations",
+        "description": "A suite of visual programs showcasing algorithms, animations, and game physics using the p5js Javascript library and HTML5 canvas.",
+        "link": "https://lukeworks.tech/projects/",
     },
     {
         "start": "2014-08",
@@ -80,6 +82,13 @@ const projects = [
         "title": "Personal Portfolio/Blog",
         "description": "A website showcasing personal projects and articles using Python/Django and Nginx/MySQL. I'm currently working on a migration to a Rust/Rocket implementation.",
         "link": "https://lukeworks.tech/",
+    },
+    {
+        "start": "2019-03",
+        "end": "2019-06",
+        "title": "RustyNES",
+        "description": "A Nintendo Entertainment System (NES) emulator written in Rust using SDL2.",
+        "link": "https://github.com/lukexor/rustynes",
     },
 ];
 
