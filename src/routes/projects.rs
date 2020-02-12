@@ -59,3 +59,11 @@ pub fn asteroids() -> Template {
     context.insert("jsfile", "asteroids.js");
     Template::render("projects/p5js", &context)
 }
+
+#[get("/fourier")]
+pub fn fourier() -> Template {
+    let mut context = Context::new();
+    context.insert("title", "Fourier Transform");
+    context.insert("jsfile", "fourier.js");
+    Template::render("projects/p5js", &context)
+}
