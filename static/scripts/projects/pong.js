@@ -1,8 +1,12 @@
 const PADDLE_WIDTH = 15;
 const PADDLE_HEIGHT = 90;
 const PADDLE_PADDING = 30;
+const MAX_BOUNCE_ANGLE = 75;
+const BALL_SPEED = 8;
+const PLAYER_SPEED = 6;
+const CPU_SPEED = 6;
 
-const LIMIT_TOP = 20 + (PADDLE_HEIGHT / 2);
+const LIMIT_TOP = 10 + (PADDLE_HEIGHT / 2);
 let LIMIT_BOT;
 
 const BALL_SIZE = 15;
@@ -25,6 +29,7 @@ p5.disableFriendlyErrors = true;
 
 function setup() {
     createCanvas(windowWidth - 15, windowHeight - 20);
+    noStroke();
     LIMIT_BOT = height - 20 - (PADDLE_HEIGHT / 2);
     textFont("Courier");
     textSize(TEXT_SIZE);
@@ -33,7 +38,6 @@ function setup() {
 }
 
 function draw() {
-    background(51);
     game.update();
     game.draw();
 }
@@ -75,6 +79,7 @@ class Game {
     }
 
     draw() {
+        background(51);
         // Draw board
         fill(150);
         // Center line
@@ -163,11 +168,14 @@ class Player {
         this.w = PADDLE_WIDTH;
         this.h = PADDLE_HEIGHT;
         this.score = 0;
-        this.speed = 8;
+        this.speed = PLAYER_SPEED;
 
         let x = PADDLE_PADDING + (this.w / 2);
         if (this.type !== PLAYERS.PLAYER_1) {
             x = width - PADDLE_PADDING - (this.w / 2);
+        }
+        if (this.type === PLAYERS.CPU) {
+            this.speed = CPU_SPEED;
         }
         const y = (height / 2) - (this.h / 2);
         this.pos = createVector(x, y);
@@ -236,19 +244,16 @@ class Ball {
     constructor() {
         this.size = BALL_SIZE;
         this.radius = this.size / 2;
-        this.speed = 8;
+        this.speed = BALL_SPEED;
         this.resetPos();
     }
     resetPos() {
         this.pos = createVector((width / 2) - this.radius, (height / 2) - this.radius);
-        this.vel = createVector(random(0.5, 1), random(0.5, 1));
+        this.vel = p5.Vector.fromAngle(radians(random(-45, 45)));
         if (random(1) < 0.5) {
             this.vel.x *= -1;
         }
-        if (random(1) < 0.5) {
-            this.vel.y *= -1;
-        }
-        this.vel.mult(this.speed);
+        this.vel.setMag(this.speed);
     }
     left() { return this.pos.x - this.radius; }
     right() { return this.pos.x + this.radius; }
@@ -258,12 +263,14 @@ class Ball {
         this.pos.add(this.vel);
 
         // Bounce off paddle
-        if (this.hits(player1) && this.vel.x < 0) {
-            this.vel.x *= -1;
-            this.vel.y += player1.vel.y / 2;
-        } else if (this.hits(player2) && this.vel.x > 0) {
-            this.vel.x *= -1;
-            this.vel.y += player2.vel.y / 2;
+        const reflected1 = this.hits(player1);
+        const reflected2 = this.hits(player2);
+        if (reflected1 && this.vel.x < 0) {
+            this.vel = reflected1;
+            this.pos.x = player1.right() + this.radius;
+        } else if (reflected2 && this.vel.x > 0) {
+            this.vel = reflected2;
+            this.pos.x = player2.left() - this.radius;
         } else  if ((this.top() <= 0 && this.vel.y < 0) || (this.bottom() >= height && this.vel.y > 0)) {
             // Bounce off ceiling/floor
             this.vel.y *= -1;
@@ -278,14 +285,26 @@ class Ball {
         }
     }
     hits(player) {
-        let withinRange = this.bottom() >= player.top() && this.top() <= player.bottom();
-        let hitPlayer;
+        const withinRange = this.bottom() >= player.top() && this.top() <= player.bottom();
+        let hitPlayer = false;
+        let max_angle = MAX_BOUNCE_ANGLE;
         if (player.type === PLAYERS.PLAYER_1) {
-            hitPlayer = this.left() <= player.right() && this.right() >= player.right();
+            hitPlayer = this.left() < player.right() && this.right() > player.right();
         } else {
-            hitPlayer = this.right() >= player.left() && this.left() <= player.left();
+            hitPlayer = this.right() > player.left() && this.left() < player.left();
+            // max_angle = 180 + max_angle;
         }
-        return withinRange && hitPlayer;
+        if (withinRange && hitPlayer) {
+            const yRelativeIntersect = player.pos.y - this.pos.y;
+            const yNormalizedIntersect = yRelativeIntersect / ((player.h + this.size)/2);
+            const bounceAngle = -1 * yNormalizedIntersect * max_angle;
+            const bounceVel = p5.Vector.fromAngle(radians(bounceAngle)).setMag(this.speed);
+            if (player.type !== PLAYERS.PLAYER_1) {
+                bounceVel.x *= -1;
+            }
+            return bounceVel;
+        }
+        return null;
     }
     draw() {
         fill(255);
