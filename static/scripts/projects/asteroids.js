@@ -47,9 +47,11 @@ function draw() {
 
 function keyPressed() {
     game.keyPressed(keyCode);
+    return false;
 }
 function keyReleased() {
     game.keyReleased(keyCode);
+    return false;
 }
 
 class Game {
