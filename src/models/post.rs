@@ -4,6 +4,7 @@ use crate::models::{account::Account, category::Category};
 use crate::schema::post;
 use chrono::prelude::*;
 use diesel::prelude::*;
+use math::round;
 use post::table as posts;
 use serde::{Deserialize, Serialize};
 
@@ -26,49 +27,51 @@ use serde::{Deserialize, Serialize};
 pub struct Post {
     pub id: i32,
     pub title: String,
-    pub body: String,
-    pub category_id: i32,
+    pub permalink: String,
+    pub content: String,
+    pub likes: i32,
+    pub category_id: Option<i32>,
     pub author_id: i32,
-    pub parent_id: Option<i32>,
     pub minutes_to_read: i16,
-    pub published: bool,
     pub published_at: Option<NaiveDateTime>,
-    pub created_at: NaiveDateTime,
-    pub updated_at: NaiveDateTime,
+    pub created: NaiveDateTime,
+    pub updated: NaiveDateTime,
 }
 
 #[derive(Insertable, Serialize, Deserialize, Eq, PartialEq, Debug, Clone)]
 #[table_name = "post"]
 pub struct Insert {
     pub title: String,
-    pub body: String,
-    pub category_id: i32,
+    pub permalink: String,
+    pub content: String,
+    pub category_id: Option<i32>,
     pub author_id: i32,
-    pub parent_id: Option<i32>,
     pub minutes_to_read: i16,
 }
 
 impl Post {
-    pub fn new(id: i32, title: &str, body: &str, category_id: i32, author_id: i32) -> Self {
+    pub fn new(
+        id: i32,
+        title: &str,
+        permalink: &str,
+        content: &str,
+        category_id: Option<i32>,
+        author_id: i32,
+    ) -> Self {
         let now = Utc::now().naive_utc();
         Self {
             id,
             title: title.to_string(),
-            body: body.to_string(),
+            permalink: permalink.to_string(),
+            content: content.to_string(),
+            likes: 0,
             category_id,
             author_id,
-            parent_id: None,
-            minutes_to_read: Self::calc_minutes_to_read(body),
-            published: false,
+            minutes_to_read: Self::calc_minutes_to_read(content),
             published_at: None,
-            created_at: now,
-            updated_at: now,
+            created: now,
+            updated: now,
         }
-    }
-
-    fn with_parent(mut self, parent_id: i32) -> Self {
-        self.parent_id = Some(parent_id);
-        self
     }
 
     // Associated methods
@@ -97,50 +100,35 @@ impl Post {
         diesel::delete(posts.find(id)).execute(conn)
     }
 
-    fn calc_minutes_to_read(body: &str) -> i16 {
+    fn calc_minutes_to_read(content: &str) -> i16 {
         let avg_wpm_reading_speed = 200;
-        let words = body.split_whitespace().collect::<Vec<&str>>();
+        let words = content.split_whitespace().collect::<Vec<&str>>();
         let minutes = words.len() / avg_wpm_reading_speed;
-        math::round::ceil(minutes as f64, 0) as i16
+        round::ceil(minutes as f64, 0) as i16
     }
 }
 
 impl Insert {
-    pub fn new(title: &str, body: &str, category_id: i32, author_id: i32) -> Self {
+    pub fn new(
+        title: &str,
+        permalink: &str,
+        content: &str,
+        category_id: Option<i32>,
+        author_id: i32,
+    ) -> Self {
         Self {
             title: title.to_string(),
-            body: body.to_string(),
+            permalink: permalink.to_string(),
+            content: content.to_string(),
             category_id,
             author_id,
-            parent_id: None,
-            minutes_to_read: Post::calc_minutes_to_read(body),
+            minutes_to_read: Post::calc_minutes_to_read(content),
         }
-    }
-
-    fn with_parent(mut self, parent_id: i32) -> Self {
-        self.parent_id = Some(parent_id);
-        self
     }
 }
 
 #[cfg(all(test, not(feature = "database")))]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn post_with_parent() {
-        let parent_id = 1;
-        let post = Post::new(2, "Test Post", "Test Content", 1, 1).with_parent(parent_id);
-        assert_eq!(Some(parent_id), post.parent_id);
-    }
-
-    #[test]
-    fn insert_with_parent() {
-        let parent_id = 1;
-        let post = Insert::new("Test Post", "Test Content", 1, 1).with_parent(parent_id);
-        assert_eq!(Some(parent_id), post.parent_id);
-    }
-}
+mod tests {}
 
 #[cfg(all(test, feature = "database"))]
 mod post_tests {
@@ -162,10 +150,10 @@ mod post_tests {
 
     fn new_post(conn: &diesel::PgConnection) -> Insert {
         let title = fake!(Lorem.sentence(2, 5));
-        let body = fake!(Lorem.paragraph(5, 5));
+        let content = fake!(Lorem.paragraph(5, 5));
         let category_id = Category::list(conn).unwrap().first().unwrap().id;
         let author_id = Account::list(conn).unwrap().first().unwrap().id;
-        Insert::new(&title, &body, category_id, author_id)
+        Insert::new(&title, &content, category_id, author_id)
     }
 
     #[test]
@@ -177,12 +165,12 @@ mod post_tests {
         let mut expected_post = Post::new(
             actual_post.id,
             &new_post.title,
-            &new_post.body,
+            &new_post.content,
             new_post.category_id,
             new_post.author_id,
         );
-        expected_post.created_at = actual_post.created_at;
-        expected_post.updated_at = actual_post.updated_at;
+        expected_post.created = actual_post.created;
+        expected_post.updated = actual_post.updated;
         assert_eq!(expected_post, actual_post);
     }
 

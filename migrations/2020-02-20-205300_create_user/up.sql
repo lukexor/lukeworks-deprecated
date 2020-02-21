@@ -1,0 +1,9 @@
+CREATE TABLE app_user (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(60) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    website VARCHAR(2048),
+    is_deleted BOOLEAN NOT NULL DEFAULT 'f',
+    created TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated TIMESTAMP NOT NULL DEFAULT NOW()
+);

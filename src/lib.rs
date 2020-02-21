@@ -4,9 +4,11 @@
 // https://github.com/diesel-rs/diesel/pull/1956
 #[macro_use]
 extern crate diesel;
+#[macro_use]
+extern crate diesel_derive_enum;
 
 use rocket::{routes, Rocket};
-use rocket_contrib::{serve::StaticFiles, templates::Template};
+use rocket_contrib::{helmet::SpaceHelmet, serve::StaticFiles, templates::Template};
 
 #[macro_use]
 mod db;
@@ -15,6 +17,7 @@ mod models;
 mod response;
 mod routes;
 mod schema;
+mod sql_types;
 
 use db::DbConn;
 use routes::{account, admin, category, post, projects, root::*};
@@ -22,10 +25,9 @@ use routes::{account, admin, category, post, projects, root::*};
 pub fn rocket() -> Rocket {
     rocket::ignite()
         .attach(DbConn::fairing())
+        // .attach(SpaceHelmet::default())
         .attach(Template::custom(|engines| {
-            engines
-                .tera
-                .register_filter("markdown", filters::markdown_filter);
+            engines.tera.register_filter("markdown", filters::markdown);
         }))
         .mount("/static", StaticFiles::from("static/"))
         .mount(

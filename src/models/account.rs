@@ -1,9 +1,7 @@
-use crate::schema::account;
+use crate::{schema::account, sql_types::AccountRole};
 use account::table as accounts;
-use bcrypt::{hash, DEFAULT_COST};
 use chrono::prelude::*;
 use diesel::prelude::*;
-use rand::{seq::SliceRandom, thread_rng};
 use serde::{Deserialize, Serialize};
 
 #[derive(
@@ -13,54 +11,44 @@ use serde::{Deserialize, Serialize};
 #[table_name = "account"]
 pub struct Account {
     pub id: i32,
-    pub email: String,
-    pub full_name: String,
-    pub password: String,
-    pub password_updated: NaiveDateTime,
-    pub website: Option<String>,
-    pub phone: Option<String>,
+    pub user_id: i32,
+    pub password: Option<String>,
+    pub password_updated: Option<NaiveDateTime>,
     pub bio: Option<String>,
-    pub is_admin: bool,
-    pub is_staff: bool,
-    pub is_active: bool,
+    pub phone: Option<String>,
+    pub avatar: Option<String>,
+    pub role: AccountRole,
     pub last_login: Option<NaiveDateTime>,
-    pub created_at: NaiveDateTime,
-    pub updated_at: NaiveDateTime,
+    pub locked_at: Option<NaiveDateTime>,
+    pub is_active: bool,
+    pub created: NaiveDateTime,
+    pub updated: NaiveDateTime,
 }
 
 #[derive(Insertable, Serialize, Deserialize, Eq, PartialEq, Debug, Clone)]
 #[table_name = "account"]
 pub struct Insert {
-    pub email: String,
-    pub full_name: String,
-    pub password: String,
+    user_id: i32,
 }
 
 impl Account {
-    pub fn new(id: i32, email: &str, full_name: &str) -> Self {
+    pub fn new(id: i32, user_id: i32) -> Self {
         let now = Utc::now().naive_utc();
         Self {
             id,
-            email: email.to_string(),
-            full_name: full_name.to_string(),
-            password: Self::generate_hashed_password(),
-            password_updated: now,
-            website: None,
-            phone: None,
+            user_id,
+            password: None,
+            password_updated: None,
             bio: None,
-            is_admin: false,
-            is_staff: false,
-            is_active: true,
+            phone: None,
+            avatar: None,
+            role: AccountRole::User,
             last_login: None,
-            created_at: now,
-            updated_at: now,
+            locked_at: None,
+            is_active: true,
+            created: now,
+            updated: now,
         }
-    }
-
-    fn with_password(mut self, password: &str) -> Self {
-        self.password = Self::hash_password(password);
-        self.password_updated = Utc::now().naive_utc();
-        self
     }
 
     // Associated methods
@@ -77,6 +65,8 @@ impl Account {
             .get_result::<Self>(conn)
     }
 
+    // TODO Add password setting function using postgres crypt() and get_salt('bf')
+
     pub fn get(conn: &diesel::PgConnection, id: i32) -> QueryResult<Self> {
         accounts.find(id).first::<Self>(conn)
     }
@@ -88,45 +78,16 @@ impl Account {
     pub fn delete(conn: &diesel::PgConnection, id: i32) -> QueryResult<usize> {
         diesel::delete(accounts.find(id)).execute(conn)
     }
-
-    fn generate_hashed_password() -> String {
-        const CHARSET: &[u8] =
-            b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789)(*&^%$#@!~";
-        let mut rng = thread_rng();
-        let password: Option<String> = (0..30)
-            .map(|_| Some(*CHARSET.choose(&mut rng)? as char))
-            .collect();
-        Self::hash_password(&password.expect("Valid password."))
-    }
-
-    fn hash_password(password: &str) -> String {
-        hash(password, DEFAULT_COST).expect("Valid hash.")
-    }
 }
 
 impl Insert {
-    pub fn new(email: &str, full_name: &str) -> Self {
-        Self {
-            email: email.to_string(),
-            full_name: full_name.to_string(),
-            password: Account::generate_hashed_password(),
-        }
+    pub fn new(user_id: i32) -> Self {
+        Self { user_id }
     }
 }
 
 #[cfg(all(test, not(feature = "database")))]
-mod tests {
-    use super::*;
-    use bcrypt::verify;
-
-    #[test]
-    fn with_password() {
-        let password = "1234";
-        let account = Account::new(1, "test@example.com", "Bob Ross").with_password(password);
-        let valid = verify(&password, &account.password).unwrap();
-        assert!(valid);
-    }
-}
+mod tests {}
 
 #[cfg(all(test, feature = "database"))]
 mod tests {
@@ -153,8 +114,8 @@ mod tests {
         );
         expected_account.password = actual_account.password.clone();
         expected_account.password_updated = actual_account.password_updated;
-        expected_account.created_at = actual_account.created_at;
-        expected_account.updated_at = actual_account.updated_at;
+        expected_account.created = actual_account.created;
+        expected_account.updated = actual_account.updated;
         assert_eq!(expected_account, actual_account);
     }
 

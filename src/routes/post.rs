@@ -8,13 +8,13 @@ use rocket_contrib::{
     json::{Json, JsonValue},
     templates::Template,
 };
-use tera::Context;
+use std::collections::HashMap;
 
 // Pages ------------------------------------------------------------
 
 #[get("/<title>")] // A specific blog post or project by title
 pub fn by_title(title: String) -> Template {
-    let mut context = Context::new();
+    let mut context: HashMap<&str, &str> = HashMap::new();
     context.insert("title", &title);
     // TODO - See if title exists as either a post or a project, else return 404
     Template::render("http/404", &context)
@@ -22,7 +22,7 @@ pub fn by_title(title: String) -> Template {
 
 #[get("/blog")] // List of blog posts with date/title
 pub fn blog(conn: DbConn) -> Template {
-    let mut context = Context::new();
+    let mut context: HashMap<&str, &Vec<Post>> = HashMap::new();
     let mut posts = Post::list(&conn).unwrap();
     posts.reverse();
     context.insert("posts", &posts);
@@ -31,13 +31,13 @@ pub fn blog(conn: DbConn) -> Template {
 
 #[get("/projects")] // List of project posts with date/title
 pub fn projects() -> Template {
-    let context = Context::new();
+    let context: HashMap<&str, Vec<Post>> = HashMap::new();
     Template::render("post/projects", &context)
 }
 
 #[get("/category/<category>")] // List of blog posts by category
 pub fn by_category(category: String) -> Template {
-    let mut context = Context::new();
+    let mut context: HashMap<&str, &str> = HashMap::new();
     context.insert("category", &category);
     Template::render("post/category", &context)
 }

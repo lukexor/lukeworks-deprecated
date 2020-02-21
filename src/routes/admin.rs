@@ -1,11 +1,10 @@
-use rocket::get;
-use rocket::response::Redirect;
+use rocket::{get, response::Redirect};
 use rocket_contrib::templates::Template;
-use tera::Context;
+use std::collections::HashMap;
 
 #[get("/admin")] // Login to administer website TODO: Auth here
 pub fn index() -> Template {
-    let context = Context::new();
+    let context: HashMap<&str, &str> = HashMap::new();
     Template::render("admin/index", &context)
 }
 
@@ -16,6 +15,6 @@ pub fn redirect() -> Redirect {
 
 #[get("/login")] // Login page
 pub fn login() -> Template {
-    let context = Context::new();
+    let context: HashMap<&str, &str> = HashMap::new();
     Template::render("admin/login", &context)
 }

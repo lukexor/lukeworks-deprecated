@@ -4,6 +4,6 @@
 {% block main %}
 {% for post in posts %}
 <h3>{{ post.title }}</h3>
-<p>{{ post.body|safe|markdown }}</p>
+<p>{{ post.content|safe|markdown }}</p>
 {% endfor %}
 {% endblock main %}

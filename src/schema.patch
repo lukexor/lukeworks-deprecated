@@ -1,0 +1,13 @@
+diff --git a/src/schema.rs b/src/schema.rs
+index 610c003..8bf939c 100644
+--- a/src/schema.rs
++++ b/src/schema.rs
+@@ -1,6 +1,8 @@
++#![allow(unused_imports)]
++
+ table! {
+     use diesel::sql_types::*;
+     use crate::sql_types::*;
+ 
+     account (id) {
+         id -> Int4,

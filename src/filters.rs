@@ -1,8 +1,8 @@
 use pulldown_cmark as cmark;
+use rocket_contrib::templates::tera::{to_value, try_get_value, Result as TeraResult, Value};
 use std::collections::HashMap;
-use tera::{to_value, try_get_value, Result as TeraResult, Value};
 
-pub fn markdown_filter(value: Value, args: HashMap<String, Value>) -> TeraResult<Value> {
+pub fn markdown(value: Value, args: HashMap<String, Value>) -> TeraResult<Value> {
     let s = try_get_value!("markdown", "value", String, value);
     let inline = match args.get("inline") {
         Some(val) => try_get_value!("markdown", "inline", bool, val),
