@@ -3,7 +3,6 @@ INSERT INTO post (
     title,
     permalink,
     content,
-    author_id,
     published_at,
     created,
     updated
@@ -17,7 +16,6 @@ INSERT INTO post (
     </div>
 
 When I was attending the University of Michigan-Flint for a few years and majoring in Environmental Science, I became heavily involved in the Environmental Science Club. There wasn''t a lot of members or general interest at the time, so I ended up being Vice President and maintainer of the club website. The existing website was incredibly dated and hard to maintain, so I designed and developed a new website. It''s very dated by today''s standards, but it served its purpose well to keep members up-to-date on club activities and local environmental news.',
-        1, /* Author */
         '2007-11-01 12:00:00', /* Published */
         '2017-03-27 01:41:46', /* Created */
         '2017-05-06 02:59:00' /* Updated */
@@ -33,7 +31,6 @@ When I was attending the University of Michigan-Flint for a few years and majori
 This website. I''ve had many iterations over the years, but I settled on this design and have been really happy with it for now. It was my first project using Python/Django and I used it to learn the framework and to learn testing out various security measures such as a honeypot field to prevent bots from spamming, learning how to set up HTTPS, etc. It''s been a lot of fun. I''ve also used it as a place to write and post about things that interest me.
 
 My current work on this site is migrating over to a Rust/Rocket implementation. Updates coming soon!',
-        1, /* Author */
         '2019-08-21 16:09:16',
         '2017-03-27 01:06:07',
         '2017-07-13 17:44:00'
@@ -52,7 +49,6 @@ MindYou takes the most useful ideas from top productivity methodologies and comb
 <p>Still under development.</p>
 <p>Based on <a title="Getting Things Done" href="http://gettingthingsdone.com/">Getting Things Done</a> by David Allen, and <a title="Bullet Journal" href="http://bulletjournal.com/">Bullet Journal</a> by Ryder Carroll</p>
 <br style="clear: both">',
-        1, /* Author */
         NULL, /* Published */
         '2014-11-18 21:24:20', /* Created */
         '2017-05-06 03:00:00' /* Updated */
@@ -62,7 +58,6 @@ MindYou takes the most useful ideas from top productivity methodologies and comb
         'ChatDot', /* Title */
         'chatdot', /* permalink */
         'This was a class project that implements a basic IM application with Java using a basic multi-threaded client/server protocol. Users can register, login/logout, and chat individually with other users or broadcast messages out to all other users currently logged in. It''s a very simple application as a proof of concepts and has not been robustly featured or tested.',
-        1, /* Author */
         '2017-06-19 02:45:47', /* Published */
         '2020-01-23 02:42:17', /* Created */
         '2020-01-23 02:45:47' /* Updated */
@@ -78,7 +73,6 @@ MindYou takes the most useful ideas from top productivity methodologies and comb
 <strong>Haskelltaire</strong> is a simple 1-card draw game of Solitaire played from the command line written in just 500 lines of [Haskell][]. It was done as part of a class project in functional programming and highlights how powerful and terse functional programming can be. The PlayingCard library can be easily adapted and generalized to allow the creation of many other card games.
 
 [Haskell]: https://www.haskell.org/', /* Content */
-        1, /* Author */
         '2019-08-22 00:00:00', /* Published */
         '2019-08-21 15:42:14', /* Created */
         '2019-08-22 00:00:00' /* Updated */
@@ -114,7 +108,6 @@ photo credit: [Cerberus][] via [Zsolt Palatinus][] [copyright][]
 [Cerberus]: https://unsplash.com/photos/pEK3AbP8wa4
 [Zsolt Palatinus]: https://unsplash.com/@sunitalap
 [copyright]: https://unsplash.com/license',
-        1, /* Author */
         '2019-08-21 15:24:57', /* Published */
         '2019-08-21 15:19:30', /* Created */
         '2019-08-21 15:24:57' /* Updated */
@@ -128,7 +121,6 @@ photo credit: [Cerberus][] via [Zsolt Palatinus][] [copyright][]
 It is currently capable of decoding 48000 kilosample/s 16-bit single-channel WAV files in little-endian Microsoft PCM format. The file contents must be encoded using the answering frequencies of the 9N1 Bell 103 protocol at 300 bits per second. The bytes must also be packed tight with no lead-in or filtering.
 
 There are options for changing the sampling rate, and filter length as well as using the origin frequencies instead of answering but these have not been tested.',
-        1, /* Author */
         '2019-04-26 02:42:15', /* Published */
         '2020-01-23 02:39:36', /* Created */
         '2019-04-26 02:42:15' /* Updated */
@@ -149,7 +141,6 @@ Huge shout out to [The Coding Train][] for getting me interested in visual algor
 
 [ps5.js]: https://p5js.org/
 [The Coding Train]: https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw',
-        1, /* Author */
         '2020-02-01 19:57:51', /* Published */
         '2020-02-01 19:56:40', /* Created */
         '2020-02-01 19:57:51' /* Updated */
@@ -163,7 +154,6 @@ Huge shout out to [The Coding Train][] for getting me interested in visual algor
 I absolutely loved [The Matrix][] when it came out. I can''t even count how many times I rewatched it. I used to love all the Matrix screen savers that came out shortly after and always wondered how they did it. This was a lot of fun to program and required a lot less code than I expected. As always the devil is in the details and there are a lot of knobs that can be turned to tweak how the end result looks. I''m satisfied with how it turned out! Credit goes to [The Coding Train](https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw) for the great tutorials.
 
 [The Matrix]: https://www.imdb.com/title/tt0133093/',
-        1, /* Author */
         '2020-02-01 19:59:05', /* Published */
         '2020-02-01 19:58:25', /* Created */
         '2020-02-01 19:59:07' /* Updated */
@@ -175,7 +165,6 @@ I absolutely loved [The Matrix][] when it came out. I can''t even count how many
         '<iframe src="https://dev.lukeworks.tech/fireworks" frameborder="0" width="100%" height="500px"></iframe>
 
 Fun celebration fireworks! It was a great exercise in using velocity vectors with particles and simulated gravity. Credit to [The Coding Train](https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw) for the great videos.',
-        1, /* Author */
         '2020-02-05 22:41:11', /* Published */
         '2020-02-05 22:39:04', /* Created */
         '2020-02-05 22:41:13' /* Updated */
@@ -187,7 +176,6 @@ Fun celebration fireworks! It was a great exercise in using velocity vectors wit
         '<iframe src="https://dev.lukeworks.tech/raycasting-2d" frameborder="0" width="100%" height="500px"></iframe>
 
 2D Raycasting with Javascript! It''s a lot of fun interacting with coding algorithms like this. This uses some [line intersection math](https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection) from Wikipedia, By default it moves around randomly using the [p5js](https://p5js.org/) noise function, but you can toggle manual mouse movement by clicking on the frame. Shout out to [The Coding Train](https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw) for all the awesome work he does!',
-        1, /* Author */
         '2020-02-06 00:22:12', /* Published */
         '2020-02-06 00:17:47', /* Created */
         '2020-02-06 00:21:58' /* Updated */
@@ -199,7 +187,6 @@ Fun celebration fireworks! It was a great exercise in using velocity vectors wit
         '<iframe src="https://dev.lukeworks.tech/lorenz-attractor" frameborder="0" width="100%" height="500px"></iframe>
 
 A quick little Javascript implementation of the [Lorenz Attractor](http://mathworld.wolfram.com/LorenzAttractor.html). Not too difficult, but fun to visualize and plenty of things could be done to make it more interesting. Credit to [The Coding Train](https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw) for all the inspiration!',
-        1, /* Author */
         '2020-02-06 01:45:17', /* Published */
         '2020-02-06 01:43:11', /* Created */
         '2020-02-06 01:45:19' /* Updated */
@@ -211,7 +198,6 @@ A quick little Javascript implementation of the [Lorenz Attractor](http://mathwo
         '<iframe src="https://dev.lukeworks.tech/pong" frameborder="0" width="100%" height="500px"></iframe>
 
 Javascript Pong! Nothing too fancy here, but some fun competition against either the Computer or another Player. Lots more features could be added for better AI, but it supports touch events so is somewhat mobile friendly! One of my favorite parts of this project was adding a velocity boost to the ball if you hit it while moving up or down. Combine that with the maximum speed a paddle can move up or down and you get some challenging return shots!',
-        1, /* Author */
         '2020-02-11 02:21:57', /* Published */
         '2020-02-11 02:19:01', /* Created */
         '2020-02-11 02:21:59' /* Updated */
@@ -223,7 +209,6 @@ Javascript Pong! Nothing too fancy here, but some fun competition against either
         '<iframe src="https://dev.lukeworks.tech/asteroids" frameborder="0" width="100%" height="500px"></iframe>
 
 An arcade classic. My original implementation of this was in Rust using my PixEngine project, so this is a Javascript port using p5js. Came out pretty nice! Many aspects of the program were much easier using p5js and Javascript but I now have plenty of ideas for improvements on my PixEngine. At some point I''d love to add more explosion particles to the ship and asteroids and other features like random UFOs flying around. More to come!',
-        1, /* Author */
         '2020-02-11 20:52:04', /* Published */
         '2020-02-11 20:50:22', /* Created */
         '2020-02-11 20:52:06' /* Updated */
@@ -237,7 +222,6 @@ An arcade classic. My original implementation of this was in Rust using my PixEn
 I absolutely love watching visualizations. I''ve been following various YouTube channels on the topic such as [3Blue1Brown](https://www.youtube.com/watch?v=spUNpyF58BY) and [SmarterEveryDay](https://www.youtube.com/watch?v=ds0cmAV-Yek) and thought it was so cool to see waves represented as a series of end-to-end pendulums navigating around a circle. I thought it was even cooler when I found out you can draw **any** line shape using this method. Thanks to [The Coding Train](https://www.youtube.com/watch?v=Mm2eYfj0SgA) for getting me back into this topic enough to play with my own version of it.
 
 Above is a rough approximation of a square wave, which you can adjust using the slider to a plan sine wave by moving left, or a better square wave by moving right. You can also click and drag in the right partition of the window to draw your own shape! When you release the mouse, it''ll start re-drawing it using the Discrete Fourier Transform. Pressing Escape gets you back to the sine wave demo. Neat!',
-        1, /* Author */
         '2020-02-12 22:45:01', /* Published */
         '2020-02-12 22:38:57', /* Created */
         '2020-02-12 22:45:03' /* Updated */
@@ -262,6 +246,27 @@ INSERT INTO project (
     (13, 23, 'https://lukeworks.tech/pong', '2020-02-11', '2020-02-11'),
     (14, 24, 'https://lukeworks.tech/asteroids', '2020-02-11', '2020-02-11'),
     (15, 25, 'https://lukeworks.tech/fourier', '2020-02-12', '2020-02-12')
+;
+
+INSERT INTO post_author (
+    post_id,
+    author_id
+) VALUES
+    (11, 1),
+    (12, 1),
+    (13, 1),
+    (14, 1),
+    (15, 1),
+    (16, 1),
+    (17, 1),
+    (18, 1),
+    (19, 1),
+    (20, 1),
+    (21, 1),
+    (22, 1),
+    (23, 1),
+    (24, 1),
+    (25, 1)
 ;
 
 INSERT INTO post_tag (

@@ -18,6 +18,7 @@ mod response;
 mod routes;
 mod schema;
 mod sql_types;
+mod template;
 
 use db::DbConn;
 use routes::{account, admin, category, post, projects, root::*};

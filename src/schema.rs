@@ -75,11 +75,20 @@ table! {
         content -> Text,
         likes -> Int4,
         category_id -> Nullable<Int4>,
-        author_id -> Int4,
         minutes_to_read -> Int2,
         published_at -> Nullable<Timestamp>,
         created -> Timestamp,
         updated -> Timestamp,
+    }
+}
+
+table! {
+    use diesel::sql_types::*;
+    use crate::sql_types::*;
+
+    post_author (post_id, author_id) {
+        post_id -> Int4,
+        author_id -> Int4,
     }
 }
 
@@ -133,8 +142,9 @@ table! {
 joinable!(account -> app_user (user_id));
 joinable!(comment -> app_user (author_id));
 joinable!(comment -> post (post_id));
-joinable!(post -> account (author_id));
 joinable!(post -> category (category_id));
+joinable!(post_author -> account (author_id));
+joinable!(post_author -> post (post_id));
 joinable!(post_tag -> post (post_id));
 joinable!(post_tag -> tag (tag_id));
 joinable!(project -> post (post_id));
@@ -148,6 +158,7 @@ allow_tables_to_appear_in_same_query!(
     category,
     comment,
     post,
+    post_author,
     post_tag,
     project,
     subscription,

@@ -1,4 +1,11 @@
 {% extends "base" %}
-{% block title %}Lucas Petherbridge - Software Engineer. Designer. Thinker.{% endblock title %}
-{% block meta_description %}A blog and project portfolio by Lucas Petherbridge on programming and technology.{% endblock meta_description %}
-{% block main %}<p>Contact page</p>{% endblock main %}
+
+{% block title %}Contact | LukeWorks{% endblock title %}
+
+{% block main %}
+
+<p>{{ user.email }}</p>
+<p>{{ user.website }}</p>
+<p>{{ account.phone }}</p>
+
+{% endblock main %}

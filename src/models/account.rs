@@ -1,13 +1,23 @@
-use crate::{schema::account, sql_types::AccountRole};
+use crate::{models::user::User, schema::account, sql_types::AccountRole};
 use account::table as accounts;
 use chrono::prelude::*;
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(
-    Queryable, Identifiable, AsChangeset, Serialize, Deserialize, Eq, PartialEq, Debug, Clone,
+    Queryable,
+    Identifiable,
+    AsChangeset,
+    Serialize,
+    Deserialize,
+    Associations,
+    Eq,
+    PartialEq,
+    Debug,
+    Clone,
 )]
 #[changeset_options(treat_none_as_null = "true")]
+#[belongs_to(User)]
 #[table_name = "account"]
 pub struct Account {
     pub id: i32,

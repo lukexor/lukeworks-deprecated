@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <head lang="en">
     <meta charset="utf-8">
-    <title>{% block title %}{% endblock title %}</title>
+    <title>{% block title %}Lucas Petherbridge | Software Engineer. Designer. Thinker.{% endblock title %}</title>
     <meta name="author" content="Lucas Petherbridge">
-    <meta name="description" content="{% block meta_description %}{% endblock meta_description %}">
+    <meta name="description" content="{% block meta_description %}A blog and project portfolio by Lucas Petherbridge on programming, technology and other topics.{% endblock meta_description %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name=”robots” content=”index, follow”>
     <link rel=”canonical” href=”https://lukeworks.tech/”>

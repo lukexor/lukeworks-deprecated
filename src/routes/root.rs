@@ -1,5 +1,5 @@
-use rocket::get;
-use rocket::response::Redirect;
+use crate::{models::user::User, template::Context, DbConn};
+use rocket::{get, response::Redirect};
 use rocket_contrib::templates::Template;
 use std::collections::HashMap;
 
@@ -15,14 +15,20 @@ pub fn index(s: Option<String>) -> Template {
 }
 
 #[get("/about")] // About page
-pub fn about() -> Template {
-    let context: HashMap<&str, &str> = HashMap::new();
+pub fn about(conn: DbConn) -> Template {
+    let mut context = Context::new();
+    let (user, account) = User::get_user_account(&conn, 1).unwrap();
+    context.insert("user", &user);
+    context.insert("account", &account);
     Template::render("root/about", &context)
 }
 
 #[get("/contact")] // Contact forms
-pub fn contact() -> Template {
-    let context: HashMap<&str, &str> = HashMap::new();
+pub fn contact(conn: DbConn) -> Template {
+    let mut context = Context::new();
+    let (user, account) = User::get_user_account(&conn, 1).unwrap();
+    context.insert("user", &user);
+    context.insert("account", &account);
     Template::render("root/contact", &context)
 }
 

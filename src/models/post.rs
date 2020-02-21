@@ -1,7 +1,7 @@
-#![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
-
-use crate::models::{account::Account, category::Category};
-use crate::schema::post;
+use crate::{
+    models::{account::Account, category::Category},
+    schema::post,
+};
 use chrono::prelude::*;
 use diesel::prelude::*;
 use math::round;
@@ -20,10 +20,9 @@ use serde::{Deserialize, Serialize};
     Debug,
     Clone,
 )]
-#[table_name = "post"]
 #[changeset_options(treat_none_as_null = "true")]
-#[belongs_to(Account, foreign_key = "author_id")]
 #[belongs_to(Category)]
+#[table_name = "post"]
 pub struct Post {
     pub id: i32,
     pub title: String,
@@ -31,7 +30,6 @@ pub struct Post {
     pub content: String,
     pub likes: i32,
     pub category_id: Option<i32>,
-    pub author_id: i32,
     pub minutes_to_read: i16,
     pub published_at: Option<NaiveDateTime>,
     pub created: NaiveDateTime,
@@ -45,7 +43,6 @@ pub struct Insert {
     pub permalink: String,
     pub content: String,
     pub category_id: Option<i32>,
-    pub author_id: i32,
     pub minutes_to_read: i16,
 }
 
@@ -56,7 +53,6 @@ impl Post {
         permalink: &str,
         content: &str,
         category_id: Option<i32>,
-        author_id: i32,
     ) -> Self {
         let now = Utc::now().naive_utc();
         Self {
@@ -66,7 +62,6 @@ impl Post {
             content: content.to_string(),
             likes: 0,
             category_id,
-            author_id,
             minutes_to_read: Self::calc_minutes_to_read(content),
             published_at: None,
             created: now,
@@ -109,19 +104,12 @@ impl Post {
 }
 
 impl Insert {
-    pub fn new(
-        title: &str,
-        permalink: &str,
-        content: &str,
-        category_id: Option<i32>,
-        author_id: i32,
-    ) -> Self {
+    pub fn new(title: &str, permalink: &str, content: &str, category_id: Option<i32>) -> Self {
         Self {
             title: title.to_string(),
             permalink: permalink.to_string(),
             content: content.to_string(),
             category_id,
-            author_id,
             minutes_to_read: Post::calc_minutes_to_read(content),
         }
     }
@@ -152,8 +140,7 @@ mod post_tests {
         let title = fake!(Lorem.sentence(2, 5));
         let content = fake!(Lorem.paragraph(5, 5));
         let category_id = Category::list(conn).unwrap().first().unwrap().id;
-        let author_id = Account::list(conn).unwrap().first().unwrap().id;
-        Insert::new(&title, &content, category_id, author_id)
+        Insert::new(&title, &content, category_id)
     }
 
     #[test]
@@ -167,7 +154,6 @@ mod post_tests {
             &new_post.title,
             &new_post.content,
             new_post.category_id,
-            new_post.author_id,
         );
         expected_post.created = actual_post.created;
         expected_post.updated = actual_post.updated;

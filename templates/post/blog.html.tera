@@ -1,9 +1,13 @@
 {% extends "base" %}
+
 {% block title %}Blog | LukeWorks{% endblock title %}
-{% block meta_description %}A blog where I write about my thoughts and experiences with software and technology.{% endblock meta_description %}
+{% block meta_description %}A blog where I write about my thoughts and experiences with software, technology and other topics.{% endblock meta_description %}
+
 {% block main %}
+
 {% for post in posts %}
-<h3>{{ post.title }}</h3>
-<p>{{ post.content|safe|markdown }}</p>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.content|safe|markdown }}</p>
 {% endfor %}
+
 {% endblock main %}

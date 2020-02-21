@@ -4,7 +4,6 @@ INSERT INTO post (
     permalink,
     content,
     category_id,
-    author_id,
     minutes_to_read,
     published_at,
     created,
@@ -18,7 +17,6 @@ INSERT INTO post (
 
 I''ll be posting articles about once a month to start with as I finish out the site, and we''ll see where to go from there. Happy coding!',
         9, /* Programming */
-        1, /* Author */
         1, /* Minutes */
         '2014-11-18 00:00:00',
         '2014-11-18 00:00:00',
@@ -47,7 +45,6 @@ photo credit: [Brett Jordan] via [photopin] [cc][]
 [photopin]: http://photopin.com
 [cc]: http://creativecommons.org/licenses/by/2.0/',
         1, /* Career */
-        1, /* Author */
         2, /* Minutes */
         '2014-11-21 07:42:52',
         '2014-11-21 07:42:52',
@@ -105,7 +102,6 @@ photo credit: [lydia_shiningbrightly][] via [photopin][] [cc][]
 [photopin]: http://photopin.com
 [cc]: http://creativecommons.org/licenses/by/2.0/',
         1, /* Career */
-        1, /* Author */
         6, /* Minutes */
         '2014-11-26 00:52:11',
         '2014-11-26 00:52:11',
@@ -171,7 +167,6 @@ photo credit: [GYLo][] via [photopin][] [cc][]
 [photopin]: http://photopin.com
 [cc]: http://creativecommons.org/licenses/by/2.0/',
         1, /* Career */
-        1, /* Author */
         14 /* Minutes */,
         '2014-12-04 03:06:26',
         '2014-12-04 03:06:26',
@@ -208,7 +203,6 @@ photo credit: [Princess Bride][] [Motion picture]. (1987).
 [certified]: https://www.scrumalliance.org/certifications/practitioners/certified-scrummaster-csm
 [Part 4]: /articles/2015/01/lost-and-found-part-4/ ''"Lost and Found" : Part 4 - Software development in practice''[Princess Bride]: http://princessbrideforever.com/',
         1, /* Career */
-        1, /* Author */
         9, /* Minutes */
         '2014-12-18 21:49:53',
         '2014-12-17 22:49:49',
@@ -269,7 +263,6 @@ photo credit: [Crossroads: Success or Failure][] via [StockMonkeys][] [cc][]
 [StockMonkeys]: http://www.stockmonkeys.com/
 [cc]: http://creativecommons.org/licenses/by/2.0/',
         1, /* Career */
-        1, /* Author */
         14, /* Minutes */
         '2015-01-14 22:30:34',
         '2015-01-14 19:45:21',
@@ -307,7 +300,6 @@ photo credit: [Speeding ticket][] via [stavos][] [cc][]
 [stavos]: https://www.flickr.com/photos/stavos52093/
 [cc]: http://creativecommons.org/licenses/by/2.0/',
         1, /* Career */
-        1, /* Author */
         6, /* Minutes */
         '2015-03-18 18:56:01',
         '2015-03-18 17:24:34',
@@ -351,7 +343,6 @@ photo credit: [Hasselblad][] via [Francesco Masciello][] [cc][]
 [Francesco Masciello]: https://www.flickr.com/photos/pupaz/
 [cc]: https://creativecommons.org/licenses/by-nc-nd/2.0/',
         9, /* Software Development */
-        1, /* Author */
         10, /* Minutes */
         '2017-03-27 05:36:10',
         '2017-03-27 02:06:39',
@@ -457,7 +448,6 @@ In [Part 2][], I''ll go into the details of my implementation and some of the ma
 [sdl2]: https://docs.rs/sdl2/0.32.2/sdl2/
 [Part 2]: /articles/2020/01/rustynes_part_2',
         9, /* Software Development */
-        1, /* Author */
         10, /* Minutes */
         '2019-09-19 06:10:44',
         '2019-09-18 03:52:26',
@@ -777,12 +767,27 @@ photo credit: [Nintendo Entertainment System with controller][] via [Evan-Amos][
 [Dendy]: https://en.wikipedia.org/wiki/Dendy_(console)
 [Addressing Modes]: https://wiki.nesdev.com/w/index.php/CPU_addressing_modes',
         9, /* Software Development */
-        1, /* Author */
         43, /* Minutes */
         '2020-01-31 21:19:14',
         '2019-09-19 07:11:06',
         '2019-09-19 07:12:00'
     )
+;
+
+INSERT INTO post_author (
+    post_id,
+    author_id
+) VALUES
+    (1, 1),
+    (2, 1),
+    (3, 1),
+    (4, 1),
+    (5, 1),
+    (6, 1),
+    (7, 1),
+    (8, 1),
+    (9, 1),
+    (10, 1)
 ;
 
 INSERT INTO post_tag (

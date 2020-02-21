@@ -30,8 +30,11 @@ pub fn blog(conn: DbConn) -> Template {
 }
 
 #[get("/projects")] // List of project posts with date/title
-pub fn projects() -> Template {
-    let context: HashMap<&str, Vec<Post>> = HashMap::new();
+pub fn projects(conn: DbConn) -> Template {
+    let mut context: HashMap<&str, &Vec<Post>> = HashMap::new();
+    let mut posts = Post::list(&conn).unwrap();
+    posts.reverse();
+    context.insert("projects", &posts);
     Template::render("post/projects", &context)
 }
 

@@ -12,6 +12,7 @@ account
     user_id -> user
     password
     password_updated
+    phone
     bio
     avatar
     role: ADMIN | STAFF | USER // STAFF can post articles, USER can comment and subscribe
@@ -37,11 +38,14 @@ post
     content
     likes
     category_id -> category
-    author_id -> account // Must be registered to post
     minutes_to_read
     published_at
     created
     updated
+
+post_author
+    post_id
+    author_id -> account // Must be registered to post
 
 post_tag // Compound key
     post_id -> post
