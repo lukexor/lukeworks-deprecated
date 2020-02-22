@@ -33,7 +33,7 @@
         </ul>
     </nav>
     <footer>
-        <p>&copy; Copyright 2019 - <a href="https://linkedin.com/in/lucaspetherbridge" title="LinkedIn">Lucas Petherbridge</a>. All rights reserved.</p>
+        <p>&copy; Copyright {{ now() | date(format="%Y") }} - <a href="https://linkedin.com/in/lucaspetherbridge" title="LinkedIn">Lucas Petherbridge</a>. All rights reserved.</p>
         <!-- TODO: Add full nav here too -->
     </footer>
 </body>
