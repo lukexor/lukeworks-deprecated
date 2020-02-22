@@ -225,6 +225,19 @@ Above is a rough approximation of a square wave, which you can adjust using the 
         '2020-02-12 22:45:01', /* Published */
         '2020-02-12 22:38:57', /* Created */
         '2020-02-12 22:45:03' /* Updated */
+    ),
+    (
+        26, /* id */
+        'Fluid Simulation',
+        'fluid-simulation',
+        '<iframe src="https://dev.lukeworks.tech/fluid-simulation" frameborder="0" width="100%" height="500px"></iframe>
+
+Fluid Simulation in Javascript using [p5js](https://p5js.org/). You can click/touch and drag to create a fire trail. Inspired by [The Coding Train](https://www.youtube.com/watch?v=alhpH6ECFvQ) of course. Also check out this great [article](https://mikeash.com/pyblog/fluid-simulation-for-dummies.html) about fluid simulations by Mike Ash. It''s amazing how he broke down the logic and math. Of course, with Javascript we''re limited in processing power, so it''s not very high resolution but still really cool! It works by depositing "dye" with a density value at a certain (x, y) grid position and then adding some velocity to that area. Then each draw cycle, it performs a series of diffusion, projection, and advection calculations for each grid position, accounting for neighboring densities and velocities, solving linear equations based on the Navier-Stokes equations (which I do not understand). In this simplistic simulation, it''s only simulating in 2D, while the equations over on Mike Ash''s page are for 3D. Also, it''s only simulating incompressible fluid dynamics here. There are a ton of knobs and settings that can be tweaked to get some really interesting effects!
+
+One major problem I have and still can''t figure out how to resolve is that at the point of "dye" deposit, there are some flickering pixels that are darker than they should be. I believe it has something to do with velocities being too high and the advection affecting them in an adverse way. Mike''s article links to this [fire simulation](https://www.escapemotions.com/experiments/fluid_fire_3/index.php) that is really neat. That one is much higher resolution and doesn''t suffer from the brightness issue I have. Maybe with some more tweaking I can get a nicer result but I''m pretty happy about this as it is!',
+        '2020-02-21 23:50:53', /* Published */
+        '2020-02-21 23:43:43', /* Created */
+        '2020-02-21 23:50:53' /* Updated */
     )
 ;
 
@@ -245,7 +258,8 @@ INSERT INTO project (
     (12, 22, 'https://lukeworks.tech/lorenz-attractor', '2020-02-06', '2020-02-06'),
     (13, 23, 'https://lukeworks.tech/pong', '2020-02-11', '2020-02-11'),
     (14, 24, 'https://lukeworks.tech/asteroids', '2020-02-11', '2020-02-11'),
-    (15, 25, 'https://lukeworks.tech/fourier', '2020-02-12', '2020-02-12')
+    (15, 25, 'https://lukeworks.tech/fourier', '2020-02-12', '2020-02-12'),
+    (16, 26, 'https://lukeworks.tech/fluid-simulation', '2020-02-21', '2020-02-21')
 ;
 
 INSERT INTO post_author (
@@ -266,7 +280,8 @@ INSERT INTO post_author (
     (22, 1),
     (23, 1),
     (24, 1),
-    (25, 1)
+    (25, 1),
+    (26, 1)
 ;
 
 INSERT INTO post_tag (
@@ -310,5 +325,8 @@ INSERT INTO post_tag (
     (24, 3), /* asteroids - games */
     (25, 5), /* fourier - p5js */
     (25, 6), /* fourier - javascript */
-    (25, 10) /* fourier - math */
+    (25, 10), /* fourier - math */
+    (26, 5), /* fluid-simulation - p5js */
+    (26, 6), /* fluid-simulation - javascript */
+    (26, 10) /* fluid-simulation - math */
 ;

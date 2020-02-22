@@ -57,6 +57,7 @@ pub fn rocket() -> Rocket {
                 projects::pong,
                 projects::asteroids,
                 projects::fourier,
+                projects::fluid_simulation,
             ],
         )
         .mount(

@@ -67,3 +67,11 @@ pub fn fourier() -> Template {
     context.insert("jsfile", "fourier.js");
     Template::render("projects/p5js", &context)
 }
+
+#[get("/fluid-simulation")]
+pub fn fluid_simulation() -> Template {
+    let mut context = HashMap::new();
+    context.insert("title", "Fluid Simulation");
+    context.insert("jsfile", "fluid-simulation.js");
+    Template::render("projects/p5js", &context)
+}
