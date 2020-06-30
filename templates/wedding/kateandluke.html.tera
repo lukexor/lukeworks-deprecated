@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>Kate & Luke</title>
+    <meta name="author" content="Lucas Petherbridge">
+    <meta name="description" content="Kate & Luke got engaged! Tying the knot September 19, 2020.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name=”robots” content=”index, follow”>
+    <link rel=”canonical” href=”https://kateandluke.us/”>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/static/styles/kateandluke.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/static/bundle.js" defer></script>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <div id="image-overlay"></div>
+        <div id="links-bg"></div>
+        <nav>
+            <div id="menu" class="menu" @click="toggleMenu">
+                <i class="fa fa-bars"></i>
+            </div>
+            <ul id="links">
+                <li v-for="section in sections" :id="section.id" :img="section.img"
+                    :class="['menu-item', 'noselect', {active: (section.id === currentSection)}]"
+                    @click="navigate">
+                    {% raw %}
+                    {{ section.text }}
+                    {% endraw %}
+                </li>
+            </ul>
+        </nav>
+        <br>
+        <main id="content">
+            <div id="main-content">
+                <div class="gallery">
+                    <div v-for="(img, id) in images" :id="('image-'+id)"
+                        class="gallery-image"
+                        :style="{ backgroundImage: 'url(' + img + ')' }"
+                        @click="nextImage">
+                    </div>
+                </div>
+                <div id="gallery-text" class="gallery-text">
+                    <div id="gallery-text-0" v-show="currentSection === 'main'" class="max-width">
+                        <h1>We're engaged!</h1>
+                        <p id="tying-knot">September 19, 2020 <span class="bullet">•</span> Portland, Oregon</p>
+                    </div>
+                    <div id="gallery-text-1" v-show="currentSection === 'wedding'" class="max-width">
+                        <div class="left">
+                            <h1>The Ceremony</h1>
+                            <p><b>Sept. 19, 2020 @ 4:00 PM</b></p>
+                            <p>
+                                The Wedding Grove<br>
+                                4045 NE Cornelius Pass Rd<br>
+                                Hillsboro, OR 97124<br>
+                                <a href="https://goo.gl/maps/rguxBjkBhWsiBTd36">Map</a>
+                            </p>
+                        </div>
+                        <div class="right">
+                            <h1>The Reception</h1>
+                            <p><b>Sept. 19, 2020 @ 4:30 PM - 10:00 PM</b></p>
+                            <p>
+                                The Meadow<br>
+                                4045 NE Cornelius Pass Rd<br>
+                                Hillsboro, OR 97124<br>
+                                <a href="https://goo.gl/maps/rguxBjkBhWsiBTd36">Map</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div id="gallery-text-2" v-show="currentSection === 'covid'" class="max-width">
+                        <h1>COVID News</h1>
+
+                        <div class="update">
+                          <p>At this time we plan to move forward with the
+                          wedding ceremony and reception as scheduled!
+                          Unfortunately, we have had to change plans
+                          significantly, both to keep the event as safe as
+                          possible and to comply with State and County
+                          guidelines. We are uncertain of the exact number of
+                          guests that will be allowed by September 19th. During
+                          Phase One, Washington County is limiting gatherings to
+                          25 people or less and we are hopeful Phase Two will
+                          begin before the event, allowing more guests to
+                          attend. An email list is being gathered to keep guests
+                          updated including any last minute changes.</p>
+
+                          <p>Both the ceremony and reception will be held
+                          outdoors, weather permitting. In the event of rain,
+                          seating will be limited to the tented area. We are
+                          hoping to arrange for extra tables so that guests can
+                          socially distance as needed while seated.</p>
+
+                          <p>There will be hand sanitizer available and we are
+                          asking guests to wear masks for the entirety of the
+                          event while not eating or drinking. We will also have
+                          spare masks just in case. If you are sick or have been
+                          exposed to someone with COVID symptoms in the two
+                          weeks prior to the wedding, we ask that you please
+                          stay home.</p>
+
+                          <p>We have asked that guests that were planning to fly
+                          from out-of-state to stay home and attend the ceremony
+                          virtually.</p>
+
+                          <p>If you have any questions or suggestions, please
+                          feel free to reach out. Additionally, if you feel more
+                          comfortable attending virtually, please also let us
+                          know.  Additional details regarding virtual attendance
+                          will be sent out as the event nears.</p>
+                        </div>
+                    </div>
+                    <div id="gallery-text-3" v-show="currentSection === 'registry'" class="max-width">
+                        <h1>Coming Soon!</h1>
+                    </div>
+                    <div id="gallery-text-4" v-show="currentSection === 'rsvp'" class="max-width">
+                        <h1>Come Celebrate!</h1>
+                        <div class="update">
+                          <p>Please let us know if you can attend by August 19th, 2020.</p>
+                          <form id="rsvp-form">
+                            <span id="rsvp-error" class="error-text"></span>
+                            <label for="name">Full Name:</label>
+                            <input type="text" id="name" name="name">
+                            <br>
+                            <label for="count">Number of Guests:</label>
+                            <select id="count" name="count">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                            <br>
+                           <label for="songs">Song Requests:</label>
+                            <input type="text" id="songs" name="songs">
+                            <br>
+                            <label for="food">Dietary Restrictions:</label>
+                            <br>
+                            <textarea id="food" name="food" rows="4" cols="50">
+                            </textarea>
+                            <br>
+                            <div id="rsvp-radio">
+                              <label for="rsvp">Coming to Celebrate:</label>
+                              <input type="radio" id="rsvp-yes" name="rsvp" value="true">
+                              <label for="yes">Yes</label>
+                              <input type="radio" id="rsvp-no" name="rsvp" value="false">
+                              <label for="no">No</label>
+                            </div>
+                            <br>
+                            <input id="rsvp-submit" type="button" value="RSVP" @click="rsvpSubmit">
+                          </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="circles">
+                    <span v-for="(img, id) in images" :id="('circle-'+id)"
+                        :class="['circle', {'circle-active': (id === currentImage)}]"
+                        @click="changeImage">
+                    </span>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

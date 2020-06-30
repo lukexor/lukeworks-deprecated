@@ -6,7 +6,7 @@
     <meta name="description" content="Software Engineer. Designer. Thinker.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name=”robots” content=”index, follow”>
-    <link rel=”canonical” href=”https://lukeworks.tech/resume”>
+    <link rel=”canonical” href=”https://dev.lukeworks.tech/resume”>
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/static/styles/resume.css">
     <script src="/static/scripts/resume.js"></script>
@@ -43,7 +43,7 @@
             </section>
             <section id="projects">
                 <img class="ribbon" src="/static/images/ribbon.png">
-                <h3>Projects</h3>
+                <h3>Personal Projects</h3>
             </section>
         </section>
     </main>

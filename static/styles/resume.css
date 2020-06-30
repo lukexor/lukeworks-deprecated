@@ -21,9 +21,6 @@ body {
     position: relative;
     width: 21cm;
 }
-p {
-    margin: 0;
-}
 h1, h2, h3, h4, h5, h6 {
     color: #003D73;
     font-family: "Georgia, Palatino, serif";
@@ -84,12 +81,6 @@ a:hover {
     font-style: italic;
     margin-top: 0;
 }
-#summary {
-    hyphens: auto;
-    -ms-hyphens: auto;
-    text-align: justify;
-    -webkit-hyphens: auto;
-}
 .side-bar {
     float: left;
     width: 30%;
@@ -100,13 +91,16 @@ a:hover {
 .skill {
     float: left;
     width: 60%;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 .skill-proficiency {
     float: right;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     text-align: right;
     width: 40%;
+}
+.proficiency {
+  font-size: .8em;
 }
 .square {
     background: #003D73;

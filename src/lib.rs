@@ -6,6 +6,8 @@
 extern crate diesel;
 #[macro_use]
 extern crate diesel_derive_enum;
+#[macro_use]
+extern crate rocket;
 
 use rocket::{routes, Rocket};
 use rocket_contrib::{helmet::SpaceHelmet, serve::StaticFiles, templates::Template};
@@ -39,6 +41,8 @@ pub fn rocket() -> Rocket {
                 contact,
                 resume,
                 resume_pdf,
+                kateandluke,
+                rsvp,
                 post::by_title,
                 post::blog,
                 post::projects,

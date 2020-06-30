@@ -1,12 +1,12 @@
-const N = 110;
+const N = 90;
 const SCALE = 4;
-const ITER = 2;
+const ITER = 4;
 
-let DT = 0.1; // Time Step of Fluid
-let DIFFUSE = 0.000005; // Diffusion of Fluid
-let VISC = 0.0000001; // Viscosity of Fluid
-let VEL = 0.4; // Velocity of fluid from perlin noise
-let TIME_INC = 0.01; // Amount to step time for perlin noise each draw
+let DT = 0.02; // Time Step of Fluid
+let DIFFUSE = 0.00002; // Diffusion of Fluid
+let VISC = 0.00000001; // Viscosity of Fluid
+let VEL = 2.8; // Velocity of fluid from perlin noise
+let TIME_INC = 0.02; // Amount to step time for perlin noise each draw
 
 let dtSlider;
 let velSlider;
@@ -39,20 +39,18 @@ function setup() {
 
     for (let i = 0; i < count; ++i) {
         xs.push(random(20, w-20));
-        ys.push(random(20, h-20));
+        ys.push(random(h-h/2, h-20));
         ns.push(random(-1000, 1000));
     }
 }
 
 function draw() {
-    background(0);
-
     if (faucet) {
         for (let k = 0; k < count; ++k) {
             const nx = 4*noise(ns[k]);
             const ny = 4*noise(ns[k] + 1000);
-            xs[k] = constrain(xs[k] + random(-nx, nx), 0, w);
-            ys[k] = constrain(ys[k] + random(-ny, ny), 0, h);
+            xs[k] = constrain(xs[k] + random(-nx, nx), 20, w-20);
+            ys[k] = constrain(ys[k] + random(-ny, ny), h-h/2, h-20);
             for (let i = -2; i <= 2; ++i) {
                 for (let j = -2; j <= 2; ++j) {
                     fluid.addDensity(xs[k]+i, ys[k]+j, random(50, 100));
@@ -140,7 +138,8 @@ class Fluid {
     addDensity(x, y, amount) {
         const idx = IDX(x, y);
         this.density[idx] += amount;
-        const vel = createVector(random(-2*VEL, 2*VEL), random(-VEL));
+        const vel = createVector(random(-2*VEL, 2*VEL), random(-VEL/2));
+        // const vel = createVector(random(-2*VEL, 2*VEL), random(-2*VEL, 2*VEL));
         this.addVelocity(x, y, vel.x, vel.y);
     }
 
@@ -151,8 +150,8 @@ class Fluid {
     }
 
     draw() {
-        for (let i = 0; i < N; ++i) {
-            for (let j = 0; j < N; ++j) {
+        for (let i = 1; i < N-1; ++i) {
+            for (let j = 1; j < N-1; ++j) {
                 const x = i * SCALE;
                 const y = j * SCALE;
                 const idx = IDX(i, j);
@@ -161,7 +160,7 @@ class Fluid {
                 const d = this.density[idx];
                 const m = d / 125;
                 const f = m*d;
-                fill(f, f/3, 0);
+                fill(f, f/3, 0, 150);
                 square(x, y, SCALE);
             }
         }
