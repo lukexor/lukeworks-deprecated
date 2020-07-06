@@ -67,7 +67,7 @@
                             </p>
                         </div>
                     </div>
-                    <div id="gallery-text-2" v-show="currentSection === 'covid'" class="max-width">
+                    <div id="gallery-text-2" v-show="currentSection === 'covid'" class="max-width section">
                         <h1>COVID News</h1>
 
                         <div class="update">
@@ -112,7 +112,7 @@
                     <div id="gallery-text-3" v-show="currentSection === 'registry'" class="max-width">
                         <h1>Coming Soon!</h1>
                     </div>
-                    <div id="gallery-text-4" v-show="currentSection === 'rsvp'" class="max-width">
+                    <div id="gallery-text-4" v-show="currentSection === 'rsvp'" class="max-width section">
                         <h1>Come Celebrate!</h1>
                         <div class="update">
                           <p>Please let us know if you can attend by August 19th, 2020.</p>

@@ -62,7 +62,7 @@ const hardSkills = [
 // Experiences/Projects
 const workExperience = [{
         "start": "2020, 03",
-        "end": "Current",
+        "end": "2020, 07",
         "title": "Senior Software Engineer",
         "entity": "TEKsystems - Consultant at Nike",
         "location": "Beaverton, OR",
