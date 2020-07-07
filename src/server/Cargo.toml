@@ -27,7 +27,7 @@ serde = { version = "1.0", features = ["derive"] }
 [dependencies.rocket_contrib]
 default-features = false
 version = "0.4"
-features = ["diesel_postgres_pool", "helmet", "json", "serve", "tera_templates"]
+features = ["diesel_postgres_pool", "helmet", "json", "serve"]
 
 [dev-dependencies]
 fake = "2.2"

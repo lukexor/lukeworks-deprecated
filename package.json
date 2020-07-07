@@ -1,29 +1,35 @@
 {
-  "name": "luke_web",
-  "version": "1.0.0",
-  "description": "Kate & Luke's Wedding Website",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
-  },
+  "name": "lukeworks.tech",
+  "version": "0.1.0",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lukexor/lukeworks.git"
-  },
-  "author": "Luke Petherbridge",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/lukexor/lukeworks/issues"
-  },
-  "homepage": "https://github.com/lukexor/lukeworks",
-  "devDependencies": {
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.8.2",
-    "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11"
-  },
   "dependencies": {
-    "vue": "^2.6.11"
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "clean": "rm -rf build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
