@@ -4,48 +4,12 @@ use crate::{
     DbConn,
 };
 use rocket::{delete, get, post, put};
-use rocket_contrib::{
-    json::{Json, JsonValue},
-    templates::Template,
-};
-use std::collections::HashMap;
+use rocket_contrib::json::{Json, JsonValue};
 
-// Pages ------------------------------------------------------------
-
-#[get("/<title>")] // A specific blog post or project by title
-pub fn by_title(title: String) -> Template {
-    let mut context: HashMap<&str, &str> = HashMap::new();
-    context.insert("title", &title);
-    // TODO - See if title exists as either a post or a project, else return 404
-    Template::render("http/404", &context)
-}
-
-#[get("/blog")] // List of blog posts with date/title
-pub fn blog(conn: DbConn) -> Template {
-    let mut context: HashMap<&str, &Vec<Post>> = HashMap::new();
-    let mut posts = Post::list(&conn).unwrap();
-    posts.reverse();
-    context.insert("posts", &posts);
-    Template::render("post/blog", &context)
-}
-
-#[get("/projects")] // List of project posts with date/title
-pub fn projects(conn: DbConn) -> Template {
-    let mut context: HashMap<&str, &Vec<Post>> = HashMap::new();
-    let mut posts = Post::list(&conn).unwrap();
-    posts.reverse();
-    context.insert("projects", &posts);
-    Template::render("post/projects", &context)
-}
-
-#[get("/category/<category>")] // List of blog posts by category
-pub fn by_category(category: String) -> Template {
-    let mut context: HashMap<&str, &str> = HashMap::new();
-    context.insert("category", &category);
-    Template::render("post/category", &context)
-}
-
-// REST APIs --------------------------------------------------------
+// TODO Add search by title/content
+// TODO Add filter by category
+// TODO Add filter by tag
+// TODO Add pagination
 
 #[post("/", format = "json", data = "<post>")]
 pub fn create(conn: DbConn, post: Json<Insert>) -> JsonValue {
@@ -54,9 +18,6 @@ pub fn create(conn: DbConn, post: Json<Insert>) -> JsonValue {
         Err(e) => json_error(e),
     }
 }
-
-// TODO Add search API
-// TODO Add get post by category API
 
 #[get("/", format = "json")] // TODO Add filters/pagination
 pub fn get_all(conn: DbConn) -> JsonValue {
@@ -74,9 +35,9 @@ pub fn get(conn: DbConn, id: i32) -> JsonValue {
     }
 }
 
-#[put("/", format = "json", data = "<post>")]
-pub fn update(conn: DbConn, post: Json<Post>) -> JsonValue {
-    match Post::update(&conn, &post) {
+#[put("/<id>", format = "json", data = "<post>")]
+pub fn update(conn: DbConn, id: i32, post: Json<Post>) -> JsonValue {
+    match Post::update(&conn, id, &post) {
         Ok(u) => json_success(u),
         Err(e) => json_error(e),
     }

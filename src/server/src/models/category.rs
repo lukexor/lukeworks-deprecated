@@ -35,10 +35,14 @@ impl Category {
             .get_result::<Self>(conn)
     }
 
-    pub fn update(conn: &diesel::PgConnection, category: &Self) -> QueryResult<Self> {
-        diesel::update(categories.find(category.id))
-            .set(category)
-            .get_result::<Self>(conn)
+    pub fn update(conn: &diesel::PgConnection, id: i32, category: &Self) -> QueryResult<Self> {
+        if id == category.id {
+            diesel::update(categories.find(category.id))
+                .set(category)
+                .get_result::<Self>(conn)
+        } else {
+            QueryResult::Err(diesel::result::Error::NotFound)
+        }
     }
 
     pub fn get(conn: &diesel::PgConnection, id: i32) -> QueryResult<Self> {

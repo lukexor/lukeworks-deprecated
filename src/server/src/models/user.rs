@@ -34,7 +34,7 @@ impl User {
             id,
             name: name.to_string(),
             email: email.to_string(),
-            website: website.and_then(|w| Some(w.to_string())),
+            website: website.map(|w| w.to_string()),
             is_deleted: false,
             created: now,
             updated: now,

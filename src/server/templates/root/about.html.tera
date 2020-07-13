@@ -1,9 +1,0 @@
-{% extends "base" %}
-
-{% block title %}About {{ user.name }} | LukeWorks{% endblock title %}
-
-{% block main %}
-
-{{ account.bio|safe|markdown }}
-
-{% endblock main %}

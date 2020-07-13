@@ -28,9 +28,9 @@ pub fn get(conn: DbConn, id: i32) -> JsonValue {
     }
 }
 
-#[put("/", format = "json", data = "<category>")]
-pub fn update(conn: DbConn, category: Json<Category>) -> JsonValue {
-    match Category::update(&conn, &category) {
+#[put("/<id>", format = "json", data = "<category>")]
+pub fn update(conn: DbConn, id: i32, category: Json<Category>) -> JsonValue {
+    match Category::update(&conn, id, &category) {
         Ok(u) => json_success(u),
         Err(e) => json_error(e),
     }

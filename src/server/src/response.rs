@@ -3,9 +3,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt;
 
 #[derive(Serialize, Deserialize)]
-pub struct Success<T> {
-    pub data: T,
-}
+pub struct Success<T>(T);
 
 #[derive(Serialize, Deserialize)]
 pub struct Error {
@@ -13,7 +11,7 @@ pub struct Error {
 }
 
 pub fn json_success<T: Serialize>(d: T) -> JsonValue {
-    json!(Success { data: d })
+    json!(Success(d))
 }
 pub fn json_error<T: fmt::Display>(e: T) -> JsonValue {
     json!(Error {

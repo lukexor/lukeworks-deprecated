@@ -1,7 +1,4 @@
-use crate::{
-    models::{account::Account, category::Category},
-    schema::post,
-};
+use crate::{models::category::Category, schema::post};
 use chrono::prelude::*;
 use diesel::prelude::*;
 use math::round;
@@ -77,10 +74,15 @@ impl Post {
             .get_result::<Self>(conn)
     }
 
-    pub fn update(conn: &diesel::PgConnection, post: &Self) -> QueryResult<Self> {
-        diesel::update(posts.find(post.id))
-            .set(post)
-            .get_result::<Self>(conn)
+    pub fn update(conn: &diesel::PgConnection, id: i32, post: &Self) -> QueryResult<Self> {
+        if id == post.id {
+            diesel::update(posts.find(post.id))
+                .set(post)
+                .get_result::<Self>(conn)
+        } else {
+            QueryResult::Err(diesel::result::Error::NotFound)
+
+        }
     }
 
     pub fn get(conn: &diesel::PgConnection, id: i32) -> QueryResult<Self> {

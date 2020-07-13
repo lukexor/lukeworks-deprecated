@@ -79,20 +79,20 @@ MindYou takes the most useful ideas from top productivity methodologies and comb
     ),
     (
         16, /* id */
-        'RustyNES - An NES Emulator written in Rust', /* Title */
-        'rustynes', /* permalink */
+        'TetaNES - An NES Emulator written in Rust', /* Title */
+        'tetanes', /* permalink */
         '<div class="post-header-img">
-  <img src="https://raw.githubusercontent.com/lukexor/rustynes/master/static/rustynes.png" width="800">
+  <img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/tetanes.png" width="800">
 </div>
 
-<strong>RustyNES</strong> is an emulator for the Nintendo Entertainment System (NES) released in 1985, written using [Rust][rust] and [SDL2][sdl2].
+<strong>TetaNES</strong> is an emulator for the Nintendo Entertainment System (NES) released in 1985, written using [Rust][rust] and [SDL2][sdl2].
 
 It started as a personal curiosity that turned into a passion project to demonstrate a proficiency in Rust and in digital sound production. It can play most games but is still a work-in-progress. I hope to transform it into a fully-featured and performant NES emulator. It is my hope to see a Rust emulator rise in popularity and compete with the more popular C and C++ versions.
 
-<strong>RustyNES</strong> is also meant to showcase how clean and readable low-level Rust programs can be in addition to them having the type and memory-safety guarantees that Rust is known for.
+<strong>TetaNES</strong> is also meant to showcase how clean and readable low-level Rust programs can be in addition to them having the type and memory-safety guarantees that Rust is known for.
 
-<img src="https://raw.githubusercontent.com/lukexor/rustynes/master/static/donkey_kong.png" width="350" style="padding: 5px"><img src="https://raw.githubusercontent.com/lukexor/rustynes/master/static/super_mario_bros.png" width="350" style="padding: 5px">
-<img src="https://raw.githubusercontent.com/lukexor/rustynes/master/static/legend_of_zelda.png" width="350" style="padding: 5px"><img src="https://raw.githubusercontent.com/lukexor/rustynes/master/static/metroid.png" width="350" style="padding: 5px">
+<img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/donkey_kong.png" width="350" style="padding: 5px"><img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/super_mario_bros.png" width="350" style="padding: 5px">
+<img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/legend_of_zelda.png" width="350" style="padding: 5px"><img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/metroid.png" width="350" style="padding: 5px">
 
 You can check out the code on [Github][github].
 
@@ -104,7 +104,7 @@ photo credit: [Cerberus][] via [Zsolt Palatinus][] [copyright][]
 
 [rust]: https://www.rust-lang.org/tools/install
 [sdl2]: https://www.libsdl.org/
-[github]: https://github.com/lukexor/rustynes
+[github]: https://github.com/lukexor/tetanes
 [Cerberus]: https://unsplash.com/photos/pEK3AbP8wa4
 [Zsolt Palatinus]: https://unsplash.com/@sunitalap
 [copyright]: https://unsplash.com/license',
@@ -249,7 +249,7 @@ INSERT INTO project (
     (3, 13, 'https://mindyou.me/', '2014-11-18', NULL), /* Current */
     (4, 14, 'https://github.com/lukexor/ChatDot', '2017-04-24', '2017-06-19'),
     (5, 15, 'https://github.com/lukexor/haskelltaire', '2019-03-01', '2019-03-27'),
-    (6, 16, 'https://github.com/lukexor/rustynes', '2019-04-01', '2019-06-09'),
+    (6, 16, 'https://github.com/lukexor/tetanes', '2019-04-01', '2019-06-09'),
     (7, 17, 'https://github.com/lukexor/bell103_demodulator', '2019-04-20', '2019-04-26'),
     (8, 18, 'https://lukeworks.tech/maze-astar', '2020-01-28', '2020-01-29'),
     (9, 19, 'https://lukeworks.tech/matrix', '2020-01-30', '2020-01-30'),
@@ -297,11 +297,11 @@ INSERT INTO post_tag (
     (15, 3), /* haskelltaire - games */
     (15, 11), /* haskelltaire - functional prog */
     (15, 13), /* haskelltaire - haskell */
-    (16, 3), /* rustynes - games */
-    (16, 4), /* rustynes - nes */
-    (16, 7), /* rustynes - emulation */
-    (16, 12), /* rustynes - rust */
-    (16, 14), /* rustynes - sound */
+    (16, 3), /* tetanes - games */
+    (16, 4), /* tetanes - nes */
+    (16, 7), /* tetanes - emulation */
+    (16, 12), /* tetanes - rust */
+    (16, 14), /* tetanes - sound */
     (17, 7), /* bell103_demodulator - emulation */
     (17, 14), /* bell103_demodulator - sound */
     (18, 5), /* maze-astar - p5js */

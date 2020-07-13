@@ -28,9 +28,9 @@ pub fn get(conn: DbConn, id: i32) -> JsonValue {
     }
 }
 
-#[put("/", format = "json", data = "<account>")]
-pub fn update(conn: DbConn, account: Json<Account>) -> JsonValue {
-    match Account::update(&conn, &account) {
+#[put("/<id>", format = "json", data = "<account>")]
+pub fn update(conn: DbConn, id: i32, account: Json<Account>) -> JsonValue {
+    match Account::update(&conn, id, &account) {
         Ok(u) => json_success(u),
         Err(e) => json_error(e),
     }

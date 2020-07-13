@@ -2,13 +2,35 @@
   "name": "lukeworks.tech",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@types/node": "^14.0.20",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-helmet": "^6.0.0",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/react-transition-group": "^4.4.0",
+    "@types/styled-components": "^5.1.1",
+    "axios": "^0.19.2",
+    "babel-plugin-relay": "^9.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-helmet-async": "^1.0.6",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "react-transition-group": "^4.4.1",
+    "styled-components": "^5.1.1",
+    "typescript": "^3.9.6"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.0",
+    "@testing-library/react": "^10.4.5",
+    "@testing-library/user-event": "^12.0.11",
+    "@types/jest": "^26.0.4",
+    "react-snap": "^1.23.0"
+  },
+  "resolutions": {
+    "styled-components": "^5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -19,6 +41,13 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "typings": "./src/index.d.ts",
+  "reactSnapshot": {
+    "include": [
+      "/resume",
+      "/404"
+    ]
   },
   "browserslist": {
     "production": [

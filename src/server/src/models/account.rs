@@ -69,10 +69,14 @@ impl Account {
             .get_result::<Self>(conn)
     }
 
-    pub fn update(conn: &diesel::PgConnection, account: &Self) -> QueryResult<Self> {
-        diesel::update(accounts.find(account.id))
-            .set(account)
-            .get_result::<Self>(conn)
+    pub fn update(conn: &diesel::PgConnection, id: i32, account: &Self) -> QueryResult<Self> {
+        if id == account.id {
+            diesel::update(accounts.find(account.id))
+                .set(account)
+                .get_result::<Self>(conn)
+        } else {
+            QueryResult::Err(diesel::result::Error::NotFound)
+        }
     }
 
     // TODO Add password setting function using postgres crypt() and get_salt('bf')
