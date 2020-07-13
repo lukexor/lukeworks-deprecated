@@ -3,7 +3,7 @@ import Dates from "./Dates";
 import Ribbon from "./Ribbon";
 import Icon from "./Icon";
 import { H3, H4, H5, IconTitle } from "./Styles";
-import { ResumeExperience } from "../Resume";
+import { ResumeExperience } from "components/Resume";
 
 interface Props {
   list: ResumeExperience[];

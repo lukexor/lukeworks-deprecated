@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { AdminContext, IAdminContext } from "../Lukeworks";
+import { AdminContext, IAdminContext } from "components/Lukeworks";
 
 const isAuthenticated = (context: IAdminContext) => {
   return context.loggedInUser;

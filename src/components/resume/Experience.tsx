@@ -1,7 +1,7 @@
 import React from "react";
 import Ribbon from "./Ribbon";
 import { A, H3, H4 } from "./Styles";
-import { ResumeAddtlExperience } from "../Resume";
+import { ResumeAddtlExperience } from "components/Resume";
 
 interface Props {
   list: ResumeAddtlExperience[];

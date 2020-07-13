@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
+import useAsync from "hooks/useAsync";
 // import graphql from 'babel-plugin-relay/macro';  // TODO Relay: https://relay.dev/
 import Post, { IPost } from "./components/Post";
 
@@ -15,21 +16,8 @@ import Post, { IPost } from "./components/Post";
 // `;
 
 const Blog = () => {
-  const [posts, setPosts] = useState<IPost[]>([]);
-
-  // TODO Fix proxying
-  useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const response = await axios.get("/api/post");
-        setPosts(response.data);
-      } catch (e) {
-        alert(`Error getting posts: ${e}`);
-      }
-    };
-    getPosts();
-  }, []);
-
+  const immediate = true;
+  const { pending, value, error } = useAsync(getPosts, immediate);
   return (
     <section className="fadein">
       <Helmet>
@@ -42,11 +30,22 @@ const Blog = () => {
 
       <h3>Blog</h3>
 
-      {posts.map((post: IPost) => {
+      {pending && <p>Loading...</p>}
+      {error && <p>Error loading posts: {error}</p>}
+      {value?.map((post: IPost) => {
         return <Post key={post.id} {...post} />;
       })}
     </section>
   );
+};
+
+const getPosts = async () => {
+  try {
+    const response = await axios.get("/api/post");
+    return response.data;
+  } catch (e) {
+    alert(`Error getting posts: ${e}`);
+  }
 };
 
 export default Blog;

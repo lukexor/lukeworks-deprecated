@@ -1,7 +1,7 @@
 import React from "react";
 import FooterNav from "./FooterNav";
 import { StyledA } from "./StyledLinks";
-import { ILink } from "../../Portfolio";
+import { ILink } from "components/Portfolio";
 
 interface Props {
   links: ILink[];

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyledNavLink } from "./StyledLinks";
-import { ILink } from "../../Portfolio";
+import { ILink } from "components/Portfolio";
 
 interface Props {
   links: ILink[];
