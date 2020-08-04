@@ -27,6 +27,6 @@ I currently work at Nike which is fantastic since it combines my love of program
 
 I am constantly looking for new things to learn and better ways to do things including solving problems for fun and trying out new projects. Emerging technologies, especially AI and Machine Learning, excite me and I keep looking for anything I can sink my teeth into. I occasionally post articles to share my projects and ideas with the hope they spur discussions about code, software practices and technology.',
     '503-616-8265',
-    'https://lukeworks.tech/static/images/about_me.jpg',
+    'https://lukeworks.tech/images/about_me.jpg',
     'admin'
 );

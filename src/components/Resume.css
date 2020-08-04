@@ -1,0 +1,141 @@
+.resume {
+  background: #eee;
+  color: #444;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 95%;
+  height: 29.7cm;
+  margin: 0 auto;
+  padding: 10px 40px;
+  position: relative;
+  width: 21cm;
+}
+
+.resume ul {
+  padding-left: 1em;
+}
+
+.resume h1,
+.resume h2,
+.resume h3,
+.resume h4,
+.resume h5,
+.resume h6 {
+  color: #003d73;
+  font-family: "Georgia, Palatino, serif";
+}
+
+.resume h3 {
+  border-bottom: 2px solid #ccc;
+  font-size: 1.5em;
+  margin: 25px 0 10px 0;
+  padding-bottom: 5px;
+}
+
+.resume h4 {
+  color: #333;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 15px 0 5px 0;
+  padding: 0;
+}
+
+.resume h5 {
+  color: #333;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 0.9em;
+  font-style: italic;
+  font-weight: normal;
+  margin: 0 0 5px 0;
+  padding: 0;
+}
+
+.resume a {
+  color: #444;
+  text-decoration: none;
+}
+
+.resume a:visited {
+  color: #444;
+  text-decoration: none;
+}
+
+.resume a:hover {
+  color: #00f;
+  text-decoration: underline;
+}
+
+.resume .main-content {
+  float: right;
+  padding-left: 8%;
+  width: 62%;
+}
+
+.resume .icon-title {
+  display: flex;
+}
+
+.resume .icon-title h4 {
+  font-size: 1.5em;
+  margin: auto 0px;
+}
+
+/* Aside */
+.resume aside {
+  float: left;
+  clear: both;
+  width: 30%;
+}
+
+.resume aside section {
+  clear: both;
+}
+
+.resume aside p {
+  margin: 5px 0 10px 0;
+}
+
+/* Dates */
+.resume .dates {
+  clear: both;
+  color: #666;
+  font-size: 0.85em;
+}
+
+/* Header */
+.resume .header {
+  float: left;
+  height: 7em;
+  width: 50%;
+}
+
+.resume .name {
+  font-size: 2.6em;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.resume .position {
+  font-size: 1.6em;
+  font-style: italic;
+  margin-top: 0;
+}
+
+.resume summary {
+  text-align: justify;
+}
+
+/* Icon */
+.resume .icon {
+  width: 35px;
+  height: 35px;
+  float: left;
+  margin: 5px 10px 5px 0;
+}
+
+/* Ribbon */
+.resume .ribbon {
+  float: left;
+  margin: 0.2em 0 0 -8%;
+  padding: 0;
+  width: 30px;
+}

@@ -6,8 +6,8 @@ extern crate rocket;
 extern crate diesel;
 
 use rocket::{response::NamedFile, routes, Request, Rocket};
-use rocket_contrib::helmet::SpaceHelmet;
-use std::path::{Path, PathBuf};
+use rocket_contrib::{helmet::SpaceHelmet, serve::StaticFiles};
+use std::path::{Path};
 
 #[macro_use]
 mod db;
@@ -22,37 +22,7 @@ use db::DbConn;
 use routes::{account, category, post};
 
 const BUILD: &str = "../../build/";
-const STATIC: &str = "static";
 const INDEX: &str = "index.html";
-const NOT_FOUND: &str = "404.html";
-
-// TODO: Add ?s=<SEARCH>
-
-#[get("/<path..>", rank = 2)]
-fn path(path: Option<PathBuf>) -> Option<NamedFile> {
-    let mut file = PathBuf::from(BUILD);
-    match path {
-        Some(p) => {
-            file.push(p);
-            match NamedFile::open(&file) {
-                Ok(f) => Some(f),
-                Err(_) => {
-                    file.set_extension("html");
-                    match NamedFile::open(&file) {
-                        Ok(f) => Some(f),
-                        Err(_) => index(),
-                    }
-                }
-            }
-        }
-        None => index(),
-    }
-}
-
-#[get("/")]
-fn index() -> Option<NamedFile> {
-    NamedFile::open(Path::new(BUILD).join(INDEX)).ok()
-}
 
 #[catch(404)]
 fn not_found(_req: &Request) -> Option<NamedFile> {
@@ -63,7 +33,7 @@ pub fn rocket() -> Rocket {
     rocket::ignite()
         .attach(DbConn::fairing())
         .attach(SpaceHelmet::default())
-        .mount("/", routes![index, path])
+        .mount("/", StaticFiles::from(BUILD).rank(1))
         .register(catchers![not_found])
         .mount(
             "/api/account/",

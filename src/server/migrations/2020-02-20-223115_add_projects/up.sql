@@ -12,7 +12,7 @@ INSERT INTO post (
         'UM-Flint Environmental Science Club Website',
         'umflint_env_sci_club_website',
         '<div class="post-header-img">
-        <img src="/static/images/projects/umflint_env_club_main.png" title="UM-Flint Environmental Science Club Website" alt="UM-Flint Environmental Science Club Website">
+        <img src="/images/projects/umflint_env_club_main.png" title="UM-Flint Environmental Science Club Website" alt="UM-Flint Environmental Science Club Website">
     </div>
 
 When I was attending the University of Michigan-Flint for a few years and majoring in Environmental Science, I became heavily involved in the Environmental Science Club. There wasn''t a lot of members or general interest at the time, so I ended up being Vice President and maintainer of the club website. The existing website was incredibly dated and hard to maintain, so I designed and developed a new website. It''s very dated by today''s standards, but it served its purpose well to keep members up-to-date on club activities and local environmental news.',
@@ -25,7 +25,7 @@ When I was attending the University of Michigan-Flint for a few years and majori
         'Personal Portfolio/Blog',
         'personal_portfolio_blog',
         '<div class="post-header-img">
-    <img src="/static/images/projects/portfolio_blog_main.png" title="Personal Portfolio/Blog" alt="Personal Portfolio/Blog">
+    <img src="/images/projects/portfolio_blog_main.png" title="Personal Portfolio/Blog" alt="Personal Portfolio/Blog">
 </div>
 
 This website. I''ve had many iterations over the years, but I settled on this design and have been really happy with it for now. It was my first project using Python/Django and I used it to learn the framework and to learn testing out various security measures such as a honeypot field to prevent bots from spamming, learning how to set up HTTPS, etc. It''s been a lot of fun. I''ve also used it as a place to write and post about things that interest me.
@@ -40,7 +40,7 @@ My current work on this site is migrating over to a Rust/Rocket implementation. 
         'MindYou', /* Title */
         'mindyou', /* permalink */
         '<div class="post-header-img">
-  <img src="/static/images/projects/mindyou_main.png" title="MindYou" alt="MindYou" width="350px" style="width: 350px; float: right; padding-left: 15px">
+  <img src="/images/projects/mindyou_main.png" title="MindYou" alt="MindYou" width="350px" style="width: 350px; float: right; padding-left: 15px">
 </div>
 
 <strong>MindYou</strong>&nbsp;is a feature-packed task management system for iPhone.
@@ -67,12 +67,12 @@ MindYou takes the most useful ideas from top productivity methodologies and comb
         'Haskelltaire', /* Title */
         'haskelltaire', /* permalink */
         '<div class="post-header-img">
-  <img src="https://raw.githubusercontent.com/lukexor/haskelltaire/master/new_game_board.png">
+  <img src="/images/projects/haskelltaire_board.png">
 </div>
 
-<strong>Haskelltaire</strong> is a simple 1-card draw game of Solitaire played from the command line written in just 500 lines of [Haskell][]. It was done as part of a class project in functional programming and highlights how powerful and terse functional programming can be. The PlayingCard library can be easily adapted and generalized to allow the creation of many other card games.
+<strong>Haskelltaire</strong> is a simple 1-card draw game of Solitaire played from the command line written in just 500 lines of [Haskell][haskell]. It was done as part of a class project in functional programming and highlights how powerful and terse functional programming can be. The PlayingCard library can be easily adapted and generalized to allow the creation of many other card games.
 
-[Haskell]: https://www.haskell.org/', /* Content */
+[haskell]: https://www.haskell.org/', /* Content */
         '2019-08-22 00:00:00', /* Published */
         '2019-08-21 15:42:14', /* Created */
         '2019-08-22 00:00:00' /* Updated */
@@ -82,7 +82,7 @@ MindYou takes the most useful ideas from top productivity methodologies and comb
         'TetaNES - An NES Emulator written in Rust', /* Title */
         'tetanes', /* permalink */
         '<div class="post-header-img">
-  <img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/tetanes.png" width="800">
+  <img src="/images/projects/tetanes/logo.png" width="800">
 </div>
 
 <strong>TetaNES</strong> is an emulator for the Nintendo Entertainment System (NES) released in 1985, written using [Rust][rust] and [SDL2][sdl2].
@@ -91,22 +91,22 @@ It started as a personal curiosity that turned into a passion project to demonst
 
 <strong>TetaNES</strong> is also meant to showcase how clean and readable low-level Rust programs can be in addition to them having the type and memory-safety guarantees that Rust is known for.
 
-<img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/donkey_kong.png" width="350" style="padding: 5px"><img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/super_mario_bros.png" width="350" style="padding: 5px">
-<img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/legend_of_zelda.png" width="350" style="padding: 5px"><img src="https://raw.githubusercontent.com/lukexor/tetanes/master/static/metroid.png" width="350" style="padding: 5px">
+<img src="/images/projects/tetanes/donkey_kong.png" width="350" style="padding: 5px"><img src="/images/projects/tetanes/super_mario_bros.png" width="350" style="padding: 5px">
+<img src="/images/projects/tetanes/legend_of_zelda.png" width="350" style="padding: 5px"><img src="/images/projects/tetanes/metroid.png" width="350" style="padding: 5px">
 
 You can check out the code on [Github][github].
 
 <div class="photo-credit" markdown="1">
 
-photo credit: [Cerberus][] via [Zsolt Palatinus][] [copyright][]
+photo credit: [Cerberus][cerberus] via [Zsolt Palatinus][zsolt-palatinus] [copyright][copyright]
 
 </div>
 
 [rust]: https://www.rust-lang.org/tools/install
 [sdl2]: https://www.libsdl.org/
 [github]: https://github.com/lukexor/tetanes
-[Cerberus]: https://unsplash.com/photos/pEK3AbP8wa4
-[Zsolt Palatinus]: https://unsplash.com/@sunitalap
+[cerberus]: https://unsplash.com/photos/pEK3AbP8wa4
+[zsolt-palatinus]: https://unsplash.com/@sunitalap
 [copyright]: https://unsplash.com/license',
         '2019-08-21 15:24:57', /* Published */
         '2019-08-21 15:19:30', /* Created */
@@ -131,16 +131,16 @@ There are options for changing the sampling rate, and filter length as well as u
         'maze-astar', /* permalink */
         '<iframe id="myIframe" src="https://dev.lukeworks.tech/maze-astar" width="100%" frameborder="0" height="650px"></iframe>
 
-Lately, I''ve been having a lot of fun putting this maze generator/A* search program together. It''s really enjoyable visualizing the algorithms as they loop through each iteration. So much so that I''m going to be doing a whole series of these based on various algorithms and data structures. My initial working implementation was using plain Javascript and canvas, but I''ve updated it to use the [ps5.js][] library which will be useful later on when I get to some more advanced algorithms.
+Lately, I''ve been having a lot of fun putting this maze generator/A* search program together. It''s really enjoyable visualizing the algorithms as they loop through each iteration. So much so that I''m going to be doing a whole series of these based on various algorithms and data structures. My initial working implementation was using plain Javascript and canvas, but I''ve updated it to use the [p5.js][p5js] library which will be useful later on when I get to some more advanced algorithms.
 
 The program allows you to test various settings for maze generation including cell size and how often the algorithm will connect through when it encounters a dead-end and has to backtrack. I added the ability to download and upload saved mazes since the smaller cell sizes can take quite a long time to generate and I wanted to be able to test A* against them (and hopefully some other search algorithms soon) later on. Once a maze is generated, each time you click *Solve Maze* it will generate random starting and goal points. You can also pause/unpause the algorithm as well as adjust the frame rate for how fast it updates.
 
 Keep an eye out for more updates soon!
 
-Huge shout out to [The Coding Train][] for getting me interested in visual algorithms and ps5.js!
+Huge shout out to [The Coding Train][coding-train] for getting me interested in visual algorithms and ps5.js!
 
-[ps5.js]: https://p5js.org/
-[The Coding Train]: https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw',
+[p5js]: https://p5js.org/
+[coding-train]: https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw',
         '2020-02-01 19:57:51', /* Published */
         '2020-02-01 19:56:40', /* Created */
         '2020-02-01 19:57:51' /* Updated */
@@ -151,9 +151,9 @@ Huge shout out to [The Coding Train][] for getting me interested in visual algor
         'matrix', /* permalink */
         '<iframe src="https://dev.lukeworks.tech/matrix" frameborder="0" width="100%" height="500px"></iframe>
 
-I absolutely loved [The Matrix][] when it came out. I can''t even count how many times I rewatched it. I used to love all the Matrix screen savers that came out shortly after and always wondered how they did it. This was a lot of fun to program and required a lot less code than I expected. As always the devil is in the details and there are a lot of knobs that can be turned to tweak how the end result looks. I''m satisfied with how it turned out! Credit goes to [The Coding Train](https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw) for the great tutorials.
+I absolutely loved [The Matrix][matrix] when it came out. I can''t even count how many times I rewatched it. I used to love all the Matrix screen savers that came out shortly after and always wondered how they did it. This was a lot of fun to program and required a lot less code than I expected. As always the devil is in the details and there are a lot of knobs that can be turned to tweak how the end result looks. I''m satisfied with how it turned out! Credit goes to [The Coding Train](https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw) for the great tutorials.
 
-[The Matrix]: https://www.imdb.com/title/tt0133093/',
+[matrix]: https://www.imdb.com/title/tt0133093/',
         '2020-02-01 19:59:05', /* Published */
         '2020-02-01 19:58:25', /* Created */
         '2020-02-01 19:59:07' /* Updated */
