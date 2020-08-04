@@ -5,7 +5,7 @@
 const personalInfo = {
     "name": "Lucas Petherbridge",
     "position": "Senior Software Engineer",
-    "summary": "Senior Software Engineer with 8+ years experience solving problems by developing innovative software. I started programming at age 15 and have never stopped pushing the limits of my craft, I'm constantly looking for new challenges & opportunities for learning.",
+    "summary": "Senior Software Engineer with 8+ years experience solving problems by developing innovative software solutions in a variety of domains. I started programming at age 15 and love keeping up with the latest technology trends. I'm constantly looking for new challenges and opportunities for learning.",
     "addr1": "9826 SW 59<sup>th</sup> Ave",
     "addr2": "Portland, OR 97219",
     "phone": "(503) 616-8265",
@@ -15,11 +15,11 @@ const personalInfo = {
 // Hard and Soft Skills
 const softSkills = [{
         "proficiency": 5,
-        "skills": "Leadership, Quick-Learner, Communication",
+        "skills": "Leadership, Adaptability, Communication",
     },
     {
         "proficiency": 4,
-        "skills": "Problem-Solving, Teamwork",
+        "skills": "Problem-Solving, Teamwork & Collaboration",
     },
     {
         "proficiency": 3,
@@ -62,16 +62,18 @@ const hardSkills = [
 // Experiences/Projects
 const workExperience = [{
         "start": "2020, 03",
-        "end": "2020, 07",
+        "end": "2020, 06",
         "title": "Senior Software Engineer",
         "entity": "TEKsystems - Consultant at Nike",
         "location": "Beaverton, OR",
+        "img": "https://media-exp1.licdn.com/dms/image/C4E0BAQFINoS6Zc9PAg/company-logo_100_100/0?e=1602720000&v=beta&t=lEQJYFR-w_-1y5Tmf4fvxQMBLeVjDu1kLQ8Z-LDLEuU",
         "bullets": [
-            "Extended & maintained a critical product planning tool using Angular & Node.js with Typescript, GraphQL, & MySQL.",
-            "Set up, configured, & managed infrastructure as code using AWS & Terraform.",
-            "Created & managed automated deployment pipelines using BMX Jenkins & Docker.",
-            "Led team in defining scope & architecture decisions for projects.",
-            "Mentored & pair programmed with junior developers.",
+            "Extended & maintained a product planning SPA that enabled Merchant and Product teams to efficiently plan out future product lines using JavaScript, Angular, Node.js, Typescript, GraphQL, & MySQL.",
+            "Designed, configured, & set up cloud infrastructure as code for a GraphQL API integration with ElasticSearch & Okta authentication using AWS & Terraform. Required cross-team collaboration.",
+            "Created & managed automated build & deployment pipelines using Github, AWS CLI, BMX Jenkins & Docker.",
+            "Led team in clarifying scope, technology & architecture decisions for a new merchant planning project.",
+            "Mentored, provided code reviews & pair programmed with junior developers.",
+            "Exit: Contract ended due to organization restructure.",
         ],
     },
     {
@@ -80,34 +82,37 @@ const workExperience = [{
         "title": "Senior Software Engineer",
         "entity": "NetFortris (Formerly Fonality, Inc)",
         "location": "Culver City, CA",
+        "img": "https://media-exp1.licdn.com/dms/image/C4E0BAQGAeHgWGRf3xA/company-logo_100_100/0?e=1602720000&v=beta&t=whY1yqfM3bODadLwjdg6P3IsTHHE6gF7J0V1P9wMthM",
         "bullets": [
-            "Extended mobile UCaaS application to meet customer needs using React Native & Redux with Typescript.",
-            "Redesigned legacy Salesforce integration to modern API standards on a solo project which reduced total code by 90% switching from Angular to Vue.js while maintaining features & increasing maintainability using Vue.js, XML, & Apex.",
+            "Worked remotely for 6 years while maintaining high productivity & close collaboration with teams.",
+            "Extended mobile UCaaS application to enable rich customer integration experience with our communication platform using React Native & Redux with Typescript.",
+            "Redesigned legacy Salesforce telephony integration using modern API standards on a solo project which reduced total code by 90% by switching from Angular to Vue.js while maintaining features & increasing maintainability using JavaScript, Vue.js, XML, & Apex.",
             "Developed & integrated a flexible cloud platform for a UCaaS system to achieve high scalability & availability using Perl & Golang.",
-            "Reduced dependency on legacy systems by 80% by developing a fault tolerant, automated migration path which led to a 15% reduction in support & billing costs.",
-            "Decreased UI responsiveness by 50% leading to a dramatic increase in sales productivity.",
-            "Designed & developed an OSS/BSS for the ordering, billing, & provisioning of VoiP services that led to a 20% increase in overall revenue using Perl, JQuery, & HTML/CSS.",
+            "Reduced dependency on legacy systems by 80% by developing a fault tolerant, automated migration solution which led to a 15% reduction in support & billing costs.",
+            "Designed & developed an OSS/BSS for the ordering, billing, & provisioning of VoiP services that led to a 20% increase in overall revenue using Perl, JavaScript, JQuery, & HTML/CSS.",
         ],
     },
     {
-        "start": "2012, 10",
+        "start": "2013, 03",
         "end": "2013, 11",
         "title": "Scrum Master",
         "entity": "Fonality, Inc.",
         "location": "Culver City, CA",
+        "img": "https://media-exp1.licdn.com/dms/image/C4E0BAQGRT0VJ6N47rQ/company-logo_100_100/0?e=1602720000&v=beta&t=IqYYWl3lZA1AIl3HuiZnXL-CMyyVzKCtKAZa7GLJwGc",
         "bullets": [
-            "Drafted & refined requirements working with Product Owner & development teams to design solutions & define timelines for management.",
+            "Drafted & refined requirements working with Product Owner & development teams to design solutions & define timeline estimates for management.",
             "Led process & development initiatives for an OSS/BSS for the ordering, billing, & provisioning of VoIP services using JIRA, Git, & Crucible.",
             "Advocated for team collaboration, communication, & education using pair programming & code reviews",
         ],
     },
 ];
 const education = [{
-    "start": "2015, 09",
-    "end": "2019, 06",
+    "start": "2015",
+    "end": "2019",
     "title": "Bachelor of Computer Science",
     "entity": "Portland State University",
     "location": "Portland, OR",
+    "img": "https://media-exp1.licdn.com/dms/image/C4D0BAQHTacvX0dq-6w/company-logo_100_100/0?e=1602720000&v=beta&t=_NlNfnkW4CtfYjFIeHfbxfdMXeSqmiCjVq6CJHntPZ8",
     "bullets": [
         "Consulted as a Scrum/Agile coach for 10 teams during my senior capstone in lieu of a project, providing guidance & support in the completion of their team projects.",
     ],
@@ -158,8 +163,8 @@ window.onload = function() {
     Object.entries(personalInfo).forEach((info) => addInfo("personal-info", info));
     softSkills.forEach((row) => addSkill("soft-skills", row, softProficiencies));
     hardSkills.forEach((row) => addSkill("hard-skills", row, hardProficiencies));
-    workExperience.forEach((experience) => addExperience("work-experience", experience));
-    education.forEach((experience) => addExperience("education", experience));
+    workExperience.forEach((experience) => addExperience("work-experience", experience, false));
+    education.forEach((experience) => addExperience("education", experience, true));
     projects.forEach((project) => addProject("projects", project));
 };
 
@@ -193,9 +198,10 @@ const addSkill = function(section, row, proficiencies) {
     </section>`;
     document.getElementById(section).innerHTML += html;
 };
-const addExperience = function(section, experience) {
-    const start = formatDate(experience.start.split(','));
-    const end = formatDate(experience.end.split(','));
+const addExperience = function(section, experience, edu) {
+    const start = formatDate(experience.start);
+    const end = formatDate(experience.end);
+    const duration = calcDuration(experience.start, experience.end);
     let description = "";
     if (experience.bullets.length > 1) {
         description = '<ul class="clear">';
@@ -206,22 +212,26 @@ const addExperience = function(section, experience) {
     } else {
         description = `<p>${experience.bullets[0]}</p>`;
     }
+    const dates = edu
+      ? `<div class="dates">${ experience.start } - ${ experience.end }</div>`
+      : `<div class="dates">${ start } –  ${ end } <span>${ duration }</span></div>`;
     const html = `<section>
         <div class="experience">
+            <img src="${ experience.img }" />
             <h4>${ experience.title }</h4>
         </div>
-        <div class="dates">${ start } –  ${ end }</div>
         <h5 class="clear">${ experience.entity }, ${ experience.location }</h5>
+        ${dates}
         ${ description }
     </section>`;
     document.getElementById(section).innerHTML += html;
 };
 const addProject = function(section, project) {
-    const start = formatDate(project.start.split(','));
-    const end = formatDate(project.end.split(','));
+    const start = formatDate(project.start);
+    const end = formatDate(project.end);
     const html = `<section>
         <div class="experience">
-            <h4>${ project.title }</h4>
+            <h4 class="project-title">${ project.title }</h4>
         </div>
         <div class="dates">${ start } –  ${ end }</div>
         <div class="clear pad-bottom">
@@ -235,12 +245,16 @@ const addProject = function(section, project) {
 
 // Utility functions
 const formatDate = function(date) {
-    let year = date[0];
-    let month = date[1] || 0;
-    let day = date[2] || 1;
+    if (date === "Current") {
+      return date;
+    }
+    date = date.split(",");
+    const year = date[0];
+    const month = date[1] || 1;
+    const day = date[2] || 1;
     try {
         const dateObj = new Date(year, month - 1, day);
-        if (dateObj instanceof Date && !isNaN(dateObj)) {
+        if (dateObj instanceof Date) {
             const month = dateObj.toLocaleDateString("default", {
                 "month": "short"
             });
@@ -254,6 +268,31 @@ const formatDate = function(date) {
     }
     return date;
 };
+const calcDuration = function(start, end) {
+    start = start.split(",");
+    end = end.split(",");
+    const sYear = start[0];
+    const sMonth = start[1] || 1;
+    const eYear = end[0];
+    const eMonth = end[1] || 1;
+    let duration = "1 mo";
+    try {
+        let dYears = eYear - sYear;
+        let dMonths = (eMonth - sMonth) + 1;
+        if (dMonths < 0) {
+          dYears -= 1;
+          dMonths += 12;
+        }
+        let years = dYears > 0 ? `${dYears} yr` : "";
+        if (dYears > 1) years += 's';
+        let months = dMonths > 0 ? `${dMonths} mo` : "";
+        if (dMonths > 1) months += 's';
+        duration = `${years} ${months}`;
+    } catch (e) {
+      console.warn(e);
+    }
+    return duration;
+}
 
 // == End of Resume Details
 // ====================================
@@ -261,9 +300,9 @@ const formatDate = function(date) {
 // Constant lookup tables
 const softProficiencies = {
     5: "Excellent",
-    4: "Above Average",
+    4: "Superior",
     3: "Average",
-    2: "Below Average",
+    2: "Subpar",
     1: "Poor",
 };
 const hardProficiencies = {

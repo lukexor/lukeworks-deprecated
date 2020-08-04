@@ -24,11 +24,11 @@ const app = new Vue({
                 text: 'REGISTRY',
                 img: 1,
             },
-            {
-                id: 'rsvp',
-                text: 'RSVP',
-                img: 1,
-            },
+            // {
+            //     id: 'rsvp',
+            //     text: 'RSVP',
+            //     img: 1,
+            // },
         ],
         currentImage: 0,
         images: [
@@ -57,7 +57,7 @@ const app = new Vue({
                 if (section === 'main') {
                     window.location.hash = '';
                 } else {
-                    window.location.href = `${window.location.origin}#${section}`;
+                    window.location.hash = section;
                 }
                 const menu = document.getElementById('menu');
                 if (menu && window.getComputedStyle(menu)['display'] === 'block') {
